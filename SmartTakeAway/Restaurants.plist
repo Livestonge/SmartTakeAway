@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>Pronto Bures</string>
+		<key>adresse</key>
+		<string>3 Rue du Général Leclerc, 91440 Bures-sur-Yvette</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Nabab Kebab</string>
+		<key>adresse</key>
+		<string>72 Rue Rambuteau, 75001 Paris</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Lunsj Time</string>
+		<key>adresse</key>
+		<string>1 Rue du Morvan, 91940 Les Ulis</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>UlisFood</string>
+		<key>adresse</key>
+		<string>124 Avenue des Champs Lasniers, 91940 Les Ulis</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Los tacos</string>
+		<key>adresse</key>
+		<string>18 Rue de Paris, 91400 Orsay</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Bodrum Restaurant</string>
+		<key>adresse</key>
+		<string>43 Rue des Batignolles, 75017 Paris</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Dilara Kebab</string>
+		<key>adresse</key>
+		<string>38 Rue Emilie Raspail, 94110 Arcueil</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Délices D`anatolie</string>
+		<key>adresse</key>
+		<string>81 Rue de Paris, 91120 Palaiseau</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Grillé</string>
+		<key>adresse</key>
+		<string>15 Rue Saint-Augustin, 75002 Paris</string>
+	</dict>
+</array>
+</plist>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Sandwiches</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>Grec</string>
+			<key>price</key>
+			<dict>
+				<key>sandwich</key>
+				<integer>6</integer>
+			</dict>
+			<key>description</key>
+			<string>Poulet mariné, onion</string>
+			<key>image</key>
+			<string>menu-sandwich-grec</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Chicken chikka</string>
+			<key>price</key>
+			<dict>
+				<key>sandwich</key>
+				<integer>7</integer>
+			</dict>
+			<key>description</key>
+			<string>Poulet mariné, fromage</string>
+			<key>image</key>
+			<string>chicken-paprika</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Americain</string>
+			<key>price</key>
+			<dict>
+				<key>sandwich</key>
+				<integer>9</integer>
+			</dict>
+			<key>description</key>
+			<string>2 steaks, oeuf, fromage</string>
+			<key>image</key>
+			<string>Americain</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Merguez</string>
+			<key>price</key>
+			<dict>
+				<key>sandwich</key>
+				<integer>5</integer>
+			</dict>
+			<key>description</key>
+			<string></string>
+			<key>image</key>
+			<string>sandwich-merguez</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Mixte</string>
+			<key>price</key>
+			<dict>
+				<key>sandwich</key>
+				<integer>8</integer>
+			</dict>
+			<key>description</key>
+			<string>2 viandes au choix</string>
+			<key>image</key>
+			<string>sandwich-mixte</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Mexicain</string>
+			<key>price</key>
+			<dict>
+				<key>sandwich</key>
+				<integer>6</integer>
+			</dict>
+			<key>description</key>
+			<string>Poulet mariné, poivrons, olives</string>
+			<key>image</key>
+			<string>sandwich-mexicain</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Boursin</string>
+			<key>price</key>
+			<dict>
+				<key>sandwich</key>
+				<real>6</real>
+			</dict>
+			<key>description</key>
+			<string>Poulet mariné, boursin</string>
+			<key>image</key>
+			<string>sandwich-boursin</string>
+		</dict>
+	</array>
+	<key>Pizza</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>Pizza Zita</string>
+			<key>price</key>
+			<dict>
+				<key>pizza</key>
+				<dict>
+					<key>medium</key>
+					<real>8</real>
+					<key>grande</key>
+					<integer>10</integer>
+					<key>large</key>
+					<real>12</real>
+				</dict>
+			</dict>
+			<key>description</key>
+			<string></string>
+			<key>image</key>
+			<string>Tomate-fromage</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Pizza Napolitaine</string>
+			<key>price</key>
+			<dict>
+				<key>pizza</key>
+				<dict>
+					<key>medium</key>
+					<real>6</real>
+					<key>grande</key>
+					<integer>8</integer>
+					<key>large</key>
+					<real>10</real>
+				</dict>
+			</dict>
+			<key>description</key>
+			<string>Anchois and olives</string>
+			<key>image</key>
+			<string>pizza-napolitaine</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Pizza Regina</string>
+			<key>price</key>
+			<dict>
+				<key>pizza</key>
+				<dict>
+					<key>medium</key>
+					<real>7</real>
+					<key>grande</key>
+					<real>8</real>
+					<key>large</key>
+					<integer>10</integer>
+				</dict>
+			</dict>
+			<key>description</key>
+			<string>Jambon, champignon</string>
+			<key>image</key>
+			<string>pizza-regina</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Pizza Campione</string>
+			<key>price</key>
+			<dict>
+				<key>pizza</key>
+				<dict>
+					<key>medium</key>
+					<real>8</real>
+					<key>grande</key>
+					<real>10</real>
+					<key>large</key>
+					<integer>11</integer>
+				</dict>
+			</dict>
+			<key>description</key>
+			<string>Viande hachee, champignon</string>
+			<key>image</key>
+			<string>pizza-campione</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Pizza Neptune</string>
+			<key>price</key>
+			<dict>
+				<key>pizza</key>
+				<dict>
+					<key>medium</key>
+					<integer>8</integer>
+					<key>grande</key>
+					<integer>10</integer>
+					<key>large</key>
+					<real>12</real>
+				</dict>
+			</dict>
+			<key>description</key>
+			<string>Thon, champignon, olives, oignon</string>
+			<key>image</key>
+			<string>pizza-neptune</string>
+		</dict>
+	</array>
+</dict>
+</plist>
