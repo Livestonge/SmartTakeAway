@@ -14,4 +14,5 @@ protocol RestaurantsProviderDelegate: AnyObject{
 protocol RestaurantsProvider: AnyObject {
   var delegate: RestaurantsProviderDelegate? { get set }
   func getRestaurants()
+  func didSelect(_ restaurant: Restaurant)
 }

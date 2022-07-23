@@ -18,4 +18,9 @@ class RestaurantsProviding: RestaurantsProvider {
     // we call the delegate to hand him the restaurants.
     delegate?.didReceive(restaurants: restaurants.model ?? [])
   }
+  
+  func didSelect(_ restaurant: Restaurant) {
+    Orders.shared.restaurantName = restaurant.name
+    Orders.shared.restaurantAdress = restaurant.adresse
+  }
 }

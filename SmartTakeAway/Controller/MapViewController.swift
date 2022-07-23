@@ -19,11 +19,6 @@ class MapViewController: UIViewController{
     lazy private var geocoder = CLGeocoder()
     private var locationManager: CLLocationManager?
     
-    lazy private var restaurantList: [Restaurant] = {
-        let restaurants = StoredData<[Restaurant]>(fileName: "Restaurants")
-        return restaurants.model ?? []
-    }()
-    
     var hideContinueBt = false
 
     override func viewDidLoad() {
@@ -36,8 +31,6 @@ class MapViewController: UIViewController{
         configureLocationManager()
         configureMapView()
         convertTolocations()
-        Orders.shared.restaurantName = restaurant?.name
-        Orders.shared.restaurantAdress = restaurant?.adresse
     }
     
     override func viewWillLayoutSubviews() {
@@ -62,41 +55,30 @@ class MapViewController: UIViewController{
     
     private func convertTolocations(_ index: Int = 0){
         
-        let restaurants = restaurantList
-        if index < restaurants.count{
-            geocoder.geocodeAddressString(restaurants[index].adresse){ [weak self] (placemarks,error) in
-                       
-                       if let error = error{
-                           print(error.localizedDescription)
-                       }
-                       guard let location = placemarks?.first?.location else {return}
-                       restaurants[index].longitude = location.coordinate.longitude
-                       restaurants[index].latitude = location.coordinate.latitude
-                       self?.convertTolocations(index+1)
-            }
-        } else if index >= restaurants.count{
-            
-           self.mapView.addAnnotations(restaurants)
+      guard let restaurant = self.restaurant else { return }
+      geocoder.geocodeAddressString(restaurant.adresse){ (placemarks,error) in
+                 
+           if let error = error{
+               print(error.localizedDescription)
+           }
+           guard let location = placemarks?.first?.location else {return}
+           restaurant.longitude = location.coordinate.longitude
+           restaurant.latitude = location.coordinate.latitude
+           self.mapView.addAnnotations([restaurant])
            self.centerTheMap()
-        }
+      }
+     
   }
     
     private func centerTheMap(){
 
-        
         guard let restaurant = self.restaurant else {return}
-        
-        for restaurantWithCoordinates in restaurantList{
-            if restaurantWithCoordinates.name == restaurant.name{
-                let regionRadius = 1000.0
-                let region = MKCoordinateRegion(center: restaurantWithCoordinates.coordinate,
-                                                       latitudinalMeters: regionRadius,
-                                                       longitudinalMeters: regionRadius)
-                self.mapView.setRegion(region, animated: true)
-                self.loadDirection(to: restaurantWithCoordinates)
-                break
-            }
-        }
+        let regionRadius = 1000.0
+        let region = MKCoordinateRegion(center: restaurant.coordinate,
+                                               latitudinalMeters: regionRadius,
+                                               longitudinalMeters: regionRadius)
+        self.mapView.setRegion(region, animated: true)
+        self.loadDirection(to: restaurant)
     }
     
     private func loadDirection(to restaurant: Restaurant){
