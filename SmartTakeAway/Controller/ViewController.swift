@@ -21,9 +21,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = .orange
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+//        navigationController?.navigationBar.isTranslucent = false
+//        navigationController?.navigationBar.barTintColor = .orange
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.orange]
         navigationItem.title = "Choose your restaurant"
         tableView.delegate = self
         tableView.dataSource = self
