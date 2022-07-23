@@ -11,11 +11,8 @@ import UIKit
 class ViewController: UIViewController {
     
 
-    lazy var restaurantList: [Restaurant] = {
-        let restaurants = StoredData<[Restaurant]>(fileName: "Restaurants")
-        return restaurants.model ?? []
-    }()
-   
+    var restaurantList: [Restaurant] = []
+    private var restaurantsProvider: RestaurantsProvider?
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -27,6 +24,9 @@ class ViewController: UIViewController {
         navigationItem.title = "Choose your restaurant"
         tableView.delegate = self
         tableView.dataSource = self
+        restaurantsProvider = RestaurantsProviding()
+        restaurantsProvider?.delegate = self
+        restaurantsProvider?.getRestaurants()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -70,4 +70,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     
+}
+
+extension ViewController: RestaurantsProviderDelegate{
+  
+  func didReceive(restaurants: [Restaurant]) {
+    self.restaurantList = restaurants
+  }
+  
 }
