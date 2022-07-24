@@ -24,7 +24,7 @@
 		09948E23288AAB5E005B6767 /* Orders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E1C288AAB5E005B6767 /* Orders.swift */; };
 		09948E24288AAB5E005B6767 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E1D288AAB5E005B6767 /* Food.swift */; };
 		09948E25288AAB5E005B6767 /* DrinksAndSauceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E1E288AAB5E005B6767 /* DrinksAndSauceList.swift */; };
-		09948E26288AAB5E005B6767 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E1F288AAB5E005B6767 /* Menu.swift */; };
+		09948E26288AAB5E005B6767 /* MenuProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E1F288AAB5E005B6767 /* MenuProvider.swift */; };
 		09948E27288AAB5E005B6767 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E20288AAB5E005B6767 /* Restaurant.swift */; };
 		09948E29288AAB7B005B6767 /* Restaurants.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09948E28288AAB7B005B6767 /* Restaurants.plist */; };
 		09948E33288AAB91005B6767 /* PizzaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E2B288AAB91005B6767 /* PizzaCell.swift */; };
@@ -49,6 +49,8 @@
 		09948E5A288AB7BD005B6767 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 09948E59288AB7BD005B6767 /* README.md */; };
 		09948E5E288C1A5D005B6767 /* RestaurantsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E5D288C1A5D005B6767 /* RestaurantsProvider.swift */; };
 		09948E61288C20B2005B6767 /* Restaurant protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E60288C20B2005B6767 /* Restaurant protocols.swift */; };
+		09948E64288D8FCC005B6767 /* Menu protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E63288D8FCC005B6767 /* Menu protocols.swift */; };
+		09948E66288D8FEF005B6767 /* Menu type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E65288D8FEF005B6767 /* Menu type.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,7 +91,7 @@
 		09948E1C288AAB5E005B6767 /* Orders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Orders.swift; sourceTree = "<group>"; };
 		09948E1D288AAB5E005B6767 /* Food.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		09948E1E288AAB5E005B6767 /* DrinksAndSauceList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrinksAndSauceList.swift; sourceTree = "<group>"; };
-		09948E1F288AAB5E005B6767 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		09948E1F288AAB5E005B6767 /* MenuProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuProvider.swift; sourceTree = "<group>"; };
 		09948E20288AAB5E005B6767 /* Restaurant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
 		09948E28288AAB7B005B6767 /* Restaurants.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Restaurants.plist; sourceTree = "<group>"; };
 		09948E2B288AAB91005B6767 /* PizzaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PizzaCell.swift; sourceTree = "<group>"; };
@@ -115,6 +117,8 @@
 		09948E59288AB7BD005B6767 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		09948E5D288C1A5D005B6767 /* RestaurantsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsProvider.swift; sourceTree = "<group>"; };
 		09948E60288C20B2005B6767 /* Restaurant protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Restaurant protocols.swift"; sourceTree = "<group>"; };
+		09948E63288D8FCC005B6767 /* Menu protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Menu protocols.swift"; sourceTree = "<group>"; };
+		09948E65288D8FEF005B6767 /* Menu type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Menu type.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,7 +228,7 @@
 				09948E1C288AAB5E005B6767 /* Orders.swift */,
 				09948E1D288AAB5E005B6767 /* Food.swift */,
 				09948E1E288AAB5E005B6767 /* DrinksAndSauceList.swift */,
-				09948E1F288AAB5E005B6767 /* Menu.swift */,
+				09948E62288D8FAD005B6767 /* Menu model */,
 				09948E5F288C206F005B6767 /* Restaurant model */,
 			);
 			path = Model;
@@ -289,6 +293,16 @@
 				09948E20288AAB5E005B6767 /* Restaurant.swift */,
 			);
 			path = "Restaurant model";
+			sourceTree = "<group>";
+		};
+		09948E62288D8FAD005B6767 /* Menu model */ = {
+			isa = PBXGroup;
+			children = (
+				09948E1F288AAB5E005B6767 /* MenuProvider.swift */,
+				09948E63288D8FCC005B6767 /* Menu protocols.swift */,
+				09948E65288D8FEF005B6767 /* Menu type.swift */,
+			);
+			path = "Menu model";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -445,11 +459,13 @@
 				09948E13288AAABA005B6767 /* ChosenMenuViewController.swift in Sources */,
 				09948E56288AAEE9005B6767 /* TrackerViewController.swift in Sources */,
 				09948DCC288AA521005B6767 /* AppDelegate.swift in Sources */,
+				09948E66288D8FEF005B6767 /* Menu type.swift in Sources */,
 				09948E18288AAABA005B6767 /* TrackerView.swift in Sources */,
 				09948E23288AAB5E005B6767 /* Orders.swift in Sources */,
 				09948E35288AAB91005B6767 /* SelectControl.swift in Sources */,
+				09948E64288D8FCC005B6767 /* Menu protocols.swift in Sources */,
 				09948E14288AAABA005B6767 /* MapViewController.swift in Sources */,
-				09948E26288AAB5E005B6767 /* Menu.swift in Sources */,
+				09948E26288AAB5E005B6767 /* MenuProvider.swift in Sources */,
 				09948E15288AAABA005B6767 /* TabBarViewController.swift in Sources */,
 				09948E34288AAB91005B6767 /* CloseButton.swift in Sources */,
 				09948E24288AAB5E005B6767 /* Food.swift in Sources */,

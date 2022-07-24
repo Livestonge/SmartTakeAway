@@ -15,10 +15,9 @@ class FoodViewController: UIViewController {
     @IBOutlet weak var menuTitle: UILabel!
     @IBOutlet weak var menuStackview: UIStackView!
     
-    lazy var menuTodisplay: [String: [Food]] = {
-        let menu = StoredData<[String:[Food]]>(fileName: "Meny")
-        return menu.model ?? [:]
-    }()
+    private var menuTodisplay: [Food] = []
+    private var menuProvider: MenuProvider?
+    private var sandwichCtrl: SandwichListController?
     
     lazy var pizzaViewController: PizzaViewController = {
         let storyboard = UIStoryboard(name: "Pizza", bundle: Bundle.main)
@@ -29,7 +28,7 @@ class FoodViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Choose a menu"
-        
+      
         for menuView in menuStackview.subviews{
             menuView.tag = menuStackview.subviews.firstIndex(of: menuView)!
             menuView.isUserInteractionEnabled = true
@@ -37,6 +36,10 @@ class FoodViewController: UIViewController {
                                                     action: #selector(handleTaps(sender:)))
             menuView.addGestureRecognizer(tapGesture)
         }
+        menuProvider = MenuProviding()
+        menuProvider?.delegate = self
+        menuProvider?.getMenuFor(.sandwiches)
+        sandwichCtrl?.menyList = menuTodisplay
     }
     
    @IBAction func handleTaps(sender: UITapGestureRecognizer){
@@ -46,9 +49,11 @@ class FoodViewController: UIViewController {
        if index == 0{
            pizzaViewController.removeFromParent()
            pizzaViewController.view.removeFromSuperview()
+           menuProvider?.getMenuFor(.sandwiches)
            menuTitle.text = "Menu Sandwiches"
        } else if index == 1{
-           pizzaViewController.menyList = menuTodisplay["Pizza"]
+           menuProvider?.getMenuFor(.pizza)
+           pizzaViewController.menyList = menuTodisplay
            addChild(pizzaViewController)
            pizzaViewController.didMove(toParent: self)
            pizzaViewController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -67,10 +72,16 @@ class FoodViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "foodSegue" {
-             let menuListController = segue.destination as! SandwichListController
-             menuListController.menyList = menuTodisplay["Sandwiches"]
+             let menuListController = segue.destination as? SandwichListController
+             self.sandwichCtrl = menuListController
         }
     }
 }
 
 
+extension FoodViewController: MenuProviderDelegate{
+  
+  func didReceiveMenu(_ menu: [Food]) {
+    self.menuTodisplay = menu
+  }
+}
