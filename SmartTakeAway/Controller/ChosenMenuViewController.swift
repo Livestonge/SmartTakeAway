@@ -43,9 +43,9 @@ class ChosenMenuViewController: UIViewController {
     
     var chosenMenu: Food?{
         didSet{
-            self.dishName?.text = oldValue?.name ?? ""
-            self.ingredients?.text = oldValue?.description ?? ""
-            self.price?.text = "\(oldValue?.priceAmount ??  0)€"
+            self.dishName?.text = chosenMenu?.name ?? ""
+            self.ingredients?.text = chosenMenu?.description ?? ""
+            self.price?.text = "\(chosenMenu?.priceAmount ??  0)€"
         }
     }
     lazy var auxChoixList: [String: [String]] = {
@@ -91,7 +91,6 @@ class ChosenMenuViewController: UIViewController {
         
         orderBtOutlet.layer.cornerRadius = 30
         orderBtOutlet.isEnabled = false
-        
        
     
     }

@@ -51,6 +51,8 @@
 		09948E61288C20B2005B6767 /* Restaurant protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E60288C20B2005B6767 /* Restaurant protocols.swift */; };
 		09948E64288D8FCC005B6767 /* Menu protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E63288D8FCC005B6767 /* Menu protocols.swift */; };
 		09948E66288D8FEF005B6767 /* Menu type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E65288D8FEF005B6767 /* Menu type.swift */; };
+		09948E69288EAB52005B6767 /* SelectedFoodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E68288EAB52005B6767 /* SelectedFoodManager.swift */; };
+		09948E6B288EAB94005B6767 /* Selected food protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E6A288EAB94005B6767 /* Selected food protocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +121,8 @@
 		09948E60288C20B2005B6767 /* Restaurant protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Restaurant protocols.swift"; sourceTree = "<group>"; };
 		09948E63288D8FCC005B6767 /* Menu protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Menu protocols.swift"; sourceTree = "<group>"; };
 		09948E65288D8FEF005B6767 /* Menu type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Menu type.swift"; sourceTree = "<group>"; };
+		09948E68288EAB52005B6767 /* SelectedFoodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFoodManager.swift; sourceTree = "<group>"; };
+		09948E6A288EAB94005B6767 /* Selected food protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Selected food protocol.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,7 +230,7 @@
 				09948E1A288AAB5E005B6767 /* AuxChoix.swift */,
 				09948E1B288AAB5E005B6767 /* StoredData.swift */,
 				09948E1C288AAB5E005B6767 /* Orders.swift */,
-				09948E1D288AAB5E005B6767 /* Food.swift */,
+				09948E67288EAB29005B6767 /* Food Selection Model */,
 				09948E1E288AAB5E005B6767 /* DrinksAndSauceList.swift */,
 				09948E62288D8FAD005B6767 /* Menu model */,
 				09948E5F288C206F005B6767 /* Restaurant model */,
@@ -303,6 +307,16 @@
 				09948E65288D8FEF005B6767 /* Menu type.swift */,
 			);
 			path = "Menu model";
+			sourceTree = "<group>";
+		};
+		09948E67288EAB29005B6767 /* Food Selection Model */ = {
+			isa = PBXGroup;
+			children = (
+				09948E1D288AAB5E005B6767 /* Food.swift */,
+				09948E68288EAB52005B6767 /* SelectedFoodManager.swift */,
+				09948E6A288EAB94005B6767 /* Selected food protocol.swift */,
+			);
+			path = "Food Selection Model";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -458,6 +472,7 @@
 				09948E27288AAB5E005B6767 /* Restaurant.swift in Sources */,
 				09948E13288AAABA005B6767 /* ChosenMenuViewController.swift in Sources */,
 				09948E56288AAEE9005B6767 /* TrackerViewController.swift in Sources */,
+				09948E6B288EAB94005B6767 /* Selected food protocol.swift in Sources */,
 				09948DCC288AA521005B6767 /* AppDelegate.swift in Sources */,
 				09948E66288D8FEF005B6767 /* Menu type.swift in Sources */,
 				09948E18288AAABA005B6767 /* TrackerView.swift in Sources */,
@@ -468,6 +483,7 @@
 				09948E26288AAB5E005B6767 /* MenuProvider.swift in Sources */,
 				09948E15288AAABA005B6767 /* TabBarViewController.swift in Sources */,
 				09948E34288AAB91005B6767 /* CloseButton.swift in Sources */,
+				09948E69288EAB52005B6767 /* SelectedFoodManager.swift in Sources */,
 				09948E24288AAB5E005B6767 /* Food.swift in Sources */,
 				09948E22288AAB5E005B6767 /* StoredData.swift in Sources */,
 				09948E21288AAB5E005B6767 /* AuxChoix.swift in Sources */,

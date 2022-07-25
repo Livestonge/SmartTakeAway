@@ -7,10 +7,9 @@
 //
 
 import Foundation
-import UIKit
 
 struct Food: Decodable{
-    
+  
     let name: String
     let price: Price
     let description: String

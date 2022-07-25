@@ -22,20 +22,33 @@ class TabBarViewController: UITabBarController {
            return imageToRender
        }()
 
-
+    private var foodManager: SelectedFoodProvider?
+    private var selectedFood: Food?
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
         selectedIndex = 1
+        foodManager = SelectedFoodManager()
+        foodManager?.delegate = self
         for controller in viewControllers!{
             if let chosenController = controller as? ChosenMenuViewController{
                 chosenController.tabBarItem.image = preOrderImage
             }
         }
     }
+  
+    func didSelect(_ food: Food){
+      self.foodManager?.didSelect(food)
+      addBadgeViewAt(position: 3)
+    }
+    
+    func hasSelectedFood() -> Bool{
+      self.foodManager?.hasSelectedFood() ?? false
+    }
 
     func addBadgeViewAt(position: Int){
-
+      
         let itemPosition: CGFloat = CGFloat(position)
         let itemWidth:CGFloat = tabBar.frame.width / CGFloat(tabBar.items!.count)
 
@@ -96,11 +109,12 @@ extension TabBarViewController: UITabBarControllerDelegate{
                            title: "Empty bucket")
             return false
         } else if  let controller = viewController as? ChosenMenuViewController{
-            if controller.chosenMenu == nil{
+          if hasSelectedFood() == false {
                 configureAlert(message: "Please,\n Select a restaurant first.",
                                title: "Select a menu")
                 return false
             }
+          controller.chosenMenu = selectedFood
         }
         return true
     }
@@ -127,4 +141,12 @@ extension TabBarViewController: UITabBarControllerDelegate{
         self.present(alert, animated: true)
     }
     
+}
+
+extension TabBarViewController: SelectedFoodDelegate{
+  func didReceiveSelected(_ food: Food) {
+    self.selectedFood = food
+  }
+  
+  
 }

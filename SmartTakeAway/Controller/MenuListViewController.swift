@@ -13,15 +13,6 @@ class MenuListViewController<Cell: FoodCell>: UIViewController, UITableViewDeleg
     
    
     var menyList: [Food]?
-    var chosenMenu: Food?{
-           didSet{
-            // Gets a reference to the instance of ChosenMenuViewController that is inside tabBarController.
-            let chosenMenuVC = tabBarController!.viewControllers![2] as? ChosenMenuViewController
-            chosenMenuVC!.chosenMenu = chosenMenu
-            let tabBarVC = tabBarController as! TabBarViewController
-            tabBarVC.addBadgeViewAt(position: 3)
-       }
-    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return menyList?.count ?? 0
@@ -37,13 +28,19 @@ class MenuListViewController<Cell: FoodCell>: UIViewController, UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        guard let controller = self.tabBarController as? TabBarViewController else { return }
         let name = menyList![indexPath.row].name
         let description = menyList![indexPath.row].description
         let price = menyList![indexPath.row].price
-        chosenMenu = Food(name: name, price: price, description: description, image: "")
+        let food = Food(name: name, price: price, description: description, image: "")
+        controller.didSelect(food)
         tableView.deselectRow(at: indexPath, animated: true)
        
+    }
+  
+    private func addBadgeView(){
+      guard let ctrl = self.tabBarController as? TabBarViewController else {return}
+      ctrl.addBadgeViewAt(position: 3)
     }
     
 }
