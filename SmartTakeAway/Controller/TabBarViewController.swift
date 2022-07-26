@@ -37,11 +37,14 @@ class TabBarViewController: UITabBarController {
             }
         }
     }
-  
-    func didSelect(_ food: Food){
-      self.foodManager?.didSelect(food)
-      addBadgeViewAt(position: 3)
+    func didCompleteSelectionOf(_ food: Food){
+      self.didSelect(food, badgePosition: 1)
     }
+  
+    func didSelect(_ food: Food, badgePosition: Int = 3){
+        self.foodManager?.didSelect(food)
+        addBadgeViewAt(position: badgePosition)
+      }
     
     func hasSelectedFood() -> Bool{
       self.foodManager?.hasSelectedFood() ?? false

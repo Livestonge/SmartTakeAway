@@ -75,6 +75,7 @@ class TrackerViewController: UIViewController {
         
         let name = Orders.shared.restaurantName!
         let adresse = Orders.shared.restaurantAdress!
+        count = Orders.shared.ordersList.count
         restaurantName.text = name
         restaurantAdress.text = adresse
         makeTheOrder.layer.cornerRadius = 20

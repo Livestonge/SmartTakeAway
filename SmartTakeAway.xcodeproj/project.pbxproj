@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		092892952890244300A7CCEA /* FoodAccessoryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092892942890244300A7CCEA /* FoodAccessoryProvider.swift */; };
+		092892972890297200A7CCEA /* FoodAccessoryProvider conformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092892962890297200A7CCEA /* FoodAccessoryProvider conformance.swift */; };
+		0928929B28905B9400A7CCEA /* FoodAccessory protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0928929A28905B9400A7CCEA /* FoodAccessory protocols.swift */; };
 		09948DCC288AA521005B6767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948DCB288AA521005B6767 /* AppDelegate.swift */; };
 		09948DCE288AA521005B6767 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948DCD288AA521005B6767 /* SceneDelegate.swift */; };
 		09948DE3288AA522005B6767 /* SmartTakeAwayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948DE2288AA522005B6767 /* SmartTakeAwayTests.swift */; };
@@ -36,7 +39,7 @@
 		09948E39288AAB91005B6767 /* FoodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E32288AAB91005B6767 /* FoodCell.swift */; };
 		09948E3B288AABDE005B6767 /* DAndSData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09948E3A288AABDE005B6767 /* DAndSData.plist */; };
 		09948E3D288AACE2005B6767 /* Meny.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09948E3C288AACE2005B6767 /* Meny.plist */; };
-		09948E3F288AACFF005B6767 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E3E288AACFF005B6767 /* Extension.swift */; };
+		09948E3F288AACFF005B6767 /* PickerViewDelegate conformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E3E288AACFF005B6767 /* PickerViewDelegate conformance.swift */; };
 		09948E43288AAD1B005B6767 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09948E41288AAD1B005B6767 /* LaunchScreen.storyboard */; };
 		09948E45288AAD47005B6767 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09948E44288AAD47005B6767 /* Assets.xcassets */; };
 		09948E4B288AAE8E005B6767 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 09948E49288AAE8E005B6767 /* .gitkeep */; };
@@ -73,6 +76,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		092892942890244300A7CCEA /* FoodAccessoryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAccessoryProvider.swift; sourceTree = "<group>"; };
+		092892962890297200A7CCEA /* FoodAccessoryProvider conformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodAccessoryProvider conformance.swift"; sourceTree = "<group>"; };
+		0928929A28905B9400A7CCEA /* FoodAccessory protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodAccessory protocols.swift"; sourceTree = "<group>"; };
 		09948DC8288AA521005B6767 /* SmartTakeAway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartTakeAway.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09948DCB288AA521005B6767 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09948DCD288AA521005B6767 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,7 +111,7 @@
 		09948E32288AAB91005B6767 /* FoodCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodCell.swift; sourceTree = "<group>"; };
 		09948E3A288AABDE005B6767 /* DAndSData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DAndSData.plist; sourceTree = "<group>"; };
 		09948E3C288AACE2005B6767 /* Meny.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Meny.plist; sourceTree = "<group>"; };
-		09948E3E288AACFF005B6767 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		09948E3E288AACFF005B6767 /* PickerViewDelegate conformance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PickerViewDelegate conformance.swift"; sourceTree = "<group>"; };
 		09948E42288AAD1B005B6767 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		09948E44288AAD47005B6767 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		09948E46288AAE73005B6767 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -150,6 +156,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0928929828905AD400A7CCEA /* SelectedFood Controller */ = {
+			isa = PBXGroup;
+			children = (
+				09948E0C288AAABA005B6767 /* ChosenMenuViewController.swift */,
+				09948E3E288AACFF005B6767 /* PickerViewDelegate conformance.swift */,
+				092892962890297200A7CCEA /* FoodAccessoryProvider conformance.swift */,
+			);
+			path = "SelectedFood Controller";
+			sourceTree = "<group>";
+		};
+		0928929928905B5600A7CCEA /* FoodAccessory Model */ = {
+			isa = PBXGroup;
+			children = (
+				092892942890244300A7CCEA /* FoodAccessoryProvider.swift */,
+				0928929A28905B9400A7CCEA /* FoodAccessory protocols.swift */,
+			);
+			path = "FoodAccessory Model";
+			sourceTree = "<group>";
+		};
 		09948DBF288AA521005B6767 = {
 			isa = PBXGroup;
 			children = (
@@ -175,9 +200,8 @@
 			isa = PBXGroup;
 			children = (
 				09948DCB288AA521005B6767 /* AppDelegate.swift */,
-				09948E0A288AAABA005B6767 /* Controller */,
 				09948DCD288AA521005B6767 /* SceneDelegate.swift */,
-				09948E3E288AACFF005B6767 /* Extension.swift */,
+				09948E0A288AAABA005B6767 /* Controller */,
 				09948E48288AAE8E005B6767 /* Images */,
 				09948E19288AAB5E005B6767 /* Model */,
 				09948E44288AAD47005B6767 /* Assets.xcassets */,
@@ -212,14 +236,13 @@
 		09948E0A288AAABA005B6767 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				09948E0E288AAABA005B6767 /* TabBarViewController.swift */,
+				0928929828905AD400A7CCEA /* SelectedFood Controller */,
 				09948E51288AAEE9005B6767 /* TrackerViewController.swift */,
 				09948E0B288AAABA005B6767 /* ViewController.swift */,
-				09948E0C288AAABA005B6767 /* ChosenMenuViewController.swift */,
 				09948E0D288AAABA005B6767 /* MapViewController.swift */,
-				09948E0E288AAABA005B6767 /* TabBarViewController.swift */,
 				09948E0F288AAABA005B6767 /* MenuListViewController.swift */,
 				09948E10288AAABA005B6767 /* FoodViewController.swift */,
-				09948E11288AAABA005B6767 /* TrackerView.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -229,6 +252,7 @@
 			children = (
 				09948E1A288AAB5E005B6767 /* AuxChoix.swift */,
 				09948E1B288AAB5E005B6767 /* StoredData.swift */,
+				0928929928905B5600A7CCEA /* FoodAccessory Model */,
 				09948E1C288AAB5E005B6767 /* Orders.swift */,
 				09948E67288EAB29005B6767 /* Food Selection Model */,
 				09948E1E288AAB5E005B6767 /* DrinksAndSauceList.swift */,
@@ -241,6 +265,7 @@
 		09948E2A288AAB91005B6767 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				09948E11288AAABA005B6767 /* TrackerView.swift */,
 				09948E2B288AAB91005B6767 /* PizzaCell.swift */,
 				09948E2C288AAB91005B6767 /* CloseButton.swift */,
 				09948E2D288AAB91005B6767 /* AuxChoixViews */,
@@ -461,7 +486,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09948E5E288C1A5D005B6767 /* RestaurantsProvider.swift in Sources */,
-				09948E3F288AACFF005B6767 /* Extension.swift in Sources */,
+				09948E3F288AACFF005B6767 /* PickerViewDelegate conformance.swift in Sources */,
 				09948E12288AAABA005B6767 /* ViewController.swift in Sources */,
 				09948E61288C20B2005B6767 /* Restaurant protocols.swift in Sources */,
 				09948E39288AAB91005B6767 /* FoodCell.swift in Sources */,
@@ -469,9 +494,11 @@
 				09948E37288AAB91005B6767 /* OrderCell.swift in Sources */,
 				09948E25288AAB5E005B6767 /* DrinksAndSauceList.swift in Sources */,
 				09948E17288AAABA005B6767 /* FoodViewController.swift in Sources */,
+				0928929B28905B9400A7CCEA /* FoodAccessory protocols.swift in Sources */,
 				09948E27288AAB5E005B6767 /* Restaurant.swift in Sources */,
 				09948E13288AAABA005B6767 /* ChosenMenuViewController.swift in Sources */,
 				09948E56288AAEE9005B6767 /* TrackerViewController.swift in Sources */,
+				092892972890297200A7CCEA /* FoodAccessoryProvider conformance.swift in Sources */,
 				09948E6B288EAB94005B6767 /* Selected food protocol.swift in Sources */,
 				09948DCC288AA521005B6767 /* AppDelegate.swift in Sources */,
 				09948E66288D8FEF005B6767 /* Menu type.swift in Sources */,
@@ -481,6 +508,7 @@
 				09948E64288D8FCC005B6767 /* Menu protocols.swift in Sources */,
 				09948E14288AAABA005B6767 /* MapViewController.swift in Sources */,
 				09948E26288AAB5E005B6767 /* MenuProvider.swift in Sources */,
+				092892952890244300A7CCEA /* FoodAccessoryProvider.swift in Sources */,
 				09948E15288AAABA005B6767 /* TabBarViewController.swift in Sources */,
 				09948E34288AAB91005B6767 /* CloseButton.swift in Sources */,
 				09948E69288EAB52005B6767 /* SelectedFoodManager.swift in Sources */,

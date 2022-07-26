@@ -31,26 +31,23 @@ extension ChosenMenuViewController: UIPickerViewDelegate, UIPickerViewDataSource
 
 func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
-
 }
 
 func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
     
     if pickerView == self.sausPicker{
-             return auxChoixList["Sauce"]!.count
+             return sausList.count
     } else{
-             return auxChoixList["Drink"]!.count
+             return drinkList.count
     }
 }
 
 func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
 
      if pickerView == self.drinkPicker{
-        let drink = auxChoixList["Drink"]!
-        return drink[row].capitalized
+        return drinkList[row].capitalized
      }else{
-            let drink = auxChoixList["Sauce"]!
-            return drink[row].capitalized
+        return sausList[row].capitalized
     }
 
 }
@@ -59,12 +56,10 @@ func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent c
     
    
     if pickerView == drinkPicker{
-        let drink = auxChoixList["Drink"]!
-        let selectedDrink =  drink[row]
+        let selectedDrink =  drinkList[row]
         configureDrinkViews(selectedDrink)
     }else if pickerView == sausPicker{
-        let saus = auxChoixList["Sauce"]!
-        let selectedSaus = saus[row]
+        let selectedSaus = sausList[row]
         configureSausViews(selectedSaus)
         
     }
@@ -72,7 +67,7 @@ func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent c
 
 func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
     
-    let drinkOrSaus = (pickerView == drinkPicker ? auxChoixList["Drink"]! : auxChoixList["Sauce"]!)
+    let drinkOrSaus = (pickerView == drinkPicker ? drinkList : sausList)
     let text = drinkOrSaus[row]
     let attribute = NSAttributedString(string: text, attributes: [.foregroundColor: UIColor.black])
     return attribute

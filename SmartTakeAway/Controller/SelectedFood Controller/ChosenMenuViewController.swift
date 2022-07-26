@@ -25,7 +25,23 @@ class ChosenMenuViewController: UIViewController {
     @IBOutlet weak var sausView_2: UIImageView!
     @IBOutlet weak var sausLabel_2: UILabel!
     var pickedAtLeastOneSaus = false
+  
+    var drinkList: [String] = []
+    var sausList: [String] = []
+    var foodAccessoryProvider: FoodAccessoryProvider?
+  
     
+   
+    
+    var chosenMenu: Food?{
+        didSet{
+            self.dishName?.text = chosenMenu?.name ?? ""
+            self.ingredients?.text = chosenMenu?.description ?? ""
+            self.price?.text = "\(chosenMenu?.priceAmount ??  0)€"
+        }
+    }
+    // MARK:- IBActions
+  
     @IBAction func selectSaus(_ sender: UIControl){
         sausPicker.isHidden = false
         UIView.animate(withDuration: 0.3){ [weak self] in
@@ -37,41 +53,23 @@ class ChosenMenuViewController: UIViewController {
             UIView.animate(withDuration: 0.3){ [weak self] in
                 self?.view.layoutIfNeeded()
             }
-    }
-    
-   
-    
-    var chosenMenu: Food?{
-        didSet{
-            self.dishName?.text = chosenMenu?.name ?? ""
-            self.ingredients?.text = chosenMenu?.description ?? ""
-            self.price?.text = "\(chosenMenu?.priceAmount ??  0)€"
-        }
-    }
-    lazy var auxChoixList: [String: [String]] = {
-        let menu = StoredData<[String:[String]]>(fileName: "DAndSData")
-        return menu.model ?? [:]
-    }()
-    
-    // MARK:- TrackerViewController
-    
+  }
     
     @IBAction func makeOrder(_ sender: Any) {
            
-           guard var chosenMenu = chosenMenu else {return}
-           chosenMenu = pickDrinkAndSauce(chosenMenu)
-           Orders.shared.ordersList.append(chosenMenu)
-           let tabBarVC = tabBarController as! TabBarViewController
-           tabBarVC.addBadgeViewAt(position: 1)
-           let vc = tabBarController?.viewControllers![0] as? TrackerViewController
-           vc!.count = Orders.shared.ordersList.count
-    }
+       guard var chosenMenu = chosenMenu,
+             let tabBarVC = tabBarController as? TabBarViewController
+      else {return}
+      
+      chosenMenu = pickDrinkAndSauce(chosenMenu)
+      tabBarVC.didCompleteSelectionOf(chosenMenu)
+      }
     
-    func pickDrinkAndSauce(_ chosenMenu: Food) -> Food{
+    private func pickDrinkAndSauce(_ chosenMenu: Food) -> Food{
        var menu = chosenMenu
-       menu.drink = menu.drink != nil ? menu.drink : self.drinkLabel.text!
-       menu.sauce_1 = menu.sauce_1 != nil ? menu.sauce_1 : self.sausLabel_1.text!
-       menu.sauce_2 = menu.sauce_2 != nil ? menu.sauce_2 : self.sausLabel_2.text!
+       menu.drink = menu.drink ?? self.drinkLabel.text!
+       menu.sauce_1 = menu.sauce_1 ?? self.sausLabel_1.text!
+       menu.sauce_2 = menu.sauce_2 ?? self.sausLabel_2.text!
        return menu
     }
     
@@ -91,7 +89,9 @@ class ChosenMenuViewController: UIViewController {
         
         orderBtOutlet.layer.cornerRadius = 30
         orderBtOutlet.isEnabled = false
-       
+        foodAccessoryProvider = FoodAccessoryProviding()
+        foodAccessoryProvider?.delegate = self
+        foodAccessoryProvider?.getFoodAccessories()
     
     }
     
@@ -101,8 +101,6 @@ class ChosenMenuViewController: UIViewController {
         self.dishName?.text = chosenFood.name
         self.ingredients?.text = chosenFood.description
         self.price?.text = "\(chosenFood.priceAmount)€"
-        
-        
     }
     
     // MARK:- Animation
