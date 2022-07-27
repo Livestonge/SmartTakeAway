@@ -10,6 +10,7 @@ import UIKit
 
 class TrackerViewController: UIViewController {
     
+//  MARK: Outlets
     @IBOutlet weak var orderTableview: UITableView!
     @IBOutlet weak var orderTitle: UILabel!
     @IBOutlet weak var restaurantName: UILabel!
@@ -30,36 +31,12 @@ class TrackerViewController: UIViewController {
                        },
                        completion: nil)
     }
+  
+    var order: Order?
+    var orderManager: OrderProvider?
     
-    var count = 0
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureTitle()
-        settingTableviewHeight()
-    }
-    
-    private func configureTitle(){
-        
-        let text = "You ordered \(count) item" + (count > 1 ? "s:" : ":")
-        let customFont = UIFont(name: "Helvetica Neue", size: 22)
-        let attributedString = NSMutableAttributedString(string: text,
-                                                         attributes: [.font: customFont!])
-        let color = UIColor.white
-        attributedString.addAttributes([.foregroundColor: color],
-                                       range: NSRange(location: 12, length: 1))
-        orderTitle.attributedText = attributedString
-    }
-    
-    private func settingTableviewHeight(){
-        
-        let multiplier = count < 2 ? count : 2
-        orderTableHeight.constant = CGFloat(multiplier*100)
-        view.layoutIfNeeded()
-        orderTableview.reloadData()
-        
-    }
-    
+//  MARK:  UIViewcontroller Methods
+  
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -72,12 +49,13 @@ class TrackerViewController: UIViewController {
         orderTableview.dataSource = self
         settingTableviewHeight()
         configureTitle()
+      
+        orderManager = OrderManager()
+        orderManager?.delegate = self
+      
+        configureTitle()
+        settingTableviewHeight()
         
-        let name = Orders.shared.restaurantName!
-        let adresse = Orders.shared.restaurantAdress!
-        count = Orders.shared.ordersList.count
-        restaurantName.text = name
-        restaurantAdress.text = adresse
         makeTheOrder.layer.cornerRadius = 20
         
         let closeButton = setupSubviews(controller: self)
@@ -85,7 +63,18 @@ class TrackerViewController: UIViewController {
                               action: #selector(dismissTrackView),
                               for:  .touchUpInside)
     }
-    
+  
+  override func viewWillAppear(_ animated: Bool) {
+      super.viewWillAppear(animated)
+      self.orderManager?.getMadeOrder()
+      let name = order?.restaurantName
+      let adresse = order?.restaurantAdress
+      restaurantName.text = name
+      restaurantAdress.text = adresse
+  }
+  
+//    MARK: Objc Methods
+  
     @objc private  func dismissTrackView(){
            let tabBarVC = tabBarController as! TabBarViewController
            tabBarVC.showAlert()
@@ -95,8 +84,8 @@ class TrackerViewController: UIViewController {
        
         let storyboard = UIStoryboard(name: "Initial", bundle: nil)
         let controller = storyboard.instantiateViewController(identifier: "mapViewScene") as! MapViewController
-        let name = restaurantName.text!
-        let address = restaurantAdress.text!
+        let name = self.order?.restaurantName ?? ""
+        let address = self.order?.restaurantAdress ?? ""
         controller.restaurant = Restaurant(name: name, adresse: address)
         controller.hideContinueBt = true
         //Global function
@@ -111,6 +100,25 @@ class TrackerViewController: UIViewController {
     @objc private func dismissMapView(){
         self.dismiss(animated: true, completion: nil)
     }
+  
+  private func configureTitle(){
+      let count = self.order?.ordersList.count ?? 0
+      let text = "You ordered \(count) item" + (count > 1 ? "s:" : ":")
+      let customFont = UIFont(name: "Helvetica Neue", size: 22)
+      let attributedString = NSMutableAttributedString(string: text,
+                                                       attributes: [.font: customFont!])
+      let color = UIColor.white
+      attributedString.addAttributes([.foregroundColor: color],
+                                     range: NSRange(location: 12, length: 1))
+      orderTitle.attributedText = attributedString
+  }
+  
+  private func settingTableviewHeight(){
+      let count = self.order?.ordersList.count ?? 0
+      let multiplier = count < 2 ? count : 2
+      orderTableHeight.constant = CGFloat(multiplier*100)
+      view.layoutIfNeeded()
+  }
     
     private func insertMapButton(){
         let button = UIButton(type: .detailDisclosure)
@@ -129,7 +137,7 @@ extension TrackerViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         
-        return Orders.shared.ordersList.count
+      return self.order?.ordersList.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -137,8 +145,8 @@ extension TrackerViewController: UITableViewDelegate, UITableViewDataSource{
         let identifier = OrderCell.identifier
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! OrderCell
         
-        let order = Orders.shared.ordersList[indexPath.row]
-        cell.populateLabelsWith(order)
+        let food = self.order?.ordersList[indexPath.row]
+        cell.populateLabelsWith(food!)
         return cell
     }
     
@@ -148,17 +156,25 @@ extension TrackerViewController: UITableViewDelegate, UITableViewDataSource{
 
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
+      
+      let row = indexPath.row
         if editingStyle == .delete{
             tableView.beginUpdates()
-            Orders.shared.ordersList.remove(at: indexPath.row)
+            self.orderManager?.deleteFoodAt(row)
             tableView.deleteRows(at: [indexPath], with: .right)
-            count -= 1
             tableView.endUpdates()
-            self.settingTableviewHeight()
-            self.configureTitle()
             }
     }
-    
-    
+}
+
+// MARK: OrderProviderDelegate
+
+extension TrackerViewController: OrderProviderDelegate{
+  
+  func didReceiveOrder(_ order: Order) {
+    self.order = order
+    self.orderTableview.reloadData()
+    configureTitle()
+    settingTableviewHeight()
+  }
 }

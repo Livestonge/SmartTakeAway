@@ -12,7 +12,7 @@ class SelectedFoodManager: SelectedFoodProvider {
   private var selectedFood: Food?{
     didSet{
       if didCompleteSelection() && selectedFood != nil {
-        Orders.shared.ordersList.append(selectedFood!)
+        Order.shared.ordersList.append(selectedFood!)
       }
     }
   }
@@ -21,6 +21,10 @@ class SelectedFoodManager: SelectedFoodProvider {
   func didSelect(_ food: Food){
     self.selectedFood = food
     delegate?.didReceiveSelected(food)
+  }
+  
+  func isOrdersListEmpty() -> Bool{
+    !Order.shared.ordersList.isEmpty
   }
   
   func hasSelectedFood() -> Bool{

@@ -20,7 +20,7 @@ class RestaurantsProviding: RestaurantsProvider {
   }
   
   func didSelect(_ restaurant: Restaurant) {
-    Orders.shared.restaurantName = restaurant.name
-    Orders.shared.restaurantAdress = restaurant.adresse
+    Order.shared.restaurantName = restaurant.name
+    Order.shared.restaurantAdress = restaurant.adresse
   }
 }

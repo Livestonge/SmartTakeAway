@@ -40,7 +40,7 @@ class ChosenMenuViewController: UIViewController {
             self.price?.text = "\(chosenMenu?.priceAmount ??  0)€"
         }
     }
-    // MARK:- IBActions
+    // MARK: IBActions
   
     @IBAction func selectSaus(_ sender: UIControl){
         sausPicker.isHidden = false
@@ -74,7 +74,7 @@ class ChosenMenuViewController: UIViewController {
     }
     
     
-    // MARK:- viewDidLoad
+    // MARK: ViewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()

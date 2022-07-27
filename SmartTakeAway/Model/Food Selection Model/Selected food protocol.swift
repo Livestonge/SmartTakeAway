@@ -11,6 +11,7 @@ protocol SelectedFoodProvider: AnyObject {
   var delegate: SelectedFoodDelegate? { get set }
   func didSelect(_ food: Food)
   func hasSelectedFood() -> Bool
+  func isOrdersListEmpty() -> Bool
 }
 protocol SelectedFoodDelegate: AnyObject {
   func didReceiveSelected(_ food: Food)

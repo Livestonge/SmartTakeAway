@@ -8,9 +8,9 @@
 
 import Foundation
 
-class Orders{
+class Order{
     
-    static let shared = Orders()
+    static let shared = Order()
     var ordersList = [Food]()
     var restaurantName: String?
     var restaurantAdress: String?
