@@ -10,9 +10,10 @@ import Foundation
 protocol SelectedFoodProvider: AnyObject {
   var delegate: SelectedFoodDelegate? { get set }
   func didSelect(_ food: Food)
-  func hasSelectedFood() -> Bool
+  func didCompletedSelecting(_ food: Food)
   func isOrdersListEmpty() -> Bool
 }
 protocol SelectedFoodDelegate: AnyObject {
   func didReceiveSelected(_ food: Food)
+  func didCompleteSelection()
 }

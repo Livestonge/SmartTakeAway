@@ -8,12 +8,8 @@
 
 import Foundation
 
-class Order{
-    
-    static let shared = Order()
-    var ordersList = [Food]()
+struct Order{
+    var foodsList = [Food]()
     var restaurantName: String?
     var restaurantAdress: String?
-    
-    private init(){}
 }

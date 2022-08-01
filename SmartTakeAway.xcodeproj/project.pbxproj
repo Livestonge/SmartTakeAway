@@ -10,8 +10,9 @@
 		092892952890244300A7CCEA /* FoodAccessoryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092892942890244300A7CCEA /* FoodAccessoryProvider.swift */; };
 		092892972890297200A7CCEA /* FoodAccessoryProvider conformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092892962890297200A7CCEA /* FoodAccessoryProvider conformance.swift */; };
 		0928929B28905B9400A7CCEA /* FoodAccessory protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0928929A28905B9400A7CCEA /* FoodAccessory protocols.swift */; };
-		0928929D289142C900A7CCEA /* OrderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0928929C289142C900A7CCEA /* OrderProvider.swift */; };
+		0928929D289142C900A7CCEA /* OrderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0928929C289142C900A7CCEA /* OrderManager.swift */; };
 		092892A028918C7F00A7CCEA /* Order protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0928929F28918C7F00A7CCEA /* Order protocols.swift */; };
+		092892A22897E5D900A7CCEA /* OrderBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092892A12897E5D900A7CCEA /* OrderBank.swift */; };
 		09948DCC288AA521005B6767 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948DCB288AA521005B6767 /* AppDelegate.swift */; };
 		09948DCE288AA521005B6767 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948DCD288AA521005B6767 /* SceneDelegate.swift */; };
 		09948DE3288AA522005B6767 /* SmartTakeAwayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948DE2288AA522005B6767 /* SmartTakeAwayTests.swift */; };
@@ -81,8 +82,9 @@
 		092892942890244300A7CCEA /* FoodAccessoryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAccessoryProvider.swift; sourceTree = "<group>"; };
 		092892962890297200A7CCEA /* FoodAccessoryProvider conformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodAccessoryProvider conformance.swift"; sourceTree = "<group>"; };
 		0928929A28905B9400A7CCEA /* FoodAccessory protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodAccessory protocols.swift"; sourceTree = "<group>"; };
-		0928929C289142C900A7CCEA /* OrderProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProvider.swift; sourceTree = "<group>"; };
+		0928929C289142C900A7CCEA /* OrderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderManager.swift; sourceTree = "<group>"; };
 		0928929F28918C7F00A7CCEA /* Order protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Order protocols.swift"; sourceTree = "<group>"; };
+		092892A12897E5D900A7CCEA /* OrderBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBank.swift; sourceTree = "<group>"; };
 		09948DC8288AA521005B6767 /* SmartTakeAway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartTakeAway.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09948DCB288AA521005B6767 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09948DCD288AA521005B6767 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -173,8 +175,8 @@
 		0928929928905B5600A7CCEA /* FoodAccessory Model */ = {
 			isa = PBXGroup;
 			children = (
-				092892942890244300A7CCEA /* FoodAccessoryProvider.swift */,
 				0928929A28905B9400A7CCEA /* FoodAccessory protocols.swift */,
+				092892942890244300A7CCEA /* FoodAccessoryProvider.swift */,
 			);
 			path = "FoodAccessory Model";
 			sourceTree = "<group>";
@@ -182,9 +184,10 @@
 		0928929E28918C5500A7CCEA /* OrderModel */ = {
 			isa = PBXGroup;
 			children = (
-				09948E1C288AAB5E005B6767 /* Order.swift */,
 				0928929F28918C7F00A7CCEA /* Order protocols.swift */,
-				0928929C289142C900A7CCEA /* OrderProvider.swift */,
+				092892A12897E5D900A7CCEA /* OrderBank.swift */,
+				0928929C289142C900A7CCEA /* OrderManager.swift */,
+				09948E1C288AAB5E005B6767 /* Order.swift */,
 			);
 			path = OrderModel;
 			sourceTree = "<group>";
@@ -351,9 +354,9 @@
 		09948E67288EAB29005B6767 /* Food Selection Model */ = {
 			isa = PBXGroup;
 			children = (
-				09948E1D288AAB5E005B6767 /* Food.swift */,
-				09948E68288EAB52005B6767 /* SelectedFoodManager.swift */,
 				09948E6A288EAB94005B6767 /* Selected food protocol.swift */,
+				09948E68288EAB52005B6767 /* SelectedFoodManager.swift */,
+				09948E1D288AAB5E005B6767 /* Food.swift */,
 			);
 			path = "Food Selection Model";
 			sourceTree = "<group>";
@@ -521,9 +524,10 @@
 				09948E23288AAB5E005B6767 /* Order.swift in Sources */,
 				09948E35288AAB91005B6767 /* SelectControl.swift in Sources */,
 				09948E64288D8FCC005B6767 /* Menu protocols.swift in Sources */,
+				092892A22897E5D900A7CCEA /* OrderBank.swift in Sources */,
 				09948E14288AAABA005B6767 /* MapViewController.swift in Sources */,
 				09948E26288AAB5E005B6767 /* MenuProvider.swift in Sources */,
-				0928929D289142C900A7CCEA /* OrderProvider.swift in Sources */,
+				0928929D289142C900A7CCEA /* OrderManager.swift in Sources */,
 				092892952890244300A7CCEA /* FoodAccessoryProvider.swift in Sources */,
 				09948E15288AAABA005B6767 /* TabBarViewController.swift in Sources */,
 				09948E34288AAB91005B6767 /* CloseButton.swift in Sources */,

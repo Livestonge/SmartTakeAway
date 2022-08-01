@@ -7,33 +7,31 @@
 
 import Foundation
 
+
+protocol SelectedFoodObservable{
+  func didCompletedSelecting(_ food: Food)
+  func isFoodListEmpty() -> Bool
+}
+
 class SelectedFoodManager: SelectedFoodProvider {
   
-  private var selectedFood: Food?{
-    didSet{
-      if didCompleteSelection() && selectedFood != nil {
-        Order.shared.ordersList.append(selectedFood!)
-      }
-    }
-  }
+  var selectedFoodObserver: SelectedFoodObservable
   weak var delegate: SelectedFoodDelegate?
   
+  init(selectedFoodObserver: SelectedFoodObservable){
+    self.selectedFoodObserver = selectedFoodObserver
+  }
+  
   func didSelect(_ food: Food){
-    self.selectedFood = food
     delegate?.didReceiveSelected(food)
   }
   
-  func isOrdersListEmpty() -> Bool{
-    !Order.shared.ordersList.isEmpty
+  func didCompletedSelecting(_ food: Food) {
+    self.selectedFoodObserver.didCompletedSelecting(food)
+    self.delegate?.didCompleteSelection()
   }
   
-  func hasSelectedFood() -> Bool{
-    selectedFood != nil
-  }
-  
-  func didCompleteSelection() -> Bool{
-    selectedFood?.drink != nil &&
-    selectedFood?.sauce_1 != nil &&
-    selectedFood?.sauce_2 != nil
+  func isOrdersListEmpty() -> Bool {
+    self.selectedFoodObserver.isFoodListEmpty()
   }
 }

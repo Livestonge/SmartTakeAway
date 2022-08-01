@@ -29,25 +29,33 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         delegate = self
         selectedIndex = 1
-        foodManager = SelectedFoodManager()
+        foodManager = SelectedFoodManager(selectedFoodObserver: OrderBank.shared)
         foodManager?.delegate = self
+      
         for controller in viewControllers!{
-            if let chosenController = controller as? ChosenMenuViewController{
-                chosenController.tabBarItem.image = preOrderImage
-            }
+          switch controller {
+          case let trackerCtrl as TrackerViewController:
+            trackerCtrl.orderObserver = OrderBank.shared
+          case let chosenCtrl as ChosenMenuViewController:
+            chosenCtrl.tabBarItem.image = preOrderImage
+            chosenCtrl.didCompleteSelectionWith = foodManager?.didCompletedSelecting
+          case let navCtrl as UINavigationController:
+            guard let ctrl = navCtrl.topViewController as? ViewController else { return }
+            ctrl.restaurantDetailObserver = OrderBank.shared
+          default:
+            break
+          }
         }
     }
-    func didCompleteSelectionOf(_ food: Food){
-      self.didSelect(food, badgePosition: 1)
-    }
+//  MARK: Food selection Methods
   
     func didSelect(_ food: Food, badgePosition: Int = 3){
         self.foodManager?.didSelect(food)
         addBadgeViewAt(position: badgePosition)
       }
-    
-    func hasSelectedFood() -> Bool{
-      self.foodManager?.hasSelectedFood() ?? false
+  
+    func isOrdersListEmpty() -> Bool {
+      self.foodManager?.isOrdersListEmpty() ?? false
     }
 
     func addBadgeViewAt(position: Int){
@@ -87,12 +95,13 @@ class TabBarViewController: UITabBarController {
     }
     
     private func resetBooking(){
-        Orders.shared.ordersList.removeAll()
         let chosenMenuVC = self.viewControllers![2] as? ChosenMenuViewController
         chosenMenuVC!.chosenMenu = nil
         self.selectedIndex = 1
     }
 }
+
+// MARK: UITabBarControllerDelegate
 
 extension TabBarViewController: UITabBarControllerDelegate{
     
@@ -107,17 +116,18 @@ extension TabBarViewController: UITabBarControllerDelegate{
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         
-        if viewController is TrackerViewController &&  Orders.shared.ordersList.count == 0 {
+     
+        if viewController is TrackerViewController &&  isOrdersListEmpty() == true {
             configureAlert(message: "Please,\n Make an order",
                            title: "Empty bucket")
             return false
-        } else if  let controller = viewController as? ChosenMenuViewController{
-          if hasSelectedFood() == false {
+        } else if  let ctrl = viewController as? ChosenMenuViewController{
+          if selectedFood == nil {
                 configureAlert(message: "Please,\n Select a restaurant first.",
                                title: "Select a menu")
                 return false
             }
-          controller.chosenMenu = selectedFood
+          ctrl.chosenMenu = selectedFood
         }
         return true
     }
@@ -130,26 +140,16 @@ extension TabBarViewController: UITabBarControllerDelegate{
         self.present(alert, animated: true)
     }
     
-    func showAlert(){
-        
-        let message = "Your order will be deleted!!!"
-        let alert = UIAlertController(title: "Ooops", message: message, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "Delete", style: .default){ _ in
-            self.resetBooking()
-        }
-        
-        let regretAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(alertAction)
-        alert.addAction(regretAction)
-        self.present(alert, animated: true)
-    }
-    
 }
+// MARK: SelectedFoodDelegate
 
 extension TabBarViewController: SelectedFoodDelegate{
   func didReceiveSelected(_ food: Food) {
     self.selectedFood = food
   }
   
+  func didCompleteSelection() {
+    addBadgeViewAt(position: 1)
+  }
   
 }

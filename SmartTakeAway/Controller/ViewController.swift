@@ -13,18 +13,20 @@ class ViewController: UIViewController {
 
     var restaurantList: [Restaurant] = []
     private var restaurantsProvider: RestaurantsProvider?
-    
+    var restaurantDetailObserver: RestaurantDetailObservable?
+  
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 //        navigationController?.navigationBar.isTranslucent = false
 //        navigationController?.navigationBar.barTintColor = .orange
+      
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.orange]
         navigationItem.title = "Choose your restaurant"
         tableView.delegate = self
         tableView.dataSource = self
-        restaurantsProvider = RestaurantsProviding()
+        restaurantsProvider = RestaurantsProviding(restaurantDetailObserver: restaurantDetailObserver!)
         restaurantsProvider?.delegate = self
         restaurantsProvider?.getRestaurants()
     }

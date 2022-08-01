@@ -58,7 +58,7 @@ class TrackerView: UIView{
                                if self.seconds == 0{
                                    myTimer.invalidate()
                                    self.timerLabel.attributedText = self.orderFinishedText
-                               } else if Order.shared.ordersList.isEmpty{
+                               } else if OrderBank.shared.isFoodListEmpty() {
                                    myTimer.invalidate()
                                    self.isHidden = true
                                    self.seconds = 120

@@ -11,8 +11,14 @@ protocol OrderProvider{
   var delegate: OrderProviderDelegate? { get set }
   func getMadeOrder()
   func deleteFoodAt(_ index: Int)
+  func deleteOrder()
 }
 
+protocol OrderObservable{
+  func getMadeOrder() -> Order?
+  func deleteFoodAt(_ index: Int)
+  func deleteOrder()
+}
 protocol OrderProviderDelegate: AnyObject{
   func didReceiveOrder(_ order: Order)
 }

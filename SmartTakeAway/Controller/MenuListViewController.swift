@@ -35,7 +35,6 @@ class MenuListViewController<Cell: FoodCell>: UIViewController, UITableViewDeleg
         let food = Food(name: name, price: price, description: description, image: "")
         controller.didSelect(food)
         tableView.deselectRow(at: indexPath, animated: true)
-       
     }
   
     private func addBadgeView(){

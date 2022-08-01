@@ -34,7 +34,8 @@ class TrackerViewController: UIViewController {
   
     var order: Order?
     var orderManager: OrderProvider?
-    
+    var orderObserver: OrderObservable?
+  
 //  MARK:  UIViewcontroller Methods
   
     override func viewDidLoad() {
@@ -50,7 +51,7 @@ class TrackerViewController: UIViewController {
         settingTableviewHeight()
         configureTitle()
       
-        orderManager = OrderManager()
+        orderManager = OrderManager(orderObserver: orderObserver!)
         orderManager?.delegate = self
       
         configureTitle()
@@ -76,8 +77,7 @@ class TrackerViewController: UIViewController {
 //    MARK: Objc Methods
   
     @objc private  func dismissTrackView(){
-           let tabBarVC = tabBarController as! TabBarViewController
-           tabBarVC.showAlert()
+        self.showAlert()
        }
     
     @objc private func initiateMap() {
@@ -101,8 +101,22 @@ class TrackerViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
   
+  func showAlert(){
+      
+      let message = "Your order will be deleted!!!"
+      let alert = UIAlertController(title: "Ooops", message: message, preferredStyle: .alert)
+      let alertAction = UIAlertAction(title: "Delete", style: .default){ _ in
+        self.orderManager?.deleteOrder()
+        self.tabBarController?.selectedIndex = 1
+      }
+      
+      let regretAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+      alert.addAction(alertAction)
+      alert.addAction(regretAction)
+      self.present(alert, animated: true)
+  }
   private func configureTitle(){
-      let count = self.order?.ordersList.count ?? 0
+      let count = self.order?.foodsList.count ?? 0
       let text = "You ordered \(count) item" + (count > 1 ? "s:" : ":")
       let customFont = UIFont(name: "Helvetica Neue", size: 22)
       let attributedString = NSMutableAttributedString(string: text,
@@ -114,7 +128,7 @@ class TrackerViewController: UIViewController {
   }
   
   private func settingTableviewHeight(){
-      let count = self.order?.ordersList.count ?? 0
+      let count = self.order?.foodsList.count ?? 0
       let multiplier = count < 2 ? count : 2
       orderTableHeight.constant = CGFloat(multiplier*100)
       view.layoutIfNeeded()
@@ -136,8 +150,7 @@ class TrackerViewController: UIViewController {
 extension TrackerViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        
-      return self.order?.ordersList.count ?? 0
+      return self.order?.foodsList.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -145,7 +158,7 @@ extension TrackerViewController: UITableViewDelegate, UITableViewDataSource{
         let identifier = OrderCell.identifier
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! OrderCell
         
-        let food = self.order?.ordersList[indexPath.row]
+        let food = self.order?.foodsList[indexPath.row]
         cell.populateLabelsWith(food!)
         return cell
     }

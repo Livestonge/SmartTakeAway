@@ -16,3 +16,7 @@ protocol RestaurantsProvider: AnyObject {
   func getRestaurants()
   func didSelect(_ restaurant: Restaurant)
 }
+
+protocol RestaurantDetailObservable{
+  func didSelectRestaurant(_ restaurant: Restaurant)
+}

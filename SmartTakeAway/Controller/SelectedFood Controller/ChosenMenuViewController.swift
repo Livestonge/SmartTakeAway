@@ -29,10 +29,9 @@ class ChosenMenuViewController: UIViewController {
     var drinkList: [String] = []
     var sausList: [String] = []
     var foodAccessoryProvider: FoodAccessoryProvider?
-  
+    var didCompleteSelectionWith: ((Food) -> Void)?
     
    
-    
     var chosenMenu: Food?{
         didSet{
             self.dishName?.text = chosenMenu?.name ?? ""
@@ -57,12 +56,9 @@ class ChosenMenuViewController: UIViewController {
     
     @IBAction func makeOrder(_ sender: Any) {
            
-       guard var chosenMenu = chosenMenu,
-             let tabBarVC = tabBarController as? TabBarViewController
-      else {return}
-      
-      chosenMenu = pickDrinkAndSauce(chosenMenu)
-      tabBarVC.didCompleteSelectionOf(chosenMenu)
+       guard var chosenMenu = chosenMenu else {return}
+       chosenMenu = pickDrinkAndSauce(chosenMenu)
+       self.didCompleteSelectionWith?(chosenMenu)
       }
     
     private func pickDrinkAndSauce(_ chosenMenu: Food) -> Food{

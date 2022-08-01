@@ -11,6 +11,11 @@ import Foundation
 class RestaurantsProviding: RestaurantsProvider {
   
   weak var delegate: RestaurantsProviderDelegate?
+  private var restaurantDetailObserver: RestaurantDetailObservable
+  
+  init(restaurantDetailObserver: RestaurantDetailObservable){
+    self.restaurantDetailObserver = restaurantDetailObserver
+  }
   
   func getRestaurants(){
     // we fetch the restaurants
@@ -20,7 +25,6 @@ class RestaurantsProviding: RestaurantsProvider {
   }
   
   func didSelect(_ restaurant: Restaurant) {
-    Order.shared.restaurantName = restaurant.name
-    Order.shared.restaurantAdress = restaurant.adresse
+    restaurantDetailObserver.didSelectRestaurant(restaurant)
   }
 }
