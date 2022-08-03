@@ -25,6 +25,7 @@ class RestaurantsProviding: RestaurantsProvider {
   }
   
   func didSelect(_ restaurant: Restaurant) {
+//    Notify the observer about the selected restaurant.
     restaurantDetailObserver.didSelectRestaurant(restaurant)
   }
 }

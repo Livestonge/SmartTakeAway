@@ -17,12 +17,14 @@ class OrderManager: OrderProvider{
   }
   
   func getMadeOrder() {
-    guard let order = self.orderObserver.getMadeOrder() else { return }
+    let order = self.orderObserver.getMadeOrder()
     updateDelegateWith(order)
   }
-  func updateDelegateWith(_ order: Order){
+  
+  func updateDelegateWith(_ order: Order?){
     delegate?.didReceiveOrder(order)
   }
+  
   func deleteFoodAt(_ index: Int){
     self.orderObserver.deleteFoodAt(index)
     guard let order = self.orderObserver.getMadeOrder() else { return }

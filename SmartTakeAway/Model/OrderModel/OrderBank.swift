@@ -13,10 +13,6 @@ class OrderBank {
   static var shared = OrderBank()
   
   private init(){}
-  
-  func removeFoodAt(_ index: Int){
-    currentOrder?.foodsList.remove(at: index)
-  }
 }
 
 extension OrderBank: RestaurantDetailObservable{
@@ -47,7 +43,7 @@ extension OrderBank: OrderObservable{
   }
   
   func deleteFoodAt(_ index: Int) {
-    self.removeFoodAt(index)
+    currentOrder?.foodsList.remove(at: index)
   }
   
   func deleteOrder(){

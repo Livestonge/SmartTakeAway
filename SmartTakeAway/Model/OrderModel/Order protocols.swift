@@ -20,5 +20,5 @@ protocol OrderObservable{
   func deleteOrder()
 }
 protocol OrderProviderDelegate: AnyObject{
-  func didReceiveOrder(_ order: Order)
+  func didReceiveOrder(_ order: Order?)
 }

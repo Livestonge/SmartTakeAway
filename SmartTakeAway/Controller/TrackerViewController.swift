@@ -184,7 +184,7 @@ extension TrackerViewController: UITableViewDelegate, UITableViewDataSource{
 
 extension TrackerViewController: OrderProviderDelegate{
   
-  func didReceiveOrder(_ order: Order) {
+  func didReceiveOrder(_ order: Order?) {
     self.order = order
     self.orderTableview.reloadData()
     configureTitle()
