@@ -11,8 +11,10 @@ class FoodAccessoryProviding: FoodAccessoryProvider {
   
   private var foodAccessoryList: [String: [String]]
   weak var delegate: FoodAccessoryProviderDelegate?
+  private var foodType: String
   
-  init(){
+  init(foodType: String){
+    self.foodType = foodType
     self.foodAccessoryList = StoredData(fileName: "DAndSData").model ?? [:]
   }
   
@@ -26,9 +28,22 @@ class FoodAccessoryProviding: FoodAccessoryProvider {
     delegate?.didReceiveSausList(saus)
   }
   
+  private func getTailleList(){
+    let tailleList = self.foodAccessoryList["Taille"] ?? []
+    delegate?.didReceiveTaille(tailleList)
+  }
+  
+  
   func getFoodAccessories() {
-    getDrinkList()
-    getSausList()
+    switch self.foodType{
+    case "Pizza":
+      getDrinkList()
+      getSausList()
+      getTailleList()
+    default:
+      getDrinkList()
+      getSausList()
+    }
   }
   
   

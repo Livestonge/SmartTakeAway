@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol SelectedFoodObservable{
-  func didCompletedSelecting(_ food: Food)
+  func didCompletedSelecting(_ food: SelectedFood)
   func isFoodListEmpty() -> Bool
 }
 
@@ -26,7 +26,7 @@ class SelectedFoodManager: SelectedFoodProvider {
     delegate?.didReceiveSelected(food)
   }
   
-  func didCompletedSelecting(_ food: Food) {
+  func didCompletedSelecting(_ food: SelectedFood) {
     self.selectedFoodObserver.didCompletedSelecting(food)
     self.delegate?.didCompleteSelection()
   }

@@ -16,6 +16,8 @@ class MapViewController: UIViewController{
     @IBOutlet weak var continueBt: UIButton!
     
     var restaurant: Restaurant?
+    var restaurants: [Restaurant] = []
+    var restaurantsProvider: RestaurantsProvider?
     lazy private var geocoder = CLGeocoder()
     private var locationManager: CLLocationManager?
     
@@ -27,17 +29,29 @@ class MapViewController: UIViewController{
         navigationItem.title = "Find your restaurant"
         continueBt.isHidden = hideContinueBt
         continueBt.layer.cornerRadius = 20
-        
+      
+        restaurantsProvider = RestaurantsProviding()
+        restaurantsProvider?.delegate = self
+        restaurantsProvider?.getRestaurants()
+        self.restaurant = restaurants.first
+      
         configureLocationManager()
         configureMapView()
         convertTolocations()
+      
+        continueBt.addTarget(self,
+                             action: #selector(didTapContinueBt),
+                             for: .touchUpInside)
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
     }
     
-    
+    @objc
+    func didTapContinueBt(){
+      self.tabBarController?.selectedIndex = 1
+    }
     private func configureMapView(){
         
         self.mapView.register(RestaurantView.self,
@@ -54,18 +68,21 @@ class MapViewController: UIViewController{
     }
     
     private func convertTolocations(_ index: Int = 0){
-        
-      guard let restaurant = self.restaurant else { return }
-      geocoder.geocodeAddressString(restaurant.adresse){ (placemarks,error) in
-                 
-           if let error = error{
-               print(error.localizedDescription)
-           }
-           guard let location = placemarks?.first?.location else {return}
-           restaurant.longitude = location.coordinate.longitude
-           restaurant.latitude = location.coordinate.latitude
-           self.mapView.addAnnotations([restaurant])
-           self.centerTheMap()
+      if index < restaurants.count{
+          geocoder.geocodeAddressString(restaurants[index].adresse){ [weak self] (placemarks,error) in
+                     
+                     if let error = error{
+                         print(error.localizedDescription)
+                     }
+                     guard let location = placemarks?.first?.location else {return}
+                     self?.restaurants[index].longitude = location.coordinate.longitude
+                     self?.restaurants[index].latitude = location.coordinate.latitude
+                     self?.convertTolocations(index+1)
+          }
+      } else if index >= restaurants.count{
+          
+      self.mapView.addAnnotations(restaurants)
+      self.centerTheMap()
       }
      
   }
@@ -126,6 +143,12 @@ extension MapViewController: CLLocationManagerDelegate{
 }
 
 extension MapViewController: MKMapViewDelegate{
+  
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+      guard let restaurant = view.annotation as? Restaurant, let ctrl = self.tabBarController as? TabBarViewController else { return }
+      ctrl.didSelect(restaurant: restaurant)
+      
+    }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
@@ -159,4 +182,11 @@ extension MapViewController: MKMapViewDelegate{
         
     }
     
+}
+
+extension MapViewController: RestaurantsProviderDelegate{
+
+  func didReceive(restaurants: [Restaurant]) {
+    self.restaurants = restaurants
+  }
 }

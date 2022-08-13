@@ -66,3 +66,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension UIView {
+    
+    func addSubView(view: UIView, constraintTo anchorView: UIView){
+        
+        addSubview(view)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            view.centerXAnchor.constraint(equalTo: anchorView.centerXAnchor),
+            view.centerYAnchor.constraint(equalTo: anchorView.centerYAnchor),
+            view.widthAnchor.constraint(equalTo: anchorView.widthAnchor),
+            view.heightAnchor.constraint(equalTo: anchorView.heightAnchor)
+        ])
+    }
+}

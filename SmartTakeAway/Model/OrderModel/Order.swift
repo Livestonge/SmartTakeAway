@@ -9,7 +9,7 @@
 import Foundation
 
 struct Order{
-    var foodsList = [Food]()
+    var foodsList = [OrderedFood]()
     var restaurantName: String?
     var restaurantAdress: String?
 }

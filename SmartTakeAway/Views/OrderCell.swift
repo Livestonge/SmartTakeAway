@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OrderCell: UITableViewCell, FoodCell {
+class OrderCell: UITableViewCell {
     
     @IBOutlet weak var FoodName: UILabel!
     @IBOutlet weak var price: UILabel!
@@ -17,14 +17,12 @@ class OrderCell: UITableViewCell, FoodCell {
 
     static var identifier = String(describing: OrderCell.self )
     
-    func populateLabelsWith(_ food: Food) {
+    func populateLabelsWith(_ food: OrderedFood) {
         FoodName.text = food.name
-        let drinks = "\(String(describing: food.drink!))"
+        let drinks = "\(String(describing: food.drink))"
         drink.text = drinks
-        let sauce_1 = "\(String(describing: food.sauce_1!))"
-        let sauce_2 = "\(String(describing: food.sauce_2!))"
-        saus.text = sauce_1 + ", " + sauce_2
-        price.text = "\(food.priceAmount)€"
+        saus.text = food.sauces
+        price.text = "\(food.price)€"
         
     }
     

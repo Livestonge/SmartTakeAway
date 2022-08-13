@@ -9,7 +9,7 @@
 import Foundation
 
 struct Food: Decodable{
-  
+    
     let name: String
     let price: Price
     let description: String
@@ -17,7 +17,8 @@ struct Food: Decodable{
     var drink: String?
     var sauce_1: String?
     var sauce_2: String?
-    
+  
+  
     var priceAmount: Double{
         switch price {
         case .sandwich(let sandwichPrice):
@@ -26,9 +27,11 @@ struct Food: Decodable{
             return mediumPrice
         }
     }
-    
 }
 
+enum PizzaSize: Int {
+  case medium, grande, large
+}
 enum Price{
     case sandwich(Double), pizza(medium:Double, grande: Double, large: Double)
     

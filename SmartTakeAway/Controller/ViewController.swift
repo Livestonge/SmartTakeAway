@@ -12,34 +12,25 @@ class ViewController: UIViewController {
     
 
     var restaurantList: [Restaurant] = []
+    var selectedRestaurant: Restaurant?
     private var restaurantsProvider: RestaurantsProvider?
     var restaurantDetailObserver: RestaurantDetailObservable?
-  
+    private var restaurantManager: RestaurantManager?
+    var didCompleteSeletion: ((SelectedFood) -> Void)?
     @IBOutlet weak var tableView: UITableView!
     
-    override func viewDidLoad() {
+ 
+  override func viewDidLoad() {
         super.viewDidLoad()
-//        navigationController?.navigationBar.isTranslucent = false
-//        navigationController?.navigationBar.barTintColor = .orange
-      
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.orange]
         navigationItem.title = "Choose your restaurant"
         tableView.delegate = self
         tableView.dataSource = self
-        restaurantsProvider = RestaurantsProviding(restaurantDetailObserver: restaurantDetailObserver!)
+        restaurantsProvider = RestaurantsProviding()
         restaurantsProvider?.delegate = self
         restaurantsProvider?.getRestaurants()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        if segue.identifier == "transitionToMapView"{
-
-            if let destination = segue.destination as? MapViewController,
-                let indexPath = tableView.indexPathForSelectedRow{
-                destination.restaurant = restaurantList[indexPath.row]
-            }
-        }
+        restaurantManager = RestaurantManager(observer: restaurantDetailObserver!)
+        restaurantManager?.delegate = self
     }
 
 }
@@ -67,18 +58,50 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let restaurant = restaurantList[indexPath.row]
-        self.restaurantsProvider?.didSelect(restaurant)
-        self.performSegue(withIdentifier: "transitionToMapView", sender: nil)
+      let restaurant = restaurantList[indexPath.row]
+      self.restaurantManager?.didSelectRestaurant(restaurant)
+      tableView.deselectRow(at: indexPath, animated: true)
     }
     
     
 }
 
 extension ViewController: RestaurantsProviderDelegate{
-  
   func didReceive(restaurants: [Restaurant]) {
     self.restaurantList = restaurants
+  }
+  
+  
+}
+
+extension ViewController: RestaurantManagerDelegate{
+  
+  func showMenu() {
+    guard let menuCtrl = storyboard?.instantiateViewController(withIdentifier: "FoodViewController") as? FoodViewController
+    else {return}
+    
+    menuCtrl.didCompleteSelection = didCompleteSeletion
+    self.navigationController?.pushViewController(menuCtrl,
+                                                  animated: true)
+  }
+  
+  func showAlertFor(_ restaurant: Restaurant){
+    let alert = UIAlertController(title: "Oops",
+                                  message: "Your command at the current restaurant will be deleted",
+                                  preferredStyle: .alert)
+    let deleteAction = UIAlertAction(title: "Continue",
+                                     style: .default,
+                                     handler: {[weak self] _ in
+      self?.restaurantManager?.shouldChange(restaurant)
+    })
+    let defaultAction = UIAlertAction(title: "Cancel",
+                                      style: .cancel,
+                                      handler: nil)
+    alert.addAction(deleteAction)
+    alert.addAction(defaultAction)
+    self.present(alert,
+                 animated: true)
+    
   }
   
 }

@@ -24,6 +24,7 @@ class TabBarViewController: UITabBarController {
 
     private var foodManager: SelectedFoodProvider?
     private var selectedFood: Food?
+    private var restaurantManager: RestaurantManager?
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,16 +32,15 @@ class TabBarViewController: UITabBarController {
         selectedIndex = 1
         foodManager = SelectedFoodManager(selectedFoodObserver: OrderBank.shared)
         foodManager?.delegate = self
-      
+        restaurantManager = RestaurantManager(observer: OrderBank.shared)
+        restaurantManager?.delegate = self
         for controller in viewControllers!{
           switch controller {
           case let trackerCtrl as TrackerViewController:
             trackerCtrl.orderObserver = OrderBank.shared
-          case let chosenCtrl as ChosenMenuViewController:
-            chosenCtrl.tabBarItem.image = preOrderImage
-            chosenCtrl.didCompleteSelectionWith = foodManager?.didCompletedSelecting
           case let navCtrl as UINavigationController:
             guard let ctrl = navCtrl.topViewController as? ViewController else { return }
+            ctrl.didCompleteSeletion = self.foodManager?.didCompletedSelecting 
             ctrl.restaurantDetailObserver = OrderBank.shared
           default:
             break
@@ -48,6 +48,10 @@ class TabBarViewController: UITabBarController {
         }
     }
 //  MARK: Food selection Methods
+  
+    func didSelect(restaurant: Restaurant){
+      restaurantManager?.didSelectRestaurant(restaurant)
+    }
   
     func didSelect(_ food: Food, badgePosition: Int = 3){
         self.foodManager?.didSelect(food)
@@ -94,11 +98,7 @@ class TabBarViewController: UITabBarController {
 
     }
     
-    private func resetBooking(){
-        let chosenMenuVC = self.viewControllers![2] as? ChosenMenuViewController
-        chosenMenuVC!.chosenMenu = nil
-        self.selectedIndex = 1
-    }
+    private func resetBooking(){}
 }
 
 // MARK: UITabBarControllerDelegate
@@ -115,19 +115,11 @@ extension TabBarViewController: UITabBarControllerDelegate{
     }
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        
-     
+      
         if viewController is TrackerViewController &&  isOrdersListEmpty() == true {
             configureAlert(message: "Please,\n Make an order",
                            title: "Empty bucket")
             return false
-        } else if  let ctrl = viewController as? ChosenMenuViewController{
-          if selectedFood == nil {
-                configureAlert(message: "Please,\n Select a restaurant first.",
-                               title: "Select a menu")
-                return false
-            }
-          ctrl.chosenMenu = selectedFood
         }
         return true
     }
@@ -144,6 +136,7 @@ extension TabBarViewController: UITabBarControllerDelegate{
 // MARK: SelectedFoodDelegate
 
 extension TabBarViewController: SelectedFoodDelegate{
+  
   func didReceiveSelected(_ food: Food) {
     self.selectedFood = food
   }
@@ -151,5 +144,41 @@ extension TabBarViewController: SelectedFoodDelegate{
   func didCompleteSelection() {
     addBadgeViewAt(position: 1)
   }
+  
+  
+}
+
+
+extension TabBarViewController: RestaurantManagerDelegate{
+  func showMenu() {
+    
+    guard let navCtrl = viewControllers!.first(where: { type(of: $0) == UINavigationController.self }) as? UINavigationController else {return}
+      if let ctrl = navCtrl.topViewController as? ViewController{
+        ctrl.didCompleteSeletion = self.foodManager?.didCompletedSelecting
+      }
+    selectedIndex = 1
+    
+  }
+  
+  func showAlertFor(_ restaurant: Restaurant){
+    let alert = UIAlertController(title: "Oops",
+                                  message: "Your command at the current restaurant will be deleted",
+                                  preferredStyle: .alert)
+    let deleteAction = UIAlertAction(title: "Continue",
+                                     style: .default,
+                                     handler: {[weak self] _ in
+      self?.restaurantManager?.shouldChange(restaurant)
+      
+    })
+    let defaultAction = UIAlertAction(title: "Cancel",
+                                      style: .cancel,
+                                      handler: nil)
+    alert.addAction(deleteAction)
+    alert.addAction(defaultAction)
+    self.present(alert,
+                 animated: true)
+    
+  }
+  
   
 }

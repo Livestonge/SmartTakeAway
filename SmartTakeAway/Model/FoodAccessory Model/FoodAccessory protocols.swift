@@ -15,4 +15,5 @@ protocol FoodAccessoryProvider: AnyObject{
 protocol FoodAccessoryProviderDelegate: AnyObject{
   func didReceiveDrinkList(_ drinks: [String])
   func didReceiveSausList(_ saus: [String])
+  func didReceiveTaille(_ taille: [String])
 }

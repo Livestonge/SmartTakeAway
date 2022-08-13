@@ -16,6 +16,11 @@ class OrderBank {
 }
 
 extension OrderBank: RestaurantDetailObservable{
+  func getSelectedRestaurant() -> Restaurant?{
+    guard let order = currentOrder else {return nil}
+    return Restaurant(name: order.restaurantName!,
+                      adresse: order.restaurantAdress!)
+  }
   
   func didSelectRestaurant(_ restaurant: Restaurant){
     self.currentOrder = Order(foodsList: [],
@@ -27,8 +32,17 @@ extension OrderBank: RestaurantDetailObservable{
 
 extension OrderBank: SelectedFoodObservable{
   
-  func didCompletedSelecting(_ food: Food){
-    currentOrder?.foodsList.append(food)
+  func didCompletedSelecting(_ food: SelectedFood){
+    
+    let sauce_0 = food.food.sauce_1 ?? "none"
+    let sauce_1 = food.food.sauce_2 ?? "none"
+    
+    let sauces = sauce_0 + ", " + sauce_1
+    let orderedFood = OrderedFood(name: food.name,
+                                  price: food.price ?? 0,
+                                  drink: food.food.drink ?? "none",
+                                  sauces: sauces)
+    currentOrder?.foodsList.append(orderedFood)
   }
   
   func isFoodListEmpty() -> Bool {

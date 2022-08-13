@@ -25,6 +25,11 @@ class MenuProviding: MenuProvider{
     let menu = menuList[menu.rawValue.capitalized] ?? []
     delegate?.didReceiveMenu(menu)
   }
+  
+  func getMenyTypes() {
+    let keys = self.menuList.keys.map{ $0 }
+    self.delegate?.didReceiveMenyTypes(keys)
+  }
 }
 
 

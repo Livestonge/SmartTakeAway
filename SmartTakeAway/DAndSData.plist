@@ -21,5 +21,11 @@
 		<string>Sauce Blanche</string>
 		<string>Biggy</string>
 	</array>
+	<key>Taille</key>
+	<array>
+		<string>Medium</string>
+		<string>Large</string>
+		<string>Grand</string>
+	</array>
 </dict>
 </plist>

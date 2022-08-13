@@ -14,9 +14,15 @@ protocol RestaurantsProviderDelegate: AnyObject{
 protocol RestaurantsProvider: AnyObject {
   var delegate: RestaurantsProviderDelegate? { get set }
   func getRestaurants()
-  func didSelect(_ restaurant: Restaurant)
 }
 
 protocol RestaurantDetailObservable{
   func didSelectRestaurant(_ restaurant: Restaurant)
+  func getSelectedRestaurant() -> Restaurant?
+  func deleteOrder()
+}
+
+protocol RestaurantManagerDelegate: AnyObject{
+  func showMenu()
+  func showAlertFor(_ restaurant: Restaurant)
 }

@@ -18,11 +18,13 @@ class TrackerViewController: UIViewController {
     @IBOutlet weak var trackerView: TrackerView!
     @IBOutlet weak var makeTheOrder: UIButton!
     @IBOutlet weak var restaurantView: UIView!
-    
+    var closeButton: CloseButton!
     @IBOutlet weak var orderTableHeight: NSLayoutConstraint!
     
     @IBAction private func sendTheOrder(_ sender: Any) {
         
+        makeTheOrder.isHidden = true
+        closeButton.isHidden = true
         trackerView.transform = CGAffineTransform(scaleX: 1, y: 0.01)
         UIView.animate(withDuration: 2.0,
                        animations: {
@@ -59,7 +61,7 @@ class TrackerViewController: UIViewController {
         
         makeTheOrder.layer.cornerRadius = 20
         
-        let closeButton = setupSubviews(controller: self)
+        closeButton = setupSubviews(controller: self)
         closeButton.addTarget(self,
                               action: #selector(dismissTrackView),
                               for:  .touchUpInside)
