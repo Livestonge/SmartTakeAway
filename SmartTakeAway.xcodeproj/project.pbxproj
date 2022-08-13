@@ -204,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				0928929F28918C7F00A7CCEA /* Order protocols.swift */,
+				0997DD52289FD727000D70EF /* FoodSelectionManager.swift */,
 				092892A12897E5D900A7CCEA /* OrderBank.swift */,
 				0928929C289142C900A7CCEA /* OrderManager.swift */,
 				09948E1C288AAB5E005B6767 /* Order.swift */,
@@ -215,7 +216,6 @@
 		09948DBF288AA521005B6767 = {
 			isa = PBXGroup;
 			children = (
-				0997DD52289FD727000D70EF /* FoodSelectionManager.swift */,
 				09948E59288AB7BD005B6767 /* README.md */,
 				09948DCA288AA521005B6767 /* SmartTakeAway */,
 				09948DE1288AA522005B6767 /* SmartTakeAwayTests */,
@@ -426,7 +426,6 @@
 				0908A6937354196B3B127FE9 /* Pods-SmartTakeAway.debug.xcconfig */,
 				E6933B9F30AB54DFF0E0227A /* Pods-SmartTakeAway.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
