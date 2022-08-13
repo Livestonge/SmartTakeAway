@@ -71,6 +71,7 @@
 		09F9E6272899934600F49EBA /* RestaurantProviderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F9E6262899934600F49EBA /* RestaurantProviderTest.swift */; };
 		09F9E6292899989E00F49EBA /* TestMenuProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F9E6282899989E00F49EBA /* TestMenuProvider.swift */; };
 		09F9E62B28999BFE00F49EBA /* TestAccessoriesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F9E62A28999BFE00F49EBA /* TestAccessoriesProvider.swift */; };
+		2FF87AEE3A34903452A23A6C /* Pods_SmartTakeAway.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 801736E3EFF3CFD778BC8F62 /* Pods_SmartTakeAway.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0908A6937354196B3B127FE9 /* Pods-SmartTakeAway.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartTakeAway.debug.xcconfig"; path = "Target Support Files/Pods-SmartTakeAway/Pods-SmartTakeAway.debug.xcconfig"; sourceTree = "<group>"; };
 		092892942890244300A7CCEA /* FoodAccessoryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAccessoryProvider.swift; sourceTree = "<group>"; };
 		0928929A28905B9400A7CCEA /* FoodAccessory protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodAccessory protocols.swift"; sourceTree = "<group>"; };
 		0928929C289142C900A7CCEA /* OrderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderManager.swift; sourceTree = "<group>"; };
@@ -159,6 +161,8 @@
 		09F9E6262899934600F49EBA /* RestaurantProviderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantProviderTest.swift; sourceTree = "<group>"; };
 		09F9E6282899989E00F49EBA /* TestMenuProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestMenuProvider.swift; sourceTree = "<group>"; };
 		09F9E62A28999BFE00F49EBA /* TestAccessoriesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAccessoriesProvider.swift; sourceTree = "<group>"; };
+		801736E3EFF3CFD778BC8F62 /* Pods_SmartTakeAway.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartTakeAway.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6933B9F30AB54DFF0E0227A /* Pods-SmartTakeAway.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartTakeAway.release.xcconfig"; path = "Target Support Files/Pods-SmartTakeAway/Pods-SmartTakeAway.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +170,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FF87AEE3A34903452A23A6C /* Pods_SmartTakeAway.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +221,8 @@
 				09948DE1288AA522005B6767 /* SmartTakeAwayTests */,
 				09948DEB288AA522005B6767 /* SmartTakeAwayUITests */,
 				09948DC9288AA521005B6767 /* Products */,
+				CEC5F3474CE08F43E93A3B59 /* Pods */,
+				DD42CCC67FD267370EBEB38D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -413,6 +420,24 @@
 			path = TestRestaurantModel;
 			sourceTree = "<group>";
 		};
+		CEC5F3474CE08F43E93A3B59 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0908A6937354196B3B127FE9 /* Pods-SmartTakeAway.debug.xcconfig */,
+				E6933B9F30AB54DFF0E0227A /* Pods-SmartTakeAway.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		DD42CCC67FD267370EBEB38D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				801736E3EFF3CFD778BC8F62 /* Pods_SmartTakeAway.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -420,9 +445,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 09948DF2288AA522005B6767 /* Build configuration list for PBXNativeTarget "SmartTakeAway" */;
 			buildPhases = (
+				7F8DF19EDAAE32AD8641D180 /* [CP] Check Pods Manifest.lock */,
 				09948DC4288AA521005B6767 /* Sources */,
 				09948DC5288AA521005B6767 /* Frameworks */,
 				09948DC6288AA521005B6767 /* Resources */,
+				3560CD1B132E3A8E5C952F08 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -549,6 +576,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3560CD1B132E3A8E5C952F08 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SmartTakeAway/Pods-SmartTakeAway-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SmartTakeAway/Pods-SmartTakeAway-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SmartTakeAway/Pods-SmartTakeAway-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7F8DF19EDAAE32AD8641D180 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SmartTakeAway-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		09948DC4288AA521005B6767 /* Sources */ = {
@@ -773,6 +842,7 @@
 		};
 		09948DF3288AA522005B6767 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0908A6937354196B3B127FE9 /* Pods-SmartTakeAway.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -801,6 +871,7 @@
 		};
 		09948DF4288AA522005B6767 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E6933B9F30AB54DFF0E0227A /* Pods-SmartTakeAway.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

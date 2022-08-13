@@ -1,0 +1,6 @@
+framework module Pods_SmartTakeAway {
+  umbrella header "Pods-SmartTakeAway-umbrella.h"
+
+  export *
+  module * { export * }
+}
