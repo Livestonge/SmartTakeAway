@@ -11,6 +11,7 @@ class OrderBank {
   
   private var currentOrder: Order?
   static var shared = OrderBank()
+  lazy var analyticsManager = FirebaseManager()
   
   private init(){}
 }
@@ -43,6 +44,7 @@ extension OrderBank: SelectedFoodObservable{
                                   drink: food.food.drink ?? "none",
                                   sauces: sauces)
     currentOrder?.foodsList.append(orderedFood)
+    analyticsManager.didOrder(currentOrder)
   }
   
   func isFoodListEmpty() -> Bool {

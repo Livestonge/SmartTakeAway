@@ -17,6 +17,7 @@ class SelectionViewController: UIViewController {
   private var userSelection: UserSelection?
   var manager: FoodSelectionManager?
   var chosenFood: SelectedFood?
+  lazy var analyticsManager = FirebaseManager()
   var foodAccessoryProvider: FoodAccessoryProvider?
   var data: [String : [String]] = [:]
   var didCompleteSelection: ((SelectedFood) -> Void)?
@@ -39,6 +40,11 @@ class SelectionViewController: UIViewController {
     }
     setUpViews()
     }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    analyticsManager.didSelectFood(chosenFood)
+  }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
