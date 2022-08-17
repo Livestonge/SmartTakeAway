@@ -12,184 +12,278 @@ class TrackerViewController: UIViewController {
     
 //  MARK: Outlets
     @IBOutlet weak var orderTableview: UITableView!
-    @IBOutlet weak var orderTitle: UILabel!
-    @IBOutlet weak var restaurantName: UILabel!
-    @IBOutlet weak var restaurantAdress: UILabel!
-    @IBOutlet weak var trackerView: TrackerView!
-    @IBOutlet weak var makeTheOrder: UIButton!
-    @IBOutlet weak var restaurantView: UIView!
-    var closeButton: CloseButton!
-    @IBOutlet weak var orderTableHeight: NSLayoutConstraint!
-    
-    @IBAction private func sendTheOrder(_ sender: Any) {
-        
-        makeTheOrder.isHidden = true
-        closeButton.isHidden = true
-        trackerView.transform = CGAffineTransform(scaleX: 1, y: 0.01)
-        UIView.animate(withDuration: 2.0,
-                       animations: {
-                        self.trackerView.isHidden = false
-                        self.trackerView.transform = .identity
-                       },
-                       completion: nil)
-    }
+    var makeTheOrder: UIButton!
   
-    var order: Order?
-    var orderManager: OrderProvider?
+  
+//  MARK: Proprieties
+  
+    var foodList: [OrderedFood] = []
+    var restaurant: Restaurant?
+    var orderManager: OrderProvider!
     var orderObserver: OrderObservable?
+    var foodData = [String: [OrderedFood]]()
+    private var sectionStates: [Int : Bool] = [:]
   
 //  MARK:  UIViewcontroller Methods
   
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        trackerView.layer.cornerRadius = 10
-        orderTableview.layer.cornerRadius = 10
-        restaurantView.layer.cornerRadius = 10
-        insertMapButton()
         
         orderTableview.delegate = self
         orderTableview.dataSource = self
-        settingTableviewHeight()
-        configureTitle()
+        setUpViews()
       
         orderManager = OrderManager(orderObserver: orderObserver!)
         orderManager?.delegate = self
-      
-        configureTitle()
-        settingTableviewHeight()
-        
-        makeTheOrder.layer.cornerRadius = 20
-        
-        closeButton = setupSubviews(controller: self)
-        closeButton.addTarget(self,
-                              action: #selector(dismissTrackView),
-                              for:  .touchUpInside)
     }
   
-  override func viewWillAppear(_ animated: Bool) {
+   override func viewWillAppear(_ animated: Bool) {
       super.viewWillAppear(animated)
       self.orderManager?.getMadeOrder()
-      let name = order?.restaurantName
-      let adresse = order?.restaurantAdress
-      restaurantName.text = name
-      restaurantAdress.text = adresse
+     for key in 0..<orderTableview.numberOfSections {
+       sectionStates[key] = false
+     }
   }
   
 //    MARK: Objc Methods
   
-    @objc private  func dismissTrackView(){
-        self.showAlert()
-       }
-    
-    @objc private func initiateMap() {
-       
-        let storyboard = UIStoryboard(name: "Initial", bundle: nil)
-        let controller = storyboard.instantiateViewController(identifier: "mapViewScene") as! MapViewController
-        let name = self.order?.restaurantName ?? ""
-        let address = self.order?.restaurantAdress ?? ""
-        controller.restaurant = Restaurant(name: name, adresse: address)
-        controller.hideContinueBt = true
-        //Global function
-        let closeButton = setupSubviews(controller: controller, color: .black)
-        closeButton.addTarget(self,
-                              action: #selector(dismissMapView),
-                              for:  .touchUpInside)
-        controller.modalPresentationStyle = .fullScreen
-        self.present(controller,animated: true)
-    }
-    
-    @objc private func dismissMapView(){
-        self.dismiss(animated: true, completion: nil)
+    @objc
+    private func sendTheOrder(_ sender: Any) {
+      orderManager.didValidateOrder()
     }
   
-  func showAlert(){
-      
-      let message = "Your order will be deleted!!!"
-      let alert = UIAlertController(title: "Ooops", message: message, preferredStyle: .alert)
-      let alertAction = UIAlertAction(title: "Delete", style: .default){ _ in
-        self.orderManager?.deleteOrder()
-        self.tabBarController?.selectedIndex = 1
-      }
-      
-      let regretAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-      alert.addAction(alertAction)
-      alert.addAction(regretAction)
-      self.present(alert, animated: true)
+  @objc
+  func didTapOnBt(sender: UIButton){
+    let sectionIndex = sender.tag
+    guard let boolean = sectionStates[sectionIndex] else { return }
+    sectionStates[sectionIndex] = !boolean
+    let section = IndexSet(integer: sectionIndex)
+    orderTableview.reloadSections(section, with: .none)
   }
-  private func configureTitle(){
-      let count = self.order?.foodsList.count ?? 0
-      let text = "You ordered \(count) item" + (count > 1 ? "s:" : ":")
+  
+//  MARK: Methods
+    private func setUpHeaderView(){
+      let headerView = UIView(frame: CGRect(origin: .zero,
+                                          size: CGSize(width: orderTableview.bounds.width,
+                                                       height: 50)))
+      let titleLabel = UILabel(frame: headerView.bounds)
+      headerView.addSubview(titleLabel)
+      titleLabel.attributedText = getAttributedStringFor("Overview", color: .black)
+      titleLabel.textAlignment = .center
+      orderTableview.tableHeaderView = headerView
+    }
+    
+    private func setUpOrderButton(){
+      self.makeTheOrder = UIButton()
+      makeTheOrder.translatesAutoresizingMaskIntoConstraints = false
+      self.view.addSubview(makeTheOrder)
+      NSLayoutConstraint.activate([
+        makeTheOrder.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+        makeTheOrder.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+        makeTheOrder.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+        makeTheOrder.heightAnchor.constraint(equalToConstant: 60),
+        orderTableview.bottomAnchor.constraint(greaterThanOrEqualTo: makeTheOrder.topAnchor, constant: -10)
+      ])
+      makeTheOrder.backgroundColor = .orange
+      makeTheOrder.layer.cornerRadius = 15
+      makeTheOrder.addTarget(self,
+                          action: #selector(sendTheOrder),
+                          for: .touchUpInside)
+      makeTheOrder.setAttributedTitle(self.getAttributedStringFor("Confirmed selected items",
+                                                                  color: .white), for: .normal)
+    }
+    private func setUpViews(){
+    setUpHeaderView()
+    setUpOrderButton()
+    }
+  
+    private func getAttributedStringFor(_ title: String, color: UIColor) -> NSAttributedString{
       let customFont = UIFont(name: "Helvetica Neue", size: 22)
-      let attributedString = NSMutableAttributedString(string: text,
-                                                       attributes: [.font: customFont!])
-      let color = UIColor.white
-      attributedString.addAttributes([.foregroundColor: color],
-                                     range: NSRange(location: 12, length: 1))
-      orderTitle.attributedText = attributedString
-  }
-  
-  private func settingTableviewHeight(){
-      let count = self.order?.foodsList.count ?? 0
-      let multiplier = count < 2 ? count : 2
-      orderTableHeight.constant = CGFloat(multiplier*100)
-      view.layoutIfNeeded()
-  }
-    
-    private func insertMapButton(){
-        let button = UIButton(type: .detailDisclosure)
-        button.tintColor = .orange
-        button.translatesAutoresizingMaskIntoConstraints = false
-        restaurantView.addSubview(button)
-        let trailing = button.trailingAnchor.constraint(equalTo: restaurantView.trailingAnchor, constant: -10)
-        let centerY = button.centerYAnchor.constraint(equalTo: restaurantView.centerYAnchor, constant: 0)
-        NSLayoutConstraint.activate([centerY, trailing])
-        button.addTarget(self, action: #selector(initiateMap), for: .touchUpInside)
+      return NSAttributedString(string: title,
+                                       attributes: [.font: customFont!,
+                                                    .foregroundColor : color])
     }
+  
+  private func getFoodAt(indexPath: IndexPath) -> OrderedFood? {
+    switch indexPath.section{
+    case 1:
+      return self.foodData["ToBeConfirmed"]?[indexPath.row]
+    case 2:
+      return self.foodData["Pending"]?[indexPath.row]
+    case 3:
+      return self.foodData["Done"]?[indexPath.row]
+    default:
+      return nil
+    }
+  }
+
 }
 
 
 extension TrackerViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-      return self.order?.foodsList.count ?? 0
+      switch section {
+      case 0:
+        return 1
+      case 1:
+        let list = self.foodData["ToBeConfirmed"]?.count ?? 0
+        return  self.sectionStates[1] == false || list == 0 ? 0 : list
+      case 2:
+        return self.sectionStates[2] == false ? 0 : self.foodData["Pending"]?.count ?? 0
+      case 3:
+        return self.sectionStates[3] == false ? 0 : self.foodData["Done"]?.count ?? 0
+      default:
+         return 0
+      }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let identifier = OrderCell.identifier
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! OrderCell
-        
-        let food = self.order?.foodsList[indexPath.row]
-        cell.populateLabelsWith(food!)
+      
+      switch indexPath.section{
+      case 0:
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RestaurantCell", for: indexPath)
+        var content = cell.defaultContentConfiguration()
+        content.attributedText = getAttributedStringFor(restaurant?.name ?? "",
+                                                        color: .black)
+        content.secondaryText = restaurant?.adresse
+        cell.contentConfiguration = content
         return cell
+      case 1:
+        let food = self.foodData["ToBeConfirmed"]?[indexPath.row]
+        let orderCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! OrderCell
+        orderCell.populateLabelsWith(food!)
+        return orderCell
+      case 2:
+        let food = self.foodData["Pending"]?[indexPath.row]
+        let orderCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! OrderCell
+        orderCell.populateLabelsWith(food!)
+        return orderCell
+      case 3:
+        let food = self.foodData["Done"]?[indexPath.row]
+        let orderCell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! OrderCell
+        orderCell.populateLabelsWith(food!)
+        return orderCell
+      default:
+         break
+      }
+        fatalError("Failed to load the tableview cell")
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
+  
+    func numberOfSections(in tableView: UITableView) -> Int {
+      return self.foodData.keys.count + 1
+    }
+    
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    
+    let view = UIView()
+    let titleLabel = UILabel()
+    var count = 0
+    switch section{
+    case 1:
+      count = self.foodData["ToBeConfirmed"]?.count ?? 0
+    case 2:
+      count = self.foodData["Pending"]?.count ?? 0
+    case 3:
+      count = self.foodData["Done"]?.count ?? 0
+    default:
+      break
+    }
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(titleLabel)
+    let button = UIButton(type: .detailDisclosure)
+    button.tag = section
+    let image = sectionStates[section] == false ? UIImage(systemName: "chevron.right") : UIImage(systemName: "chevron.down")
+    
+    if count > 0{
+      button.setImage(image, for: .normal)
+      button.translatesAutoresizingMaskIntoConstraints = false
+      button.addTarget(self,
+                       action: #selector(didTapOnBt(sender:)),
+                       for: .touchUpInside)
+      view.addSubview(button)
+      NSLayoutConstraint.activate([
+        button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+        button.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+      ])
+    }
+    NSLayoutConstraint.activate([
+      titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+      titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0)
+    ])
+    
+    view.layer.cornerRadius = 10
+    switch section{
+    case 1:
+      titleLabel.text = "\(count) Selected food"
+    case 2:
+      titleLabel.text = "\(count) under preparation"
+    case 3:
+      titleLabel.text = "\(count) finished"
+    default:
+      return nil
+    }
+    view.backgroundColor = .yellow
+    return view
+  }
+  
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    if section == 0{
+      return 20
+    }
+    return 50
+  }
 
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-      
-      let row = indexPath.row
-        if editingStyle == .delete{
-            tableView.beginUpdates()
-            self.orderManager?.deleteFoodAt(row)
-            tableView.deleteRows(at: [indexPath], with: .right)
-            tableView.endUpdates()
-            }
-    }
+  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    
+    guard let food = getFoodAt(indexPath: indexPath) else { return }
+    self.orderManager.delete(food)
+    self.orderManager.getMadeOrder()
+  }
 }
 
 // MARK: OrderProviderDelegate
 
 extension TrackerViewController: OrderProviderDelegate{
   
-  func didReceiveOrder(_ order: Order?) {
-    self.order = order
+  func didReceiveFood(_ list: [OrderedFood], withStatus: OrderStatus) {
+    
+    switch withStatus {
+    case .preparation:      
+      self.foodData["Pending"] = list
+    case .finished:
+      self.foodData["Done"] = list
+    case .toBeConfirmed:
+      self.foodData["ToBeConfirmed"] = list
+    }
+    
     self.orderTableview.reloadData()
-    configureTitle()
-    settingTableviewHeight()
+    self.makeTheOrder.isHidden = foodData["ToBeConfirmed"]?.count == 0 ? true : false
+    
+  }
+  
+  func didReceiveRestaurant(_ restaurant: Restaurant) {
+    self.restaurant = restaurant
+  }
+  
+  func showAlertWith(message: String) {
+    let alert = UIAlertController(title: "OOPS",
+                                  message: message,
+                                  preferredStyle: .alert)
+    let defaultAction = UIAlertAction(title: "OK",
+                                      style: .cancel,
+                                      handler: nil)
+    
+    alert.addAction(defaultAction)
+    self.present(alert,
+                 animated: true)
   }
 }

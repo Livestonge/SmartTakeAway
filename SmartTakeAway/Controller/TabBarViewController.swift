@@ -150,6 +150,7 @@ extension TabBarViewController: SelectedFoodDelegate{
 
 
 extension TabBarViewController: RestaurantManagerDelegate{
+  
   func showMenu() {
     
     guard let navCtrl = viewControllers!.first(where: { type(of: $0) == UINavigationController.self }) as? UINavigationController else {return}
@@ -178,6 +179,19 @@ extension TabBarViewController: RestaurantManagerDelegate{
     self.present(alert,
                  animated: true)
     
+  }
+  
+  func showMessage() {
+    let alert = UIAlertController(title: "You have food under preparation",
+                                  message: "You can not change restaurant",
+                                  preferredStyle: .alert)
+    let defaultAction = UIAlertAction(title: "OK",
+                                      style: .cancel,
+                                      handler: nil)
+    
+    alert.addAction(defaultAction)
+    self.present(alert,
+                 animated: true)
   }
   
   

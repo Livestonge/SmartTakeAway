@@ -24,11 +24,13 @@ class RestaurantManager{
   
   func didSelectRestaurant(_ restaurant: Restaurant){
     let currentRestaurant = restaurantObserver.getSelectedRestaurant()
-    if currentRestaurant == nil{
+    if currentRestaurant == nil || currentRestaurant?.name == restaurant.name {
       restaurantObserver.didSelectRestaurant(restaurant)
       delegate?.showMenu()
-    }else if currentRestaurant!.name != restaurant.name{
+    }else if currentRestaurant!.name != restaurant.name && !restaurantObserver.hasOrderedFood() {
       delegate?.showAlertFor(restaurant)
+    }else if currentRestaurant!.name != restaurant.name && restaurantObserver.hasOrderedFood(){
+      delegate?.showMessage()
     }
   }
 }

@@ -29,9 +29,15 @@ extension OrderBank: RestaurantDetailObservable{
                               restaurantAdress: restaurant.adresse)
   }
   
+  func hasOrderedFood() -> Bool {
+    currentOrder?.foodsList.first(where: { $0.status == .preparation}) != nil
+  }
+  
 }
 
 extension OrderBank: SelectedFoodObservable{
+  
+  typealias Status = OrderStatus
   
   func didCompletedSelecting(_ food: SelectedFood){
     
@@ -44,7 +50,50 @@ extension OrderBank: SelectedFoodObservable{
                                   drink: food.food.drink ?? "none",
                                   sauces: sauces)
     currentOrder?.foodsList.append(orderedFood)
+  }
+  
+  func didValidateOrder(){
     analyticsManager.didOrder(currentOrder)
+    
+    let foodlList = currentOrder?
+                                .foodsList
+                                .map{ food -> OrderedFood in
+                                      var toUpdatefood = food
+                                      let currentStatus = toUpdatefood.status
+                                      let canBePrepared = ![Status.preparation, Status.finished].contains(currentStatus)
+                                      toUpdatefood.status = canBePrepared ? .preparation : currentStatus
+                                      return toUpdatefood
+                                    }
+    currentOrder?.foodsList = foodlList ?? []
+    startPreparation()
+  }
+  
+  private func startPreparation(){
+    
+    var foodsList = self.currentOrder?.foodsList.filter({ $0.status == .preparation}) ?? []
+    let initialCount = foodsList.count
+    
+    while foodsList.count > 0{
+      let timeToWait = initialCount - foodsList.count + 3
+      let lastFoodItem = foodsList.removeLast()
+      Timer.scheduledTimer(withTimeInterval: TimeInterval(5 + timeToWait),
+                           repeats: false){ [lastFoodItem, weak self] _ in
+        var toUpdateFood = lastFoodItem
+        toUpdateFood.status = .finished
+        
+        let list = self?.currentOrder?
+                        .foodsList
+                        .map{ food -> OrderedFood in
+                              if toUpdateFood.name == food.name{
+                                return toUpdateFood
+                                
+                              }
+                              return food
+                            }
+        
+        self?.currentOrder?.foodsList = list ?? []
+      }
+    }
   }
   
   func isFoodListEmpty() -> Bool {
@@ -58,7 +107,8 @@ extension OrderBank: OrderObservable{
     self.currentOrder
   }
   
-  func deleteFoodAt(_ index: Int) {
+  func delete(_ food: OrderedFood) {
+    guard let index = currentOrder?.foodsList.firstIndex(where: { $0.name == food.name }) else { return }
     currentOrder?.foodsList.remove(at: index)
   }
   

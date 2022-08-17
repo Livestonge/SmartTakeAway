@@ -104,4 +104,17 @@ extension ViewController: RestaurantManagerDelegate{
     
   }
   
+  func showMessage() {
+    let alert = UIAlertController(title: "You have food under preparation",
+                                  message: "You can not change restaurant",
+                                  preferredStyle: .alert)
+    let defaultAction = UIAlertAction(title: "OK",
+                                      style: .cancel,
+                                      handler: nil)
+    
+    alert.addAction(defaultAction)
+    self.present(alert,
+                 animated: true)
+  }
+  
 }

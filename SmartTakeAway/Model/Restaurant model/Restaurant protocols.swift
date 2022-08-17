@@ -19,10 +19,12 @@ protocol RestaurantsProvider: AnyObject {
 protocol RestaurantDetailObservable{
   func didSelectRestaurant(_ restaurant: Restaurant)
   func getSelectedRestaurant() -> Restaurant?
+  func hasOrderedFood() -> Bool
   func deleteOrder()
 }
 
 protocol RestaurantManagerDelegate: AnyObject{
   func showMenu()
   func showAlertFor(_ restaurant: Restaurant)
+  func showMessage()
 }

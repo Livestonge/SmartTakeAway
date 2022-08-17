@@ -13,4 +13,9 @@ struct OrderedFood{
   let price: Double
   let drink: String
   let sauces: String
+  var status: OrderStatus = .toBeConfirmed
   }
+
+enum OrderStatus {
+  case preparation, finished, toBeConfirmed
+}
