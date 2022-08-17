@@ -154,8 +154,10 @@ extension TabBarViewController: RestaurantManagerDelegate{
   func showMenu() {
     
     guard let navCtrl = viewControllers!.first(where: { type(of: $0) == UINavigationController.self }) as? UINavigationController else {return}
+    
       if let ctrl = navCtrl.topViewController as? ViewController{
         ctrl.didCompleteSeletion = self.foodManager?.didCompletedSelecting
+        ctrl.showMenu()
       }
     selectedIndex = 1
     
