@@ -47,7 +47,7 @@ class FoodViewController: UIViewController {
                                           at: index,
                                           animated: true)
        }
-      menuTypeSegmentCtrl.selectedSegmentIndex = 0
+      menuTypeSegmentCtrl.selectedSegmentIndex = menuTypes.firstIndex(of: "Sandwiches") ?? 0
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -68,11 +68,12 @@ class FoodViewController: UIViewController {
   @objc
   func didSelectSegment(){
     let index = self.menuTypeSegmentCtrl.selectedSegmentIndex
-    if index == 0{
+    let title = self.menuTypeSegmentCtrl.titleForSegment(at: index)
+    if title == "Sandwiches"{
         pizzaViewController.removeFromParent()
         pizzaViewController.view.removeFromSuperview()
         menuProvider?.getMenuFor(.sandwiches)
-    } else if index == 1{
+    } else if title == "Pizza"{
         menuProvider?.getMenuFor(.pizza)
         pizzaViewController.menyList = menuTodisplay
         addChild(pizzaViewController)
