@@ -13,7 +13,6 @@ import CoreLocation
 class MapViewController: UIViewController{
 
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var continueBt: UIButton!
     
     var restaurant: Restaurant?
     var restaurants: [Restaurant] = []
@@ -27,8 +26,6 @@ class MapViewController: UIViewController{
         
         super.viewDidLoad()
         navigationItem.title = "Find your restaurant"
-        continueBt.isHidden = hideContinueBt
-        continueBt.layer.cornerRadius = 20
       
         restaurantsProvider = RestaurantsProviding()
         restaurantsProvider?.delegate = self
@@ -38,20 +35,12 @@ class MapViewController: UIViewController{
         configureLocationManager()
         configureMapView()
         convertTolocations()
-      
-        continueBt.addTarget(self,
-                             action: #selector(didTapContinueBt),
-                             for: .touchUpInside)
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
     }
-    
-    @objc
-    func didTapContinueBt(){
-      self.tabBarController?.selectedIndex = 1
-    }
+  
     private func configureMapView(){
         
         self.mapView.register(RestaurantView.self,
