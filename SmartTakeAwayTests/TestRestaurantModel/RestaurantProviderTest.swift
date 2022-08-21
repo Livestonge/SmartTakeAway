@@ -11,12 +11,10 @@ import XCTest
 class RestaurantProviderTest: XCTestCase {
   var sut: RestaurantsProviding?
   var restaurants: [Restaurant]?
-  var restaurantObserver: RestaurantSelectionObserver?
   
   override func setUp() {
     super.setUp()
-    restaurantObserver = RestaurantSelectionObserver()
-    sut = RestaurantsProviding(restaurantDetailObserver: restaurantObserver!)
+    sut = RestaurantsProviding()
     sut?.delegate = self
   }
   
@@ -30,14 +28,6 @@ class RestaurantProviderTest: XCTestCase {
     sut?.getRestaurants()
     XCTAssertNotNil(self.restaurants)
     XCTAssertEqual(self.restaurants?.count, 9)
-  }
-  
-  func testDidSelectRestaurant(){
-    let restaurant = Restaurant(name: "City burger",
-                                adresse: "01 avenue de Saint Jacque 75034 Paris")
-    sut?.didSelect(restaurant)
-    XCTAssertEqual(restaurant, restaurantObserver?.restaurant)
-    XCTAssertEqual(restaurantObserver?.restaurant?.name, "City burger")
   }
 
 }

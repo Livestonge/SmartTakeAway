@@ -13,59 +13,83 @@ class TestOrderManager: XCTestCase {
   var sut: OrderManager?
   var order: Order?
   var observer: OrderObserver?
+  var foodList: [OrderedFood]?
   
   override func setUp() {
     super.setUp()
     observer = OrderObserver()
     sut = OrderManager(orderObserver: observer!)
     sut?.delegate = self
+    foodList = []
   }
   
   override func tearDown() {
     sut = nil
     observer = nil
     order = nil
+    foodList = nil
     super.tearDown()
   }
 
   func testGetOrder(){
     sut?.getMadeOrder()
-    XCTAssertNotNil(self.order)
-    XCTAssertEqual(self.order?.foodsList.first?.name, "O tacos simple")
+    XCTAssertNotNil(self.foodList)
+    XCTAssertFalse(self.foodList!.isEmpty)
   }
   
-  func testUpdateDelegate(){
-    let restaurant = Restaurant(name: "City burger",
-                                adresse: "01 avenue de Saint Jacque 75034 Paris")
-    let order = Order(foodsList: [],
-                      restaurantName: restaurant.name,
-                      restaurantAdress: restaurant.adresse)
-    
-    sut?.updateDelegateWith(order)
-    XCTAssertNotNil(self.order)
-    XCTAssertTrue(self.order!.foodsList.isEmpty)
-    XCTAssertEqual(self.order?.restaurantName, "City burger")
+  func testOrderInitialStatus(){
+    sut?.getMadeOrder()
+    XCTAssertNotNil(self.foodList)
+    XCTAssertTrue(self.foodList!.allSatisfy({ $0.status == .toBeConfirmed }))
   }
   
-  func testDeleteFoodAt(){
+  func testDidValidate(){
     sut?.getMadeOrder()
-    let count = self.order?.foodsList.count
-    sut?.deleteFoodAt(count! - 1)
+    XCTAssertNotNil(self.foodList)
+    XCTAssertTrue(self.foodList!.allSatisfy({ $0.status == .toBeConfirmed }))
+    self.foodList = []
+    sut?.didValidateOrder()
+    XCTAssertFalse(self.foodList!.isEmpty)
+    XCTAssertTrue(self.foodList!.allSatisfy({ $0.status == .preparation }))
+  }
+  
+  func testDeleteFood(){
     sut?.getMadeOrder()
-    XCTAssertLessThan(self.order!.foodsList.count, count!)
-    XCTAssertEqual(self.order?.foodsList.count, count! - 1)
+    let count = foodList?.count ?? 0
+    XCTAssertNotNil(foodList)
+    XCTAssertFalse(foodList!.isEmpty)
+    XCTAssertEqual(foodList!.count, count)
+    let food = foodList!.first!
+    self.foodList = []
+    sut?.delete(food)
+    sut?.getMadeOrder()
+    XCTAssertFalse(foodList!.isEmpty)
+    XCTAssertFalse(foodList!.contains(where: { $0.name == food.name }))
   }
   
   func testDeleteOrder(){
-    sut?.getMadeOrder()
+    self.order = self.observer?.getMadeOrder()
     XCTAssertNotNil(self.order)
     sut?.deleteOrder()
-    sut?.getMadeOrder()
+    self.order = self.observer?.getMadeOrder()
     XCTAssertNil(self.order)
   }
 }
 
 extension TestOrderManager: OrderProviderDelegate{
+  func didReceiveFood(_ list: [OrderedFood], withStatus: OrderStatus) {
+    self.foodList?.append(contentsOf: list)
+    
+  }
+  
+  func didReceiveRestaurant(_ restaurant: Restaurant) {
+    //
+  }
+  
+  func showAlertWith(message: String) {
+    //
+  }
+  
   
   func didReceiveOrder(_ order: Order?) {
     self.order = order

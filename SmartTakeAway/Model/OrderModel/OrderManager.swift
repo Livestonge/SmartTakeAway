@@ -51,11 +51,6 @@ class OrderManager: OrderProvider{
     
   }
   
-  func didUpdate( list: [OrderedFood], withStatus: OrderStatus){
-    delegate?.didReceiveFood(list,
-                             withStatus: withStatus)
-  }
-  
   func delete(_ food: OrderedFood){
     if food.status == .preparation{
       delegate?.showAlertWith(message: "You cannot delete an item under preparation")

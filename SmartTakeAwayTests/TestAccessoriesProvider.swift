@@ -14,7 +14,7 @@ class TestAccessoriesProvider: XCTestCase {
   
   override func setUp() {
     super.setUp()
-    sut = FoodAccessoryProviding()
+    sut = FoodAccessoryProviding(foodType: "")
     sut?.delegate = self
     accessoryList = [:]
   }
@@ -26,13 +26,27 @@ class TestAccessoriesProvider: XCTestCase {
   }
   
   func testGetAccessories(){
+    self.sut = FoodAccessoryProviding(foodType: "")
+    self.sut?.delegate = self
     sut?.getFoodAccessories()
     XCTAssertNotNil(accessoryList?["drinks"])
     XCTAssertNotNil(accessoryList?["sauces"])
     XCTAssertEqual(accessoryList?["drinks"]?.count, 6)
     XCTAssertEqual(accessoryList?["sauces"]?.count, 7)
+    XCTAssertNil(accessoryList?["taille"])
   }
 
+  func testGetAccessoriesForPizzaCommand(){
+    self.sut = FoodAccessoryProviding(foodType: "Pizza")
+    self.sut?.delegate = self
+    self.sut?.getFoodAccessories()
+    XCTAssertNotNil(accessoryList?["drinks"])
+    XCTAssertNotNil(accessoryList?["sauces"])
+    XCTAssertEqual(accessoryList?["drinks"]?.count, 6)
+    XCTAssertEqual(accessoryList?["sauces"]?.count, 7)
+    XCTAssertEqual(accessoryList?["taille"]?.count, 3)
+  }
+  
 }
 
 extension TestAccessoriesProvider: FoodAccessoryProviderDelegate{
@@ -44,5 +58,7 @@ extension TestAccessoriesProvider: FoodAccessoryProviderDelegate{
     self.accessoryList?["sauces"] = saus
   }
   
-  
+  func didReceiveTaille(_ taille: [String]) {
+    self.accessoryList?["taille"] = taille
+  }
 }

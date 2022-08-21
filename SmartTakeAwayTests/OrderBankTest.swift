@@ -43,41 +43,47 @@ class OrderBankTest: XCTestCase {
   }
   
   func testDidSelectFood(){
-    
+
     sut = instantiateAnOrderBankWithRestaurant()
-    
+
     var food = Food(name: "O tacos simple",
                     price: Price.sandwich(8),
                     description: "merguez avec sauce fromagère",
                     image: nil)
-    
+
     food.drink = "Pepsi"
     food.sauce_1 = "Algerienne"
     food.sauce_2 = "Harissa"
     
-    sut?.didCompletedSelecting(food)
+    let selectedFood = SelectedFood(type: "Sandwich",
+                                    food: food,
+                                    price: food.priceAmount)
+
+    sut?.didCompletedSelecting(selectedFood)
     let order = sut?.getMadeOrder()
     let storedFood = order?.foodsList.first
-    
+
     XCTAssertNotNil(order)
     XCTAssertNotNil(storedFood)
     XCTAssertEqual(storedFood?.name, "O tacos simple")
-    XCTAssertEqual(storedFood?.description, "merguez avec sauce fromagère")
-    XCTAssertEqual(storedFood?.priceAmount, 8)
+    XCTAssertEqual(storedFood?.price, 8)
   }
   
   func testDeletingOrder(){
     
     sut = instantiateAnOrderBankWithRestaurant()
     var food_1 = Food(name: "O tacos simple",
-                    price: Price.sandwich(8),
+                    price: Price.sandwich(12),
                     description: "merguez avec sauce fromagère",
                     image: nil)
     
     food_1.drink = "Pepsi"
     food_1.sauce_1 = "Algerienne"
     food_1.sauce_2 = "Harissa"
-    sut?.didCompletedSelecting(food_1)
+    let selectedFood_1 = SelectedFood(type: "Sandwich",
+                                      food: food_1,
+                                      price: food_1.priceAmount)
+    sut?.didCompletedSelecting(selectedFood_1)
     
     var food_2 = Food(name: "Kebab assiette",
                     price: Price.sandwich(12),
@@ -87,13 +93,47 @@ class OrderBankTest: XCTestCase {
     food_2.drink = "Ice tea"
     food_2.sauce_1 = "Algerienne"
     food_2.sauce_2 = "Harissa"
-    
-    sut?.didCompletedSelecting(food_2)
-    sut?.deleteFoodAt(1)
-    XCTAssertEqual(sut?.getMadeOrder()?.foodsList.count, 1)
-    XCTAssertEqual(sut?.getMadeOrder()?.foodsList.contains{ $0.name == "Kebab assiette" }, false)
+    let selectedFood_2 = SelectedFood(type: "Sandwich", food: food_2)
+    sut?.didCompletedSelecting(selectedFood_2)
     sut?.deleteOrder()
     XCTAssertNil(sut?.getMadeOrder())
+  }
+  
+  func testDeleteSelectedFood() {
+    
+    sut = instantiateAnOrderBankWithRestaurant()
+    var food_1 = Food(name: "O tacos simple",
+                    price: Price.sandwich(12),
+                    description: "merguez avec sauce fromagère",
+                    image: nil)
+    
+    food_1.drink = "Pepsi"
+    food_1.sauce_1 = "Algerienne"
+    food_1.sauce_2 = "Harissa"
+    let selectedFood_1 = SelectedFood(type: "Sandwich",
+                                      food: food_1,
+                                      price: food_1.priceAmount)
+    sut?.didCompletedSelecting(selectedFood_1)
+    
+    var food_2 = Food(name: "Kebab assiette",
+                    price: Price.sandwich(12),
+                    description: "avec frites, tomates et onion",
+                    image: nil)
+    
+    food_2.drink = "Ice tea"
+    food_2.sauce_1 = "Algerienne"
+    food_2.sauce_2 = "Harissa"
+    let selectedFood_2 = SelectedFood(type: "Sandwich", food: food_2)
+    sut?.didCompletedSelecting(selectedFood_2)
+    guard let orderedFood = sut?.getMadeOrder()?.foodsList.first
+    else {
+      XCTFail()
+      return
+    }
+    sut?.delete(orderedFood)
+    XCTAssertEqual(sut?.getMadeOrder()?.foodsList.count, 1)
+    XCTAssertFalse(sut?.getMadeOrder()?.foodsList.contains(where: { $0.name == food_1.name}) ?? true)
+    
   }
 
 }

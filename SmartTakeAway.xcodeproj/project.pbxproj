@@ -64,7 +64,6 @@
 		09B17EB0289A8BB80043C89C /* TestOrderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B17EAF289A8BB80043C89C /* TestOrderManager.swift */; };
 		09B17EB3289AC2570043C89C /* OrderObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B17EB2289AC2570043C89C /* OrderObserver.swift */; };
 		09B17EB6289AC31B0043C89C /* SelectedFoodObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B17EB5289AC31B0043C89C /* SelectedFoodObserver.swift */; };
-		09B17EB9289AC3A20043C89C /* RestaurantSelectionObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B17EB8289AC3A20043C89C /* RestaurantSelectionObserver.swift */; };
 		09B5E39128A5022F00687953 /* SelectedFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B5E39028A5022F00687953 /* SelectedFood.swift */; };
 		09B5E39328A5114700687953 /* OrderedFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B5E39228A5114700687953 /* OrderedFood.swift */; };
 		09BF310728A7C38000815093 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09BF310628A7C38000815093 /* GoogleService-Info.plist */; };
@@ -155,7 +154,6 @@
 		09B17EAF289A8BB80043C89C /* TestOrderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestOrderManager.swift; sourceTree = "<group>"; };
 		09B17EB2289AC2570043C89C /* OrderObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderObserver.swift; sourceTree = "<group>"; };
 		09B17EB5289AC31B0043C89C /* SelectedFoodObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFoodObserver.swift; sourceTree = "<group>"; };
-		09B17EB8289AC3A20043C89C /* RestaurantSelectionObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantSelectionObserver.swift; sourceTree = "<group>"; };
 		09B5E39028A5022F00687953 /* SelectedFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedFood.swift; sourceTree = "<group>"; };
 		09B5E39228A5114700687953 /* OrderedFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedFood.swift; sourceTree = "<group>"; };
 		09BF310628A7C38000815093 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -418,7 +416,6 @@
 			isa = PBXGroup;
 			children = (
 				09F9E6262899934600F49EBA /* RestaurantProviderTest.swift */,
-				09B17EB8289AC3A20043C89C /* RestaurantSelectionObserver.swift */,
 			);
 			path = TestRestaurantModel;
 			sourceTree = "<group>";
@@ -677,7 +674,6 @@
 				09F9E6292899989E00F49EBA /* TestMenuProvider.swift in Sources */,
 				09B17EB3289AC2570043C89C /* OrderObserver.swift in Sources */,
 				09B17EAE289A82480043C89C /* TestSelectedFoodManager.swift in Sources */,
-				09B17EB9289AC3A20043C89C /* RestaurantSelectionObserver.swift in Sources */,
 				09B17EB0289A8BB80043C89C /* TestOrderManager.swift in Sources */,
 				09948DE3288AA522005B6767 /* TestStoredData.swift in Sources */,
 				09F9E6272899934600F49EBA /* RestaurantProviderTest.swift in Sources */,

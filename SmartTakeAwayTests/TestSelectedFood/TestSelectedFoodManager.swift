@@ -47,7 +47,8 @@ class TestSelectedFoodManager: XCTestCase {
                     description: "Frites and tomatoes",
                     image: nil)
     
-    sut?.didCompletedSelecting(food)
+    let selectedFood = SelectedFood(type: "Sandwich", food: food)
+    sut?.didCompletedSelecting(selectedFood)
     XCTAssertNotNil(self.didCompletedSelection)
     XCTAssertEqual(self.didCompletedSelection, true)
     XCTAssertNotNil(observer?.food)
