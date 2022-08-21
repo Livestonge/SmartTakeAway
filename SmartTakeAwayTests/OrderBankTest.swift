@@ -22,6 +22,15 @@ class OrderBankTest: XCTestCase {
     super.tearDown()
   }
   
+  func instantiateAnOrderBankWithRestaurant() -> OrderBank{
+    let bank = OrderBank.shared
+    let restaurant = Restaurant(name: "City burger",
+                                adresse: "01 avenue de Saint Jacque 75034 Paris")
+    
+    bank.didSelectRestaurant(restaurant)
+    return bank
+  }
+  
   func testInsertRestaurant(){
     let restaurant = Restaurant(name: "City burger",
                                 adresse: "01 avenue de Saint Jacque 75034 Paris")
@@ -33,13 +42,11 @@ class OrderBankTest: XCTestCase {
     XCTAssertEqual(order?.restaurantName, "City burger")
   }
   
-  func instantiateAnOrderBankWithRestaurant() -> OrderBank{
-    let bank = OrderBank.shared
-    let restaurant = Restaurant(name: "City burger",
-                                adresse: "01 avenue de Saint Jacque 75034 Paris")
-    
-    bank.didSelectRestaurant(restaurant)
-    return bank
+  func testGetCurrentRestaurant(){
+    instantiateAnOrderBankWithRestaurant()
+    let restaurant = sut?.getSelectedRestaurant()
+    XCTAssertNotNil(restaurant)
+    XCTAssertEqual(restaurant?.name, "City burger")
   }
   
   func testDidSelectFood(){
@@ -133,6 +140,46 @@ class OrderBankTest: XCTestCase {
     sut?.delete(orderedFood)
     XCTAssertEqual(sut?.getMadeOrder()?.foodsList.count, 1)
     XCTAssertFalse(sut?.getMadeOrder()?.foodsList.contains(where: { $0.name == food_1.name}) ?? true)
+    
+  }
+  
+  func testHasOrderFood(){
+    sut = instantiateAnOrderBankWithRestaurant()
+    var food_1 = Food(name: "O tacos simple",
+                    price: Price.sandwich(12),
+                    description: "merguez avec sauce fromagère",
+                    image: nil)
+    
+    food_1.drink = "Pepsi"
+    food_1.sauce_1 = "Algerienne"
+    food_1.sauce_2 = "Harissa"
+    let selectedFood_1 = SelectedFood(type: "Sandwich",
+                                      food: food_1,
+                                      price: food_1.priceAmount)
+    sut?.didCompletedSelecting(selectedFood_1)
+    sut?.didValidateOrder()
+    let didOrdered = sut?.hasOrderedFood()
+    XCTAssertNotNil(didOrdered)
+    XCTAssertTrue(didOrdered!)
+  }
+  
+  func testFoodList(){
+    sut = instantiateAnOrderBankWithRestaurant()
+    var food_1 = Food(name: "O tacos simple",
+                    price: Price.sandwich(12),
+                    description: "merguez avec sauce fromagère",
+                    image: nil)
+    
+    food_1.drink = "Pepsi"
+    food_1.sauce_1 = "Algerienne"
+    food_1.sauce_2 = "Harissa"
+    let selectedFood_1 = SelectedFood(type: "Sandwich",
+                                      food: food_1,
+                                      price: food_1.priceAmount)
+    sut?.didCompletedSelecting(selectedFood_1)
+    let isEmpty = sut?.isFoodListEmpty()
+    XCTAssertNotNil(isEmpty)
+    XCTAssertFalse(isEmpty!)
     
   }
 

@@ -60,6 +60,8 @@
 		0997DD51289E75AA000D70EF /* NewFoodDetailCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0997DD50289E75AA000D70EF /* NewFoodDetailCellTableViewCell.swift */; };
 		0997DD53289FD727000D70EF /* FoodSelectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0997DD52289FD727000D70EF /* FoodSelectionManager.swift */; };
 		0997DD5528A2A27E000D70EF /* RestaurantManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0997DD5428A2A27E000D70EF /* RestaurantManager.swift */; };
+		09A7E7D428B25792009BAF88 /* TestFoodSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7E7D328B25792009BAF88 /* TestFoodSelection.swift */; };
+		09A7E7D628B25CE9009BAF88 /* TestRestaurantManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A7E7D528B25CE9009BAF88 /* TestRestaurantManager.swift */; };
 		09B17EAE289A82480043C89C /* TestSelectedFoodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B17EAD289A82480043C89C /* TestSelectedFoodManager.swift */; };
 		09B17EB0289A8BB80043C89C /* TestOrderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B17EAF289A8BB80043C89C /* TestOrderManager.swift */; };
 		09B17EB3289AC2570043C89C /* OrderObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B17EB2289AC2570043C89C /* OrderObserver.swift */; };
@@ -150,6 +152,8 @@
 		0997DD50289E75AA000D70EF /* NewFoodDetailCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFoodDetailCellTableViewCell.swift; sourceTree = "<group>"; };
 		0997DD52289FD727000D70EF /* FoodSelectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSelectionManager.swift; sourceTree = "<group>"; };
 		0997DD5428A2A27E000D70EF /* RestaurantManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantManager.swift; sourceTree = "<group>"; };
+		09A7E7D328B25792009BAF88 /* TestFoodSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFoodSelection.swift; sourceTree = "<group>"; };
+		09A7E7D528B25CE9009BAF88 /* TestRestaurantManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRestaurantManager.swift; sourceTree = "<group>"; };
 		09B17EAD289A82480043C89C /* TestSelectedFoodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSelectedFoodManager.swift; sourceTree = "<group>"; };
 		09B17EAF289A8BB80043C89C /* TestOrderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestOrderManager.swift; sourceTree = "<group>"; };
 		09B17EB2289AC2570043C89C /* OrderObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderObserver.swift; sourceTree = "<group>"; };
@@ -408,6 +412,7 @@
 			children = (
 				09B17EAD289A82480043C89C /* TestSelectedFoodManager.swift */,
 				09B17EB5289AC31B0043C89C /* SelectedFoodObserver.swift */,
+				09A7E7D328B25792009BAF88 /* TestFoodSelection.swift */,
 			);
 			path = TestSelectedFood;
 			sourceTree = "<group>";
@@ -416,6 +421,7 @@
 			isa = PBXGroup;
 			children = (
 				09F9E6262899934600F49EBA /* RestaurantProviderTest.swift */,
+				09A7E7D528B25CE9009BAF88 /* TestRestaurantManager.swift */,
 			);
 			path = TestRestaurantModel;
 			sourceTree = "<group>";
@@ -669,8 +675,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09A7E7D428B25792009BAF88 /* TestFoodSelection.swift in Sources */,
 				0993BDFE289927FD00C05C9D /* OrderBankTest.swift in Sources */,
 				09B17EB6289AC31B0043C89C /* SelectedFoodObserver.swift in Sources */,
+				09A7E7D628B25CE9009BAF88 /* TestRestaurantManager.swift in Sources */,
 				09F9E6292899989E00F49EBA /* TestMenuProvider.swift in Sources */,
 				09B17EB3289AC2570043C89C /* OrderObserver.swift in Sources */,
 				09B17EAE289A82480043C89C /* TestSelectedFoodManager.swift in Sources */,
