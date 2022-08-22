@@ -351,7 +351,7 @@
                             <constraint firstItem="p2m-Pg-Lfn" firstAttribute="top" secondItem="RUO-MQ-NEH" secondAttribute="bottom" constant="10" id="akB-SF-488"/>
                             <constraint firstItem="p2m-Pg-Lfn" firstAttribute="leading" secondItem="udy-fy-jMM" secondAttribute="leading" id="bl4-hj-d40"/>
                             <constraint firstItem="Ukb-ax-0dr" firstAttribute="height" secondItem="udy-fy-jMM" secondAttribute="height" multiplier="0.271205" id="ekE-01-sNJ"/>
-                            <constraint firstAttribute="bottom" secondItem="p2m-Pg-Lfn" secondAttribute="bottom" id="nw4-ve-1RL"/>
+                            <constraint firstAttribute="bottom" secondItem="p2m-Pg-Lfn" secondAttribute="bottom" priority="995" id="nw4-ve-1RL"/>
                             <constraint firstAttribute="trailing" secondItem="Ukb-ax-0dr" secondAttribute="trailing" id="oz7-Sj-VZI"/>
                         </constraints>
                     </view>

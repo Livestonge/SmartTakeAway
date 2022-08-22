@@ -43,7 +43,7 @@ class OrderBankTest: XCTestCase {
   }
   
   func testGetCurrentRestaurant(){
-    instantiateAnOrderBankWithRestaurant()
+    let _ = instantiateAnOrderBankWithRestaurant()
     let restaurant = sut?.getSelectedRestaurant()
     XCTAssertNotNil(restaurant)
     XCTAssertEqual(restaurant?.name, "City burger")

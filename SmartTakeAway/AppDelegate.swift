@@ -8,25 +8,6 @@
 import UIKit
 import FirebaseCore
 
-func delay(seconds: Double, completion: @escaping ()-> Void) {
-  DispatchQueue.main.asyncAfter(deadline: .now() + seconds, execute: completion)
-}
-
-func setupSubviews(controller: UIViewController, color: UIColor = .orange) -> CloseButton{
-    
-    let closeButton = CloseButton(crossColor: color)
-    controller.view.addSubview(closeButton)
-    closeButton.translatesAutoresizingMaskIntoConstraints = false
-    let width = closeButton.widthAnchor.constraint(equalToConstant: 20.0)
-    let height = closeButton.heightAnchor.constraint(equalToConstant: 20.0)
-    let safeArea = controller.view.safeAreaLayoutGuide
-    let top = closeButton.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 20)
-    let trailing = closeButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -20)
-    NSLayoutConstraint.activate([width,height,top,trailing])
-    
-    return closeButton
-}
-
 func animateTransitionWith(customView: UIView, completion: (@escaping(Bool)->Void)){
     
     UIView.transition(with: customView,
