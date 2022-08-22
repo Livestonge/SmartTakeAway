@@ -145,12 +145,20 @@ extension TrackerViewController: UITableViewDelegate, UITableViewDataSource{
       
       switch indexPath.section{
       case 0:
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "RestaurantCell", for: indexPath)
-        var content = cell.defaultContentConfiguration()
-        content.attributedText = getAttributedStringFor(restaurant?.name ?? "",
-                                                        color: .black)
-        content.secondaryText = restaurant?.adresse
-        cell.contentConfiguration = content
+        let attributedText = getAttributedStringFor(restaurant?.name ?? "",
+                                                    color: .black)
+        if #available(iOS 14, *){
+          var content = cell.defaultContentConfiguration()
+          content.attributedText = attributedText
+          cell.contentConfiguration = content
+          content.secondaryText = restaurant?.adresse
+          cell.contentConfiguration = content
+        }else{
+          cell.textLabel?.attributedText = attributedText
+          cell.detailTextLabel?.text = restaurant?.adresse
+        }
         return cell
       case 1:
         let food = self.foodData["ToBeConfirmed"]?[indexPath.row]

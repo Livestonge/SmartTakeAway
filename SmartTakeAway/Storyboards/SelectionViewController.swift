@@ -155,28 +155,47 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource{
       return cell
     case 1 :
       let cell = tableView.dequeueReusableCell(withIdentifier: "ThisIsDetailCell", for: indexPath)
-      var content = cell.defaultContentConfiguration()
       let text = data["Drinks"]?[indexPath.row] ?? ""
-      content.text = text
-      cell.contentConfiguration = content
+      
+      if #available(iOS 14, *){
+        var content = cell.defaultContentConfiguration()
+        content.text = text
+        cell.contentConfiguration = content
+        cell.accessoryType = self.userSelection?.drink?.id == indexPath.row ? .checkmark : .none
+      }else{
+        cell.textLabel?.text = text
+      }
+      
       cell.accessoryType = self.userSelection?.drink?.id == indexPath.row ? .checkmark : .none
       return cell
     case 2:
       let cell = tableView.dequeueReusableCell(withIdentifier: "ThisIsDetailCell", for: indexPath)
-      var content = cell.defaultContentConfiguration()
       let text = data["Sauces"]?[indexPath.row] ?? ""
-      content.text = text
-      cell.contentConfiguration = content
+      if #available(iOS 14, *){
+        var content = cell.defaultContentConfiguration()
+        content.text = text
+        cell.contentConfiguration = content
+        cell.accessoryType = self.userSelection?.drink?.id == indexPath.row ? .checkmark : .none
+      }else{
+        cell.textLabel?.text = text
+      }
+      
       let id_0 = self.userSelection?.sauces.0?.id
       let id_1 = self.userSelection?.sauces.1?.id
       cell.accessoryType = [id_0, id_1].contains(indexPath.row) ? .checkmark : .none
       return cell
     case 3:
       let cell = tableView.dequeueReusableCell(withIdentifier: "ThisIsDetailCell", for: indexPath)
-      var content = cell.defaultContentConfiguration()
       let text = data["Taille"]?[indexPath.row] ?? ""
-      content.text = text
-      cell.contentConfiguration = content
+      if #available(iOS 14, *){
+        var content = cell.defaultContentConfiguration()
+        content.text = text
+        cell.contentConfiguration = content
+        cell.accessoryType = self.userSelection?.drink?.id == indexPath.row ? .checkmark : .none
+      }else{
+        cell.textLabel?.text = text
+      }
+      
       cell.accessoryType = self.userSelection?.size?.id == indexPath.row ? .checkmark : .none
       return cell
     default:
