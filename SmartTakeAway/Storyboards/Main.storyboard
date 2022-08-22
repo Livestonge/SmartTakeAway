@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LWj-nf-Pkg">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -17,8 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Uo8-h8-LKg">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Uo8-h8-LKg">
+                                <rect key="frame" x="0.0" y="44" width="414" height="779"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -141,6 +142,7 @@
                         <constraints>
                             <constraint firstItem="I4b-Oe-fHn" firstAttribute="trailing" secondItem="Uo8-h8-LKg" secondAttribute="trailing" id="1gj-4W-09e"/>
                             <constraint firstItem="Uo8-h8-LKg" firstAttribute="top" secondItem="I4b-Oe-fHn" secondAttribute="top" id="8Bg-i5-Jok"/>
+                            <constraint firstItem="Uo8-h8-LKg" firstAttribute="bottom" secondItem="I4b-Oe-fHn" secondAttribute="bottom" constant="10" id="Pre-dg-JX9"/>
                             <constraint firstItem="Uo8-h8-LKg" firstAttribute="leading" secondItem="I4b-Oe-fHn" secondAttribute="leading" id="rdL-Oa-ogL"/>
                         </constraints>
                     </view>
@@ -211,8 +213,8 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="APG-Zv-O9c" secondAttribute="trailing" id="0OS-0q-6Jo"/>
                             <constraint firstItem="APG-Zv-O9c" firstAttribute="leading" secondItem="mJ7-bz-It3" secondAttribute="leading" id="IxJ-kI-jal"/>
-                            <constraint firstItem="APG-Zv-O9c" firstAttribute="top" secondItem="hiv-GA-7x0" secondAttribute="bottom" id="gRn-JK-t6J"/>
-                            <constraint firstItem="xYH-sK-Psx" firstAttribute="top" secondItem="APG-Zv-O9c" secondAttribute="bottom" id="old-CA-Tk8"/>
+                            <constraint firstItem="APG-Zv-O9c" firstAttribute="top" secondItem="blO-du-0by" secondAttribute="top" id="gRn-JK-t6J"/>
+                            <constraint firstItem="blO-du-0by" firstAttribute="bottom" secondItem="APG-Zv-O9c" secondAttribute="bottom" id="old-CA-Tk8"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="map" catalog="system" id="ojY-Yd-CGa"/>
