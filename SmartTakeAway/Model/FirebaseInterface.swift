@@ -1,8 +1,8 @@
 //
-//  FirebaseManager.swift
-//  
+//  FirebaseInterface.swift
+//  SmartTakeAway
 //
-//  Created by Awaleh Moussa Hassan on 14/08/2022.
+//  Created by Awaleh Moussa Hassan on 22/08/2022.
 //
 
 import Foundation
