@@ -23,7 +23,6 @@
 		09948E15288AAABA005B6767 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E0E288AAABA005B6767 /* TabBarViewController.swift */; };
 		09948E16288AAABA005B6767 /* MenuListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E0F288AAABA005B6767 /* MenuListViewController.swift */; };
 		09948E17288AAABA005B6767 /* FoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E10288AAABA005B6767 /* FoodViewController.swift */; };
-		09948E18288AAABA005B6767 /* TrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E11288AAABA005B6767 /* TrackerView.swift */; };
 		09948E21288AAB5E005B6767 /* AuxChoix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E1A288AAB5E005B6767 /* AuxChoix.swift */; };
 		09948E22288AAB5E005B6767 /* StoredData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E1B288AAB5E005B6767 /* StoredData.swift */; };
 		09948E23288AAB5E005B6767 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09948E1C288AAB5E005B6767 /* Order.swift */; };
@@ -114,7 +113,6 @@
 		09948E0E288AAABA005B6767 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		09948E0F288AAABA005B6767 /* MenuListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuListViewController.swift; sourceTree = "<group>"; };
 		09948E10288AAABA005B6767 /* FoodViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodViewController.swift; sourceTree = "<group>"; };
-		09948E11288AAABA005B6767 /* TrackerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerView.swift; sourceTree = "<group>"; };
 		09948E1A288AAB5E005B6767 /* AuxChoix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuxChoix.swift; sourceTree = "<group>"; };
 		09948E1B288AAB5E005B6767 /* StoredData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoredData.swift; sourceTree = "<group>"; };
 		09948E1C288AAB5E005B6767 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
@@ -316,7 +314,6 @@
 		09948E2A288AAB91005B6767 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				09948E11288AAABA005B6767 /* TrackerView.swift */,
 				09948E2B288AAB91005B6767 /* PizzaCell.swift */,
 				09948E2C288AAB91005B6767 /* CloseButton.swift */,
 				09948E2D288AAB91005B6767 /* AuxChoixViews */,
@@ -646,7 +643,6 @@
 				0997DD4F289D27C5000D70EF /* SelectionViewController.swift in Sources */,
 				09948DCC288AA521005B6767 /* AppDelegate.swift in Sources */,
 				09948E66288D8FEF005B6767 /* Menu type.swift in Sources */,
-				09948E18288AAABA005B6767 /* TrackerView.swift in Sources */,
 				09948E23288AAB5E005B6767 /* Order.swift in Sources */,
 				09948E35288AAB91005B6767 /* SelectControl.swift in Sources */,
 				09948E64288D8FCC005B6767 /* Menu protocols.swift in Sources */,
