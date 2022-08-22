@@ -339,8 +339,7 @@
 			children = (
 				09948E41288AAD1B005B6767 /* LaunchScreen.storyboard */,
 			);
-			name = Base.lproj;
-			path = ../../RemoteFadira/Fadira/Base.lproj;
+			path = Base.lproj;
 			sourceTree = "<group>";
 		};
 		09948E48288AAE8E005B6767 /* Images */ = {
