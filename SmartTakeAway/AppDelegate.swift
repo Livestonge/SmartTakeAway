@@ -8,19 +8,6 @@
 import UIKit
 import FirebaseCore
 
-func animateTransitionWith(customView: UIView, completion: (@escaping(Bool)->Void)){
-    
-    UIView.transition(with: customView,
-                      duration: 0.9,
-                      options: .transitionFlipFromTop,
-                      animations: {
-                        customView.alpha = 0
-                        customView.isHidden = true
-                        customView.superview?.layoutIfNeeded()
-                        },
-                      completion: completion)
-}
-
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
