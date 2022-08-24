@@ -22,32 +22,6 @@ class PizzaCell: UITableViewCell, FoodCell{
     
     static var identifier = String(describing: PizzaCell.self)
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: true)
-        
-        if selected{
-            let tempView = UIImageView(frame: pizzaView.frame)
-            tempView.image = pizzaView.image
-            superview!.addSubview(tempView)
-                  
-            tempView.center.x = center.x - 50
-            tempView.center.y = center.y
-        
-          
-        
-            UIView.animate(withDuration: 0.5,
-                         animations: {
-                            tempView.center.x = self.center.x + 150
-                            tempView.center.y = self.center.y + 500
-                          tempView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-                            },
-                            completion: { _ in
-                               tempView.removeFromSuperview()
-
-                            })
-        }
-    }
-    
     func populateLabelsWith(_ food: Food){
         
         switch food.price {
