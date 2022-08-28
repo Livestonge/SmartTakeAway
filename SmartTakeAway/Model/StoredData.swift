@@ -8,15 +8,16 @@
 
 import Foundation
 
-
+// Generic object used to retrieve data stored in the app.
 struct StoredData<Model: Decodable>{
-    
+    // Variable of the generic type Model for the data to retrieve.
     var model: Model?
     
+  // Intiantiate an instance of this object with the name of a file.
     init(fileName: String){
         self.model = loadDataFrom(fileName: fileName)
     }
-    
+    // Method used to retrieve the app data.
     private func loadDataFrom(fileName: String, decoder: PropertyListDecoder = .init()) -> Model?{
         
         guard let url = Bundle.main.url(forResource: fileName, withExtension: "plist")

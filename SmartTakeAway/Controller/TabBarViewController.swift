@@ -7,33 +7,31 @@
 //
 
 import UIKit
-import CoreFoundation
 
 class TabBarViewController: UITabBarController {
-    
-    
-    private lazy var preOrderImage : UIImage = {
-           
-           let size = CGSize(width: 30, height: 30)
-           let image = UIImage(named: "preOrder")!
-           let imageToRender = UIGraphicsImageRenderer(size: size).image{ _ in
-               image.draw(in: CGRect(origin: .zero, size: size))
-           }
-           return imageToRender
-       }()
-
+  
+//MARK: Proprieties
+  // A variable for managing the user selected food.
     private var foodManager: SelectedFoodProvider?
+  // A variable for the selected food.
     private var selectedFood: Food?
+  // A variable for managing the selection of a restaurant.
     private var restaurantManager: RestaurantManager?
+  
+  // MARK: ViewController Methods
   
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
         selectedIndex = 1
+      
+      // Dependencies injections
         foodManager = SelectedFoodManager(selectedFoodObserver: OrderBank.shared)
         foodManager?.delegate = self
         restaurantManager = RestaurantManager(observer: OrderBank.shared)
         restaurantManager?.delegate = self
+      
+    
         for controller in viewControllers!{
           switch controller {
           case let trackerCtrl as TrackerViewController:
@@ -50,19 +48,16 @@ class TabBarViewController: UITabBarController {
 //  MARK: Food selection Methods
   
     func didSelect(restaurant: Restaurant){
+      // Notifies the manager
       restaurantManager?.didSelectRestaurant(restaurant)
     }
-  
-    func didSelect(_ food: Food, badgePosition: Int = 3){
-        self.foodManager?.didSelect(food)
-        addBadgeViewAt(position: badgePosition)
-      }
-  
+    
+    // Method to check if the user has already selected food.
     func isOrdersListEmpty() -> Bool {
       self.foodManager?.isOrdersListEmpty() ?? false
     }
 
-    func addBadgeViewAt(position: Int){
+    private func addBadgeViewAt(position: Int){
       
         let itemPosition: CGFloat = CGFloat(position)
         let itemWidth:CGFloat = tabBar.frame.width / CGFloat(tabBar.items!.count)
@@ -97,16 +92,14 @@ class TabBarViewController: UITabBarController {
                        completion: nil)
 
     }
-    
-    private func resetBooking(){}
 }
 
-// MARK: UITabBarControllerDelegate
+// MARK: UITabBarControllerDelegate Conformance
 
 extension TabBarViewController: UITabBarControllerDelegate{
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        
+        // When the user select a tabBar buttom, we remove the orange filled circle.
         for view in tabBar.subviews{
             if view is UILabel{
                 view.removeFromSuperview()
@@ -115,7 +108,7 @@ extension TabBarViewController: UITabBarControllerDelegate{
     }
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-      
+        // We display an alert when the user taps on the first tabbar button and the orderList is empty.
         if viewController is TrackerViewController &&  isOrdersListEmpty() == true {
             configureAlert(message: "Please,\n Make an order",
                            title: "Empty bucket")
@@ -123,7 +116,7 @@ extension TabBarViewController: UITabBarControllerDelegate{
         }
         return true
     }
-    
+    // Method used to lauch an alert with the defined parameters.
     private func configureAlert(message: String, title: String){
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -133,36 +126,38 @@ extension TabBarViewController: UITabBarControllerDelegate{
     }
     
 }
-// MARK: SelectedFoodDelegate
+// MARK: SelectedFoodDelegate Conformance
 
 extension TabBarViewController: SelectedFoodDelegate{
   
   func didReceiveSelected(_ food: Food) {
+    // Updates the variable with the received data
     self.selectedFood = food
   }
   
   func didCompleteSelection() {
+    // When the user complete his food selection, we add an orange filled circle to the first tabbar item.
     addBadgeViewAt(position: 1)
   }
   
-  
 }
 
+// MARK: RestaurantManagerDelegate Conformance
 
 extension TabBarViewController: RestaurantManagerDelegate{
-  
+  // This method is called when the user has already selected a restaurant from the map page.
   func showMenu() {
-    
     guard let navCtrl = viewControllers!.first(where: { type(of: $0) == UINavigationController.self }) as? UINavigationController else {return}
     
       if let ctrl = navCtrl.topViewController as? ViewController{
+        // Inject the action to execute when the user complete selection.
         ctrl.didCompleteSeletion = self.foodManager?.didCompletedSelecting
         ctrl.showMenu()
       }
     selectedIndex = 1
     
   }
-  
+  // This method is called to warn the user that it could loose the already selected items if he change restaurant.
   func showAlertFor(_ restaurant: Restaurant){
     let alert = UIAlertController(title: "Oops",
                                   message: "Your command at the current restaurant will be deleted",
@@ -182,7 +177,7 @@ extension TabBarViewController: RestaurantManagerDelegate{
                  animated: true)
     
   }
-  
+  // A method called to inform that some food are in preparation. Changing restaurant is therefore not allowed.
   func showMessage() {
     let alert = UIAlertController(title: "You have food under preparation",
                                   message: "You can not change restaurant",

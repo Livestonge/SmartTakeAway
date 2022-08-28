@@ -158,7 +158,7 @@ class OrderBankTest: XCTestCase {
                                       price: food_1.priceAmount)
     sut?.didCompletedSelecting(selectedFood_1)
     sut?.didValidateOrder()
-    let didOrdered = sut?.hasOrderedFood()
+    let didOrdered = sut?.hasFoodInPreparation()
     XCTAssertNotNil(didOrdered)
     XCTAssertTrue(didOrdered!)
   }

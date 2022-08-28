@@ -92,7 +92,7 @@ class RestaurantDetailObserver: RestaurantDetailObservable{
     return currentRestaurant
   }
   
-  func hasOrderedFood() -> Bool {
+  func hasFoodInPreparation() -> Bool {
     return false
   }
   

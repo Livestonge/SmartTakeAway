@@ -9,8 +9,10 @@
 import Foundation
 import UIKit
 
+// Custom close button.
 class CloseButton: UIButton{
-    
+  
+    //Propriety for customizing the foregroundColor.
     var crossColor: UIColor
     
     init(crossColor: UIColor){
@@ -23,6 +25,7 @@ class CloseButton: UIButton{
         fatalError("init(coder:) has not been implemented")
     }
     
+//  Drawing and coloring the cross lines.
     override func draw(_ rect: CGRect){
         
         let path = UIBezierPath(ovalIn: rect)

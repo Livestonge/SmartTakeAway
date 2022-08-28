@@ -45,7 +45,7 @@ class TestFoodSelection: XCTestCase {
 
 }
 
-extension TestFoodSelection: NewManagerDelegate{
+extension TestFoodSelection: AccessoriesManagerDelegate{
   func didReceive(selection: UserSelection) {
     self.currentUserSelection = selection
   }

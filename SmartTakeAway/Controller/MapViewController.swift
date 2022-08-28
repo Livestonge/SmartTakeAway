@@ -11,22 +11,29 @@ import MapKit
 import CoreLocation
 
 class MapViewController: UIViewController{
-
+  
+    // MARK: IBOutlet
     @IBOutlet weak var mapView: MKMapView!
-    
+  
+    // MARK: Proprieties
+    // The currently selected restaurant
     var restaurant: Restaurant?
+  // Variable for holding the list of restaurant to show on the map.
     var restaurants: [Restaurant] = []
+  // An object that provides the restaurants to show.
     var restaurantsProvider: RestaurantsProvider?
+  // An object for positionning the restaurants on the map.
     lazy private var geocoder = CLGeocoder()
+  // An object for handling the delivery of locations to the map.
     private var locationManager: CLLocationManager?
-    
-    var hideContinueBt = false
-
+  
+   // MARK: ViewController Methods
+  
     override func viewDidLoad() {
         
         super.viewDidLoad()
         navigationItem.title = "Find your restaurant"
-      
+        // Dependencies Injections
         restaurantsProvider = RestaurantsProviding()
         restaurantsProvider?.delegate = self
         restaurantsProvider?.getRestaurants()
@@ -36,48 +43,53 @@ class MapViewController: UIViewController{
         configureMapView()
         convertTolocations()
     }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-    }
+  // MARK: Methods
   
     private func configureMapView(){
-        
+        // Registering the restaurant view.
         self.mapView.register(RestaurantView.self,
                               forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         self.mapView.delegate = self
     }
     
     private func configureLocationManager(){
-        
+        // Intiatiate a CoreLocationManager instance
         locationManager = CLLocationManager()
+      // Attributes the current viewController as the delegate of this location manager instance.
         locationManager?.delegate = self
+       // Ask the system for location updates
         locationManager?.startUpdatingLocation()
+        // Sets the precision
         locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
     }
     
     private func convertTolocations(_ index: Int = 0){
       if index < restaurants.count{
+          // Ask the geocoder variable to retrieve the coordinate of a restaurant based on his adress.
           geocoder.geocodeAddressString(restaurants[index].adresse){ [weak self] (placemarks,error) in
-                     
+                     // In the case of an error, we print the error to the console.
                      if let error = error{
                          print(error.localizedDescription)
                      }
+            // Checks if we got valid location
                      guard let location = placemarks?.first?.location else {return}
+            // Assign the location to the appropriate restaurant
                      self?.restaurants[index].longitude = location.coordinate.longitude
                      self?.restaurants[index].latitude = location.coordinate.latitude
+            // Use regression to go through the list.
                      self?.convertTolocations(index+1)
           }
       } else if index >= restaurants.count{
-          
+      // When all the restaurants in the list are all updated with coordinates. we add them to map.
       self.mapView.addAnnotations(restaurants)
+      // Centers the map.
       self.centerTheMap()
       }
      
   }
     
     private func centerTheMap(){
-
+        // Centers the map around the selected restaurant.
         guard let restaurant = self.restaurant else {return}
         let regionRadius = 1000.0
         let region = MKCoordinateRegion(center: restaurant.coordinate,
@@ -86,7 +98,7 @@ class MapViewController: UIViewController{
         self.mapView.setRegion(region, animated: true)
         self.loadDirection(to: restaurant)
     }
-    
+    // Load the direction to a restaurant
     private func loadDirection(to restaurant: Restaurant){
         
         let sourceLocation = mapView.userLocation
@@ -109,14 +121,17 @@ class MapViewController: UIViewController{
 }
 
 
+// MARK: CoreLocation Protocol Conformance
 
 extension MapViewController: CLLocationManagerDelegate{
-    
+    // Gets called when the user updates his authorization status
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        
+        // Checks the value of the status parameter.
         if status == .authorizedWhenInUse || status == .authorizedAlways{
+            // Asks for the locations
             locationManager?.startUpdatingLocation()
         } else {
+          // Request an anthorization only when the user is using the application
             locationManager?.requestWhenInUseAuthorization()
         }
     }
@@ -130,11 +145,13 @@ extension MapViewController: CLLocationManagerDelegate{
         print(error.localizedDescription)
     }
 }
-
+// MARK: Map View Protocol Conformance
 extension MapViewController: MKMapViewDelegate{
-  
+    // Called when the user taps on the map.
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+      // Checks if the selected view on the map is a restaurant.
       guard let restaurant = view.annotation as? Restaurant, let ctrl = self.tabBarController as? TabBarViewController else { return }
+      // Provides the selected restaurant to the tabbar controller
       ctrl.didSelect(restaurant: restaurant)
       
     }
@@ -167,15 +184,15 @@ extension MapViewController: MKMapViewDelegate{
         polyRender.lineWidth = 4.0
         polyRender.strokeColor = UIColor.yellow
         return polyRender
-    
-        
     }
     
 }
+// MARK: RestaurantsProviderDelegate Protocol Conformance
 
 extension MapViewController: RestaurantsProviderDelegate{
 
   func didReceive(restaurants: [Restaurant]) {
+    // Receives from the provider a list of restaurants to display.
     self.restaurants = restaurants
   }
 }

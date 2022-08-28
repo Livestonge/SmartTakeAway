@@ -8,15 +8,18 @@
 
 import UIKit
 
+// Custom uitableViewCell for configuring the details for an order.
 class OrderCell: UITableViewCell {
     
     @IBOutlet weak var FoodName: UILabel!
     @IBOutlet weak var price: UILabel!
     @IBOutlet weak var drink: UILabel!
     @IBOutlet weak var saus: UILabel!
-
+  
+  //    Identifier used by a tableview to dequeue a order cell.
     static var identifier = String(describing: OrderCell.self )
-    
+  
+  //    Configuring the cell with a order item.
     func populateLabelsWith(_ food: OrderedFood) {
         FoodName.text = food.name
         let drinks = "\(String(describing: food.drink))"

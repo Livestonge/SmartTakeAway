@@ -9,12 +9,15 @@ import Foundation
 
 class FoodAccessoryProviding: FoodAccessoryProvider {
   
+  // Propriety for the different types of accessories
   private var foodAccessoryList: [String: [String]]
   weak var delegate: FoodAccessoryProviderDelegate?
+  // Propriety used to determine which accessories to send to the delegate.
   private var foodType: String
   
   init(foodType: String){
     self.foodType = foodType
+    // Load the saved accessories.
     self.foodAccessoryList = StoredData(fileName: "DAndSData").model ?? [:]
   }
   
@@ -33,7 +36,7 @@ class FoodAccessoryProviding: FoodAccessoryProvider {
     delegate?.didReceiveTaille(tailleList)
   }
   
-  
+  // Method used to ask for the accessories related to a food.
   func getFoodAccessories() {
     switch self.foodType{
     case "Pizza":

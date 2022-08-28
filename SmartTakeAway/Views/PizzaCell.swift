@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Custom uitableViewCell for configuring the details for a pizza.
 class PizzaCell: UITableViewCell, FoodCell{
     
 
@@ -19,9 +20,11 @@ class PizzaCell: UITableViewCell, FoodCell{
     @IBOutlet weak var large: UILabel!
     @IBOutlet weak var grande: UILabel!
     @IBOutlet weak var medium: UILabel!
-    
+  
+//    Identifier used by a tableview to dequeue a pizza cell.
     static var identifier = String(describing: PizzaCell.self)
-    
+  
+//    Configuring the cell with a food item.
     func populateLabelsWith(_ food: Food){
         
         switch food.price {

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+// Object for representing the detail of basic food.
 struct Food: Decodable{
     
     let name: String
@@ -32,6 +32,8 @@ struct Food: Decodable{
 enum PizzaSize: Int {
   case medium, grande, large
 }
+
+// The price of pizza depends of his size.
 enum Price{
     case sandwich(Double), pizza(medium:Double, grande: Double, large: Double)
     
@@ -43,7 +45,7 @@ enum Price{
         case medium, grande, large
     }
 }
-
+// Manual implementation of Decodable
 extension Price: Decodable{
     
     init(from decoder: Decoder) throws {
@@ -56,10 +58,12 @@ extension Price: Decodable{
         case .pizza:
             let nestedContainer = try? container?.nestedContainer(keyedBy: PizzaCodingKeys.self,
                                                                  forKey: .pizza)
-            let mediumPrice = (try? nestedContainer?.decode(Double.self, forKey: .medium)) ?? 0
-            let grandePrice = (try? nestedContainer?.decode(Double.self, forKey: .grande)) ?? 0
-            let largePrice = (try? nestedContainer?.decode(Double.self, forKey: .large)) ?? 0
-            self = .pizza(medium: mediumPrice, grande: grandePrice, large: largePrice)
+            let mediumPrice = try? nestedContainer?.decode(Double.self, forKey: .medium)
+            let grandePrice = try? nestedContainer?.decode(Double.self, forKey: .grande)
+            let largePrice = try? nestedContainer?.decode(Double.self, forKey: .large)
+            self = .pizza(medium: mediumPrice ?? 0,
+                          grande: grandePrice ?? 0,
+                          large: largePrice ?? 0)
         default:
             throw DecodingError.dataCorrupted(DecodingError
                                                 .Context(codingPath: container!.codingPath,

@@ -9,25 +9,42 @@ import UIKit
 
 class SelectionViewController: UIViewController {
 
+//  MARK: Outlets
+  
   @IBOutlet weak var foodTableview: UITableView!
   @IBOutlet weak var foodImageView: UIImageView!
   
+//  MARK: Proprieties
+//  Propriety for the state of the disclosure button in each section.
   private var sectionStates: [Int : Bool] = [:]
+  // Propriety used to define dynamically the height of a tableviewCell.
   private var label: UILabel?
+// Propriety for holding user 's selections of accessories.
   private var userSelection: UserSelection?
+  // Object for managing the business logic of selecting an accessory.
   var manager: FoodSelectionManager?
+  // Selected food
   var chosenFood: SelectedFood?
+  
+//  Object handling app usage analytics.
   lazy var analyticsManager = FirebaseManager()
+// Accessories provider
   var foodAccessoryProvider: FoodAccessoryProvider?
+// Propriety holding the accessories to display
   var data: [String : [String]] = [:]
+// Action to execute when the user make the final selection.
   var didCompleteSelection: ((SelectedFood) -> Void)?
+  
+//  MARK: ViewController Methods
   
   override func viewDidLoad() {
     super.viewDidLoad()
     foodTableview.delegate = self
     foodTableview.dataSource = self
+    // For the case when the user can make 2 selections.
     foodTableview.allowsMultipleSelection = true
     
+    // Propriety initialisation
     manager = FoodSelectionManager()
     foodAccessoryProvider = FoodAccessoryProviding(foodType: chosenFood?.type ?? "")
     foodAccessoryProvider?.delegate = self
@@ -35,6 +52,7 @@ class SelectionViewController: UIViewController {
     manager?.delegate = self
     let imageString = self.chosenFood?.imagePath ?? ""
     foodImageView.image = UIImage(named: imageString)
+    // define the initial state of each disclosure button in each section
     for key in 0..<foodTableview.numberOfSections {
       sectionStates[key] = false
     }
@@ -43,14 +61,18 @@ class SelectionViewController: UIViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+    // Tracking the selected food.
     analyticsManager.didSelectFood(chosenFood)
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
+    // Nullify the closure when the view disappear.
     didCompleteSelection = nil
   }
   
+//  MARK: Custom methods
+  // Adding addButton and close button.
   private func setUpViews(){
     foodTableview.translatesAutoresizingMaskIntoConstraints = false
     let addButton = UIButton()
@@ -85,22 +107,7 @@ class SelectionViewController: UIViewController {
                           for: .touchUpInside)
   }
   
-  @objc
-  func didTapCloseBt(){
-    self.dismiss(animated: true)
-  }
-  
-  @objc
-  func didTapAddBt(){
-    if self.userSelection == nil{
-      showAlert()
-      return
-    }
-    chosenFood?.updateAcessories(userSelection: userSelection!)
-    didCompleteSelection?(chosenFood!)
-    self.dismiss(animated: true)
-  }
-  
+  // Alert to show when the user did not choose accessories.
   private func showAlert(){
     let alert = UIAlertController(title: "Oops",
                                   message: "You did not choose drink nor sauces",
@@ -120,8 +127,39 @@ class SelectionViewController: UIViewController {
     self.present(alert,
                  animated: true)
   }
+  
+//  MARK: Objc.
+  
+  @objc
+  func didTapCloseBt(){
+    self.dismiss(animated: true)
+  }
+  
+  @objc
+  func didTapAddBt(){
+    if self.userSelection == nil{
+      showAlert()
+      return
+    }
+    // Update the selected food with the user selected accessories.
+    chosenFood?.updateAcessories(userSelection: userSelection!)
+    // Execute the closure with the selected food as argument
+    didCompleteSelection?(chosenFood!)
+    self.dismiss(animated: true)
+  }
+  
+  @objc
+  func didTapOnBt(sender: UIButton){
+    let sectionIndex = sender.tag
+    guard let boolean = sectionStates[sectionIndex] else { return }
+    // Toggle the state of the section index.
+    sectionStates[sectionIndex] = !boolean
+    let section = IndexSet(integer: sectionIndex)
+    foodTableview.reloadSections(section, with: .none)
+  }
 }
 
+// MARK: Tableview Delegate conformance
 
 extension SelectionViewController: UITableViewDelegate, UITableViewDataSource{
   
@@ -130,6 +168,8 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource{
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    // The returned number of rows depends on the value of sectionStates[section]
     switch section {
     case 0:
       return 1
@@ -161,6 +201,7 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource{
         var content = cell.defaultContentConfiguration()
         content.text = text
         cell.contentConfiguration = content
+        // if the current indexPath is equal to the id of the accessory then we set to checkmark else none.
         cell.accessoryType = self.userSelection?.drink?.id == indexPath.row ? .checkmark : .none
       }else{
         cell.textLabel?.text = text
@@ -175,11 +216,12 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource{
         var content = cell.defaultContentConfiguration()
         content.text = text
         cell.contentConfiguration = content
+        // if the current indexPath is equal to the id of the accessory then we set to checkmark else none.
         cell.accessoryType = self.userSelection?.drink?.id == indexPath.row ? .checkmark : .none
       }else{
         cell.textLabel?.text = text
       }
-      
+      // if the current indexPath is equal to the id of the accessory then we set to checkmark else none.
       let id_0 = self.userSelection?.sauces.0?.id
       let id_1 = self.userSelection?.sauces.1?.id
       cell.accessoryType = [id_0, id_1].contains(indexPath.row) ? .checkmark : .none
@@ -191,11 +233,12 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource{
         var content = cell.defaultContentConfiguration()
         content.text = text
         cell.contentConfiguration = content
+        // if the current indexPath is equal to the id of the accessory then we set to checkmark else none.
         cell.accessoryType = self.userSelection?.drink?.id == indexPath.row ? .checkmark : .none
       }else{
         cell.textLabel?.text = text
       }
-      
+      // if the current indexPath is equal to the id of the accessory then we set to checkmark else none.
       cell.accessoryType = self.userSelection?.size?.id == indexPath.row ? .checkmark : .none
       return cell
     default:
@@ -209,6 +252,7 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource{
     switch indexPath.section{
     case 1:
       let drink = data["Drinks"]?[indexPath.row]
+// When the user selects a cell then we create an accessory which has as Id the current indexpath.
       accessory = Accessory(id: indexPath.row,
                                 type: "Drink",
                                 name: drink!)
@@ -227,6 +271,7 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource{
                             name: size!)
     default: break
     }
+    // Notifies the manager of the current user selection.
     manager?.didSelect(accessory!)
   }
   
@@ -234,8 +279,10 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource{
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     switch indexPath.section{
     case 0:
+      // Read the label height
       let height = label?.intrinsicContentSize.height ?? 0
       let cellHeight = 80 + height
+      // Sets the height of row depending of the label height.
       return  cellHeight > 90 ? cellHeight : 90
     default:
       return 50
@@ -250,11 +297,13 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource{
   }
   
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    
+    // Making header view for each section.
     let view = UIView()
+    // Add a label to the header view.
     let titleLabel = UILabel()
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(titleLabel)
+    // Add a disclosure button.
     let button = UIButton(type: .detailDisclosure)
     button.tag = section
     let image = sectionStates[section] == false ? UIImage(systemName: "chevron.right") : UIImage(systemName: "chevron.down")
@@ -285,18 +334,11 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource{
     view.backgroundColor = .yellow
     return view
   }
-  
-  @objc
-  func didTapOnBt(sender: UIButton){
-    let sectionIndex = sender.tag
-    guard let boolean = sectionStates[sectionIndex] else { return }
-    sectionStates[sectionIndex] = !boolean
-    let section = IndexSet(integer: sectionIndex)
-    foodTableview.reloadSections(section, with: .none)
-  }
 }
 
-extension SelectionViewController: NewManagerDelegate{
+// MARK: NewManagerDelegate conformance
+
+extension SelectionViewController: AccessoriesManagerDelegate{
   func didReceive(selection: UserSelection) {
     self.userSelection = selection
     foodTableview.reloadData()
@@ -304,8 +346,11 @@ extension SelectionViewController: NewManagerDelegate{
   
 }
 
+// MARK: FoodAccessoryProviderDelegate conformance
+
 extension SelectionViewController: FoodAccessoryProviderDelegate{
   func didReceiveDrinkList(_ drinks: [String]) {
+    // Adding the received accessories to the data dictionnary.
     self.data["Drinks"] = drinks
     self.foodTableview.reloadData()
   }

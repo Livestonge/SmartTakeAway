@@ -8,22 +8,13 @@
 import Foundation
 
 
-protocol SelectedFoodObservable{
-  func didCompletedSelecting(_ food: SelectedFood)
-  func isFoodListEmpty() -> Bool
-}
-
 class SelectedFoodManager: SelectedFoodProvider {
-  
+  // Object wich holds the user's order.
   var selectedFoodObserver: SelectedFoodObservable
   weak var delegate: SelectedFoodDelegate?
   
   init(selectedFoodObserver: SelectedFoodObservable){
     self.selectedFoodObserver = selectedFoodObserver
-  }
-  
-  func didSelect(_ food: Food){
-    delegate?.didReceiveSelected(food)
   }
   
   func didCompletedSelecting(_ food: SelectedFood) {

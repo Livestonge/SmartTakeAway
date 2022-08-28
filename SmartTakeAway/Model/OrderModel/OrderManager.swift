@@ -9,8 +9,11 @@ import Foundation
 
 class OrderManager: OrderProvider{
   
+  // Used to communicate with viewControllers
   weak var delegate: OrderProviderDelegate?
+  // Used for storing the user's selections
   var orderObserver: OrderObservable
+  // Used for checking periodically the states of a food in preparation.
   weak private var timer: Timer?
   
   init(orderObserver: OrderObservable){
@@ -19,15 +22,17 @@ class OrderManager: OrderProvider{
   }
   
   func didValidateOrder(){
+    // Notifies the observer.
     self.orderObserver.didValidateOrder()
-    getMadeOrder()
+    getTheListOfFood()
+    // Instantiates the timer and execute the getMadeOrder method every 2 secs.
     self.timer = Timer.scheduledTimer(withTimeInterval: .init(2),
                                       repeats: true,
-                                      block: { [weak self] _ in self?.getMadeOrder() })
+                                      block: { [weak self] _ in self?.getTheListOfFood() })
     
   }
   
-  func getMadeOrder() {
+  func getTheListOfFood() {
     
     let order = self.orderObserver.getMadeOrder()
     
@@ -57,7 +62,7 @@ class OrderManager: OrderProvider{
       return
     }
     self.orderObserver.delete(food)
-    self.getMadeOrder()
+    self.getTheListOfFood()
   }
   
   func deleteOrder(){

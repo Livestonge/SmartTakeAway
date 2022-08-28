@@ -29,18 +29,6 @@ class TestSelectedFoodManager: XCTestCase {
     super.tearDown()
   }
   
-  func testSelectFood(){
-    let food = Food(name: "O tacos simple",
-                    price: Price.sandwich(8),
-                    description: "merguez avec sauce fromagère",
-                    image: nil)
-    
-    sut?.didSelect(food)
-    XCTAssertNotNil(self.food)
-    XCTAssertEqual(self.food?.name, "O tacos simple")
-    XCTAssertEqual(self.food?.priceAmount, 8)
-  }
-  
   func testDidCompleteSelecting(){
     let food = Food(name: "Mexicain burger",
                     price: Price.sandwich(12),

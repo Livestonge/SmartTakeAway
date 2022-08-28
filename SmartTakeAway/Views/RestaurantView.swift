@@ -9,12 +9,13 @@
 import Foundation
 import MapKit
 
-
+// Creating a subclass for a restaurant illustration in the map.
 class RestaurantView: MKMarkerAnnotationView{
     
     override var annotation: MKAnnotation?{
         
         willSet{
+          // Text for representing a restaurant in the map
             glyphText = "🌯"
             markerTintColor = UIColor.yellow
         }

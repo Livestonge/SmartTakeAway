@@ -8,18 +8,23 @@
 
 import UIKit
 
-
+// Generic ViewController for group the common fonctionnalities of sandwich and pizza viewControllers.
 class MenuListViewController<Cell: FoodCell>: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
-   
+   //MARK: Proprieties
+    
+  // Variable for holding the list of food to display.
     var menyList: [Food]?
+  // Variable for holding the action to execute when the user complete selection.
     var didCompleteSelectingWith: ((SelectedFood) -> Void)?
-  
+  // ViewController to display modally when the user selects a food.
     var newViewController: SelectionViewController {
         let storyboard = UIStoryboard(name: "Initial", bundle: Bundle.main)
         let viewController = storyboard.instantiateViewController(identifier: "NewStorybaord") as! SelectionViewController
         return viewController
     }
+  
+  // MARK: Tableview Protocols Conformances
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return menyList?.count ?? 0
@@ -29,22 +34,21 @@ class MenuListViewController<Cell: FoodCell>: UIViewController, UITableViewDeleg
          let identifier = Cell.identifier
          guard  let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? Cell
            else {fatalError("Cell Not Found")}
+      // Populate the appropriate cell dynamically using the generic Cell.
           cell.populateLabelsWith(menyList![indexPath.row])
            
           return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
-  
-    private func addBadgeView(){
-      guard let ctrl = self.tabBarController as? TabBarViewController else {return}
-      ctrl.addBadgeViewAt(position: 3)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      // Deselect the row.
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }
 
 class SandwichListController: MenuListViewController<SandwichCell> {
-
+    
     @IBOutlet weak var tableView: UITableView!
     
   
@@ -55,19 +59,16 @@ class SandwichListController: MenuListViewController<SandwichCell> {
     }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        guard let controller = self.tabBarController as? TabBarViewController else { return }
-      let name = menyList![indexPath.row].name
-      let description = menyList![indexPath.row].description
-      let price = menyList![indexPath.row].price
-      let imagePath = menyList?[indexPath.row].image ?? ""
-      let food = Food(name: name, price: price, description: description, image: imagePath)
-      let ctrl = self.newViewController
-      ctrl.didCompleteSelection = didCompleteSelectingWith
-      ctrl.chosenFood = SelectedFood(type: "Sandwich",
+      
+    guard let food = menyList?[indexPath.row] else { return }
+    //Instantiate the newViewController instance.
+    let ctrl = self.newViewController
+    // inject the didCompleteSelection variable and the selected food.
+     ctrl.didCompleteSelection = didCompleteSelectingWith
+     ctrl.chosenFood = SelectedFood(type: "Sandwich",
                                      food: food)
-      self.present(ctrl, animated: true)
-//        controller.didSelect(food)
-      tableView.deselectRow(at: indexPath, animated: true)
+     self.present(ctrl, animated: true)
+     super.tableView(tableView, didSelectRowAt: indexPath)
   }
 }
 
@@ -81,20 +82,21 @@ class PizzaViewController: MenuListViewController<PizzaCell>{
         tableView.dataSource = self
     }
   
+  // MARK: Tableview Protocols Conformances
+  
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        guard let controller = self.tabBarController as? TabBarViewController else { return }
-      let name = menyList![indexPath.row].name
-      let description = menyList![indexPath.row].description
-      let price = menyList![indexPath.row].price
-      let imagePath = menyList?[indexPath.row].image ?? ""
-      let food = Food(name: name, price: price, description: description, image: imagePath)
+    
+     // Retrieve the corresponding food from the list.
+    guard let food = menyList?[indexPath.row] else { return }
+    
+    //Instantiate the newViewController instance.
       let ctrl = self.newViewController
+    // inject the didCompleteSelection variable and the selected food.
       ctrl.didCompleteSelection = didCompleteSelectingWith
       ctrl.chosenFood = SelectedFood(type: "Pizza",
                                      food: food)
       self.present(ctrl, animated: true)
-//        controller.didSelect(food)
-      tableView.deselectRow(at: indexPath, animated: true)
+      super.tableView(tableView, didSelectRowAt: indexPath)
   }
 }
 

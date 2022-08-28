@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+// An object to keep track of the details of a selected food.
 struct OrderedFood{
   let name: String
   let price: Double
@@ -16,6 +16,7 @@ struct OrderedFood{
   var status: OrderStatus = .toBeConfirmed
   }
 
+// Differents phases of the preparation of a food.
 enum OrderStatus {
   case preparation, finished, toBeConfirmed
 }

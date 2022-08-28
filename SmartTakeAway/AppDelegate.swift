@@ -11,8 +11,6 @@ import FirebaseCore
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
     FirebaseApp.configure()
@@ -37,10 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension UIView {
-    
+//    Method for automating the add subview process.
     func addSubView(view: UIView, constraintTo anchorView: UIView){
         
         addSubview(view)
+//      adding auto layout constraint.
         view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             view.centerXAnchor.constraint(equalTo: anchorView.centerXAnchor),

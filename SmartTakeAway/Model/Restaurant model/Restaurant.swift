@@ -10,13 +10,14 @@ import Foundation
 import CoreLocation
 import MapKit
 
-
+// Object used represent a restaurant
 class Restaurant: NSObject,Decodable{
     
     static var reUseIdentifier = "cellAdresse"
     
     let name: String
     var adresse: String
+  // Proprieties used to save the coordinates of a restaurant.
     var longitude: Double?
     var latitude: Double?
     
@@ -29,12 +30,12 @@ class Restaurant: NSObject,Decodable{
 }
 
 extension Restaurant: MKAnnotation{
-    
+    // Required implementation of MKAnnotation.
     var coordinate: CLLocationCoordinate2D{
         guard let latitude = latitude, let longitude = longitude else {fatalError("Coordinate not found")}
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
-    
+    // Title to display in the map.
     var title: String?{
         return name
     }

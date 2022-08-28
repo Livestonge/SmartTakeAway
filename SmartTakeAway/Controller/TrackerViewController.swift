@@ -16,11 +16,14 @@ class TrackerViewController: UIViewController {
   
   
 //  MARK: Proprieties
-  
+//  Propriety for holding the user's ordered food.
     var foodList: [OrderedFood] = []
+//  The selected restaurant.
     var restaurant: Restaurant?
+// Objects for handling the current order.
     var orderManager: OrderProvider!
     var orderObserver: OrderObservable?
+// Variable for holding the ordered food based on their status.
     var foodData = [String: [OrderedFood]]()
     private var sectionStates: [Int : Bool] = [:]
   
@@ -34,13 +37,15 @@ class TrackerViewController: UIViewController {
         orderTableview.dataSource = self
         setUpViews()
       
+      // Variable initialization
         orderManager = OrderManager(orderObserver: orderObserver!)
         orderManager?.delegate = self
     }
   
    override func viewWillAppear(_ animated: Bool) {
       super.viewWillAppear(animated)
-      self.orderManager?.getMadeOrder()
+      // fetch ordered foods.
+      self.orderManager?.getTheListOfFood()
      for key in 0..<orderTableview.numberOfSections {
        sectionStates[key] = false
      }
@@ -50,13 +55,16 @@ class TrackerViewController: UIViewController {
   
     @objc
     private func sendTheOrder(_ sender: Any) {
+      // Called when the user validate an order
       orderManager.didValidateOrder()
     }
   
+  // Called when the user tap on the disclosure function.
   @objc
   func didTapOnBt(sender: UIButton){
     let sectionIndex = sender.tag
     guard let boolean = sectionStates[sectionIndex] else { return }
+    // Toggle the state of the section index.
     sectionStates[sectionIndex] = !boolean
     let section = IndexSet(integer: sectionIndex)
     orderTableview.reloadSections(section, with: .none)
@@ -73,7 +81,7 @@ class TrackerViewController: UIViewController {
       titleLabel.textAlignment = .center
       orderTableview.tableHeaderView = headerView
     }
-    
+//    Add an order button to the view.
     private func setUpOrderButton(){
       self.makeTheOrder = UIButton()
       makeTheOrder.translatesAutoresizingMaskIntoConstraints = false
@@ -98,6 +106,7 @@ class TrackerViewController: UIViewController {
     setUpOrderButton()
     }
   
+    // Initiating an instance of NSAttributedString based on passed parameters.
     private func getAttributedStringFor(_ title: String, color: UIColor) -> NSAttributedString{
       let customFont = UIFont(name: "Helvetica Neue", size: 22)
       return NSAttributedString(string: title,
@@ -105,6 +114,7 @@ class TrackerViewController: UIViewController {
                                                     .foregroundColor : color])
     }
   
+  // Fetching an orderedFood based on the current indexpath.
   private func getFoodAt(indexPath: IndexPath) -> OrderedFood? {
     switch indexPath.section{
     case 1:
@@ -124,6 +134,8 @@ class TrackerViewController: UIViewController {
 extension TrackerViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+      
+      // The returned number of rows depends on the value of sectionStates[section]
       switch section {
       case 0:
         return 1
@@ -190,9 +202,11 @@ extension TrackerViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    
+    // HeaderView
     let view = UIView()
+    // TitleLabel
     let titleLabel = UILabel()
+    // Variable for reading the count of each category.
     var count = 0
     switch section{
     case 1:
@@ -206,6 +220,7 @@ extension TrackerViewController: UITableViewDelegate, UITableViewDataSource{
     }
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(titleLabel)
+    // Disclosure button.
     let button = UIButton(type: .detailDisclosure)
     button.tag = section
     let image = sectionStates[section] == false ? UIImage(systemName: "chevron.right") : UIImage(systemName: "chevron.down")
@@ -251,10 +266,13 @@ extension TrackerViewController: UITableViewDelegate, UITableViewDataSource{
 
     
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    // Notifies the manager that the user wants to delete.
+    if editingStyle == .delete{
+      guard let food = getFoodAt(indexPath: indexPath) else { return }
+      self.orderManager.delete(food)
+      self.orderManager.getTheListOfFood()
+    }
     
-    guard let food = getFoodAt(indexPath: indexPath) else { return }
-    self.orderManager.delete(food)
-    self.orderManager.getMadeOrder()
   }
 }
 
@@ -263,7 +281,7 @@ extension TrackerViewController: UITableViewDelegate, UITableViewDataSource{
 extension TrackerViewController: OrderProviderDelegate{
   
   func didReceiveFood(_ list: [OrderedFood], withStatus: OrderStatus) {
-    
+    // Filling th data dictionnary depending on the parameter withStatus.
     switch withStatus {
     case .preparation:      
       self.foodData["Pending"] = list
@@ -274,15 +292,18 @@ extension TrackerViewController: OrderProviderDelegate{
     }
     
     self.orderTableview.reloadData()
+    // The button disappears if there is no food to confirme.
     self.makeTheOrder.isHidden = foodData["ToBeConfirmed"]?.count == 0 ? true : false
     
   }
   
   func didReceiveRestaurant(_ restaurant: Restaurant) {
+    // The restaurant associated with the current command.
     self.restaurant = restaurant
   }
   
   func showAlertWith(message: String) {
+    // Alert to show in case the user tries to delete a food in preparation.
     let alert = UIAlertController(title: "OOPS",
                                   message: message,
                                   preferredStyle: .alert)

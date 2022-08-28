@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+// Object used to hold the details of a user's selected food.
 struct SelectedFood {
   let type: String
   var food: Food
@@ -30,7 +30,7 @@ struct SelectedFood {
   var imagePath: String{
     food.image ?? ""
   }
-  
+  // Method used to update the price propriety for the case of a pizza.
   mutating func updatePriceWith(_ size: Int? = nil) {
     switch food.price {
     case .sandwich(let amount):

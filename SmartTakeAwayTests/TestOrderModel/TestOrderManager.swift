@@ -32,19 +32,19 @@ class TestOrderManager: XCTestCase {
   }
 
   func testGetOrder(){
-    sut?.getMadeOrder()
+    sut?.getTheListOfFood()
     XCTAssertNotNil(self.foodList)
     XCTAssertFalse(self.foodList!.isEmpty)
   }
   
   func testOrderInitialStatus(){
-    sut?.getMadeOrder()
+    sut?.getTheListOfFood()
     XCTAssertNotNil(self.foodList)
     XCTAssertTrue(self.foodList!.allSatisfy({ $0.status == .toBeConfirmed }))
   }
   
   func testDidValidate(){
-    sut?.getMadeOrder()
+    sut?.getTheListOfFood()
     XCTAssertNotNil(self.foodList)
     XCTAssertTrue(self.foodList!.allSatisfy({ $0.status == .toBeConfirmed }))
     self.foodList = []
@@ -54,7 +54,7 @@ class TestOrderManager: XCTestCase {
   }
   
   func testDeleteFood(){
-    sut?.getMadeOrder()
+    sut?.getTheListOfFood()
     let count = foodList?.count ?? 0
     XCTAssertNotNil(foodList)
     XCTAssertFalse(foodList!.isEmpty)
@@ -62,7 +62,7 @@ class TestOrderManager: XCTestCase {
     let food = foodList!.first!
     self.foodList = []
     sut?.delete(food)
-    sut?.getMadeOrder()
+    sut?.getTheListOfFood()
     XCTAssertFalse(foodList!.isEmpty)
     XCTAssertFalse(foodList!.contains(where: { $0.name == food.name }))
   }
