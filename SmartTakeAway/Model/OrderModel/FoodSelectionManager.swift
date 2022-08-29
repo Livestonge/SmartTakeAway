@@ -50,7 +50,6 @@ class FoodSelectionManager{
     case "Sauce":
       switch self.userSelection.sauces{
       case (nil, nil):
-        
         self.userSelection.sauces = (accessory, nil)
       /*
         If the user has already choosen a sauce, it returns nil if the new selection is the same as the current sauce
