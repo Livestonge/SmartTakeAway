@@ -21,6 +21,7 @@ class OrderManager: OrderProvider{
   private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
   // Variable to track the notification to post when the user's order is prepared.
   private var didPostNotification = false
+  // Variable used to know if the oderpage is currently displayed or not.
   var isDisplayingOrderPage = true
   
   init(orderObserver: OrderObservable){
@@ -40,7 +41,7 @@ class OrderManager: OrderProvider{
     print("OrderManager is deInitialize.")
     NotificationCenter.default.removeObserver(self)
   }
-
+  // method used to notify the system that we need time to finish some processing while app in the background
   @objc
   func appMovedToBackground(){
     isDisplayingOrderPage = false
@@ -66,7 +67,7 @@ class OrderManager: OrderProvider{
   }
   
   func registerBackgroundTask(){
-
+    // notifies the system that we may need time to finish some processing
     self.backgroundTask = UIApplication.shared.beginBackgroundTask(){ [weak self] in
       print("BackgroundTask ending....")
       self?.endBackgroundTask()
