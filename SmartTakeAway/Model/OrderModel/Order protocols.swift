@@ -9,6 +9,8 @@ import Foundation
 // Protocol used to group the requirements for an object providing the user order.
 protocol OrderProvider{
   var delegate: OrderProviderDelegate? { get set }
+  func willShowOrderPage()
+  func orderPageWillDisappear()
   func getTheListOfFood()
   func delete(_ food: OrderedFood)
   func deleteOrder()

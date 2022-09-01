@@ -45,10 +45,17 @@ class TrackerViewController: UIViewController {
    override func viewWillAppear(_ animated: Bool) {
       super.viewWillAppear(animated)
       // fetch ordered foods.
-      self.orderManager?.getTheListOfFood()
+     self.orderManager?.getTheListOfFood()
+     self.orderManager.willShowOrderPage()
+     
      for key in 0..<orderTableview.numberOfSections {
        sectionStates[key] = false
      }
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.orderManager.orderPageWillDisappear()
   }
   
 //    MARK: Objc Methods

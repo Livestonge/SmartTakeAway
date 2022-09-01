@@ -19,6 +19,9 @@ class OrderManager: OrderProvider{
   weak private var timer: Timer?
   // BackgroundTask used when the app use to the background while there is food in preparation.
   private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
+  // Variable to track the notification to post when the user's order is prepared.
+  private var didPostNotification = false
+  var isDisplayingOrderPage = true
   
   init(orderObserver: OrderObservable){
     self.orderObserver = orderObserver
@@ -52,6 +55,14 @@ class OrderManager: OrderProvider{
   @objc
   func appMovedToForeground(){
     endBackgroundTask()
+  }
+  
+  func willShowOrderPage(){
+    self.isDisplayingOrderPage = true
+  }
+  
+  func orderPageWillDisappear(){
+    self.isDisplayingOrderPage = false
   }
   
   func registerBackgroundTask(){
@@ -96,9 +107,13 @@ class OrderManager: OrderProvider{
                                 adresse: order?.restaurantAdress ?? "")
     delegate?.didReceiveRestaurant(restaurant)
     
+    shouldInvalidateTimer(pendingList.isEmpty)
     shouldEndBackgroundTask(pendingList.isEmpty)
+    shouldPostNotification(pendingList.isEmpty && !finishedList.isEmpty)
   }
   
+  private func shouldInvalidateTimer(_ state: Bool){
+    if state{
       self.timer?.invalidate()
     }
   }
@@ -109,6 +124,14 @@ class OrderManager: OrderProvider{
     }
   }
   
+  private func shouldPostNotification(_ state: Bool){
+    if state {
+      postNotification()
+      self.didPostNotification = state
+      return
+    }
+    self.didPostNotification = state
+  }
   
   private func postNotification() {
     
