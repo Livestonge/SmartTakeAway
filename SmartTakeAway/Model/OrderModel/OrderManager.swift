@@ -15,10 +15,54 @@ class OrderManager: OrderProvider{
   var orderObserver: OrderObservable
   // Used for checking periodically the states of a food in preparation.
   weak private var timer: Timer?
+  // BackgroundTask used when the app use to the background while there is food in preparation.
+  private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
   
   init(orderObserver: OrderObservable){
     self.orderObserver = orderObserver
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(appMovedToBackground),
+                                           name: UIApplication.willResignActiveNotification,
+                                           object: nil)
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(appMovedToForeground),
+                                           name: UIApplication.willEnterForegroundNotification,
+                                           object: nil)
     
+  }
+  
+  deinit{
+    print("OrderManager is deInitialize.")
+    NotificationCenter.default.removeObserver(self)
+  }
+
+  @objc
+  func appMovedToBackground(){
+    isDisplayingOrderPage = false
+    let isTimerRunning = timer?.isValid == true
+    let isBackgroundTaskValid = backgroundTask != .invalid
+    if isTimerRunning && !isBackgroundTaskValid{
+      registerBackgroundTask()
+    }
+
+  }
+
+  @objc
+  func appMovedToForeground(){
+    endBackgroundTask()
+  }
+  
+  func registerBackgroundTask(){
+
+    self.backgroundTask = UIApplication.shared.beginBackgroundTask(){ [weak self] in
+      print("BackgroundTask ending....")
+      self?.endBackgroundTask()
+    }
+
+  }
+
+  func endBackgroundTask(){
+    self.backgroundTask = .invalid
   }
   
   func didValidateOrder(){
@@ -50,9 +94,18 @@ class OrderManager: OrderProvider{
                                 adresse: order?.restaurantAdress ?? "")
     delegate?.didReceiveRestaurant(restaurant)
     
-    if pendingList.isEmpty{
+    shouldEndBackgroundTask(pendingList.isEmpty)
+  }
+  
       self.timer?.invalidate()
     }
+  }
+  
+  private func shouldEndBackgroundTask(_ state: Bool){
+    if state{
+      self.endBackgroundTask()
+    }
+  }
     
   }
   
