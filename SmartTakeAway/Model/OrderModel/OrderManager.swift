@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UserNotifications
+import UIKit
 
 class OrderManager: OrderProvider{
   
@@ -106,7 +108,29 @@ class OrderManager: OrderProvider{
       self.endBackgroundTask()
     }
   }
+  
+  
+  private func postNotification() {
     
+    guard didPostNotification == false && isDisplayingOrderPage == false else { return }
+    
+    UNUserNotificationCenter.current().getNotificationSettings{ settings in
+      if settings.authorizationStatus == .authorized {
+        let content = UNMutableNotificationContent()
+        content.title = "Finished"
+        content.body = "Your order is ready🍽"
+        
+
+        let request = UNNotificationRequest(identifier: UUID().uuidString,
+                                            content: content,
+                                            trigger: nil)
+        UNUserNotificationCenter.current().add(request){ error in
+          if let error = error{
+            print("Notification error: \(error.localizedDescription)")
+          }
+        }
+      }
+    }
   }
   
   func delete(_ food: OrderedFood){
