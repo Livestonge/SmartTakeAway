@@ -6,7 +6,7 @@ This project is part of Openclassrooms IOS developper training course.
 
 ## Technologies
 
-<img align="right" src="https://github.com/Livestonge/SmartTakeAway/Images/SmartTakeAway.GIF">
+<img align="right" src="https://github.com/Livestonge/SmartTakeAway/Images/SmartTakeAway.gif">
 
 The project is created with:
 
