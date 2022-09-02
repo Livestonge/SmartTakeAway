@@ -8,16 +8,12 @@
 import UIKit
 
 class NewFoodDetailCellTableViewCell: UITableViewCell {
+    @IBOutlet var foodTitle: UILabel!
+    @IBOutlet var foodDetailDescription: UILabel!
+    @IBOutlet var foodPrice: UILabel!
 
-  @IBOutlet weak var foodTitle: UILabel!
-  @IBOutlet weak var foodDetailDescription: UILabel!
-  @IBOutlet weak var foodPrice: UILabel!
-  
-  override func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    
-
 }

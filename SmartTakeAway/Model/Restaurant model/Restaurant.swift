@@ -6,37 +6,35 @@
 //  Copyright © 2020 awaleh moussa hassan. All rights reserved.
 //
 
-import Foundation
 import CoreLocation
+import Foundation
 import MapKit
 
 // Object used represent a restaurant
-class Restaurant: NSObject,Decodable{
-    
+class Restaurant: NSObject, Decodable {
     static var reUseIdentifier = "cellAdresse"
-    
+
     let name: String
     var adresse: String
-  // Proprieties used to save the coordinates of a restaurant.
+    // Proprieties used to save the coordinates of a restaurant.
     var longitude: Double?
     var latitude: Double?
-    
-    init(name: String, adresse: String){
-        
+
+    init(name: String, adresse: String) {
         self.name = name
         self.adresse = adresse
     }
-
 }
 
-extension Restaurant: MKAnnotation{
+extension Restaurant: MKAnnotation {
     // Required implementation of MKAnnotation.
-    var coordinate: CLLocationCoordinate2D{
-        guard let latitude = latitude, let longitude = longitude else {fatalError("Coordinate not found")}
+    var coordinate: CLLocationCoordinate2D {
+        guard let latitude = latitude, let longitude = longitude else { fatalError("Coordinate not found") }
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
+
     // Title to display in the map.
-    var title: String?{
+    var title: String? {
         return name
     }
 }

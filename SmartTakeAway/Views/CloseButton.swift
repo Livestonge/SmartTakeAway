@@ -10,35 +10,33 @@ import Foundation
 import UIKit
 
 // Custom close button.
-class CloseButton: UIButton{
-  
-    //Propriety for customizing the foregroundColor.
+class CloseButton: UIButton {
+    // Propriety for customizing the foregroundColor.
     var crossColor: UIColor
-    
-    init(crossColor: UIColor){
+
+    init(crossColor: UIColor) {
         self.crossColor = crossColor
         super.init(frame: .zero)
-        
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-//  Drawing and coloring the cross lines.
-    override func draw(_ rect: CGRect){
-        
+
+    //  Drawing and coloring the cross lines.
+    override func draw(_ rect: CGRect) {
         let path = UIBezierPath(ovalIn: rect)
         UIColor.white.setFill()
         path.fill()
-        
-        guard let context = UIGraphicsGetCurrentContext() else {return}
-        context.addLines(between: [CGPoint(x: bounds.width*0.2, y: bounds.width*0.8),
-                                    CGPoint(x: bounds.width*0.8, y: bounds.width*0.2)])
-        
-        context.addLines(between: [CGPoint(x: bounds.width*0.2, y: bounds.width*0.2),
-                                    CGPoint(x: bounds.width*0.8, y: bounds.width*0.8)])
-        
+
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        context.addLines(between: [CGPoint(x: bounds.width * 0.2, y: bounds.width * 0.8),
+                                   CGPoint(x: bounds.width * 0.8, y: bounds.width * 0.2)])
+
+        context.addLines(between: [CGPoint(x: bounds.width * 0.2, y: bounds.width * 0.2),
+                                   CGPoint(x: bounds.width * 0.8, y: bounds.width * 0.8)])
+
         crossColor.setStroke()
         context.strokePath()
     }

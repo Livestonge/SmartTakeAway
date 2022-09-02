@@ -8,9 +8,9 @@
 
 import Foundation
 // A user can make select many food within an order
-struct Order{
+struct Order {
     var foodsList = [OrderedFood]()
-  // The details of the restaurant.
+    // The details of the restaurant.
     var restaurantName: String?
     var restaurantAdress: String?
 }

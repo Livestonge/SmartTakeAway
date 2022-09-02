@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum MenuType: String{
-  case sandwiches, pizza
+enum MenuType: String {
+    case sandwiches, pizza
 }

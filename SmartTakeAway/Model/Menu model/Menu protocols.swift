@@ -8,13 +8,13 @@
 import Foundation
 // Protocol used to group the requirements for an object providing the menu.
 protocol MenuProvider: AnyObject {
-  var delegate: MenuProviderDelegate? {get set}
-  func getMenuFor(_ menu: MenuType)
-  func getMenyTypes()
+    var delegate: MenuProviderDelegate? { get set }
+    func getMenuFor(_ menu: MenuType)
+    func getMenyTypes()
 }
 
 // Protocol used to group the requirements for an object which communicates with an MenuProvider.
 protocol MenuProviderDelegate: AnyObject {
-  func didReceiveMenu(_ menu: [Food])
-  func didReceiveMenyTypes(_ types: [String])
+    func didReceiveMenu(_ menu: [Food])
+    func didReceiveMenyTypes(_ types: [String])
 }

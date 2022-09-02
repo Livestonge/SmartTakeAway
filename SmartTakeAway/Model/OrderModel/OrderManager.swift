@@ -6,168 +6,160 @@
 //
 
 import Foundation
-import UserNotifications
 import UIKit
+import UserNotifications
 
-class OrderManager: OrderProvider{
-  
-  // Used to communicate with viewControllers
-  weak var delegate: OrderProviderDelegate?
-  // Used for storing the user's selections
-  var orderObserver: OrderObservable
-  // Used for checking periodically the states of a food in preparation.
-  weak private var timer: Timer?
-  // BackgroundTask used when the app use to the background while there is food in preparation.
-  private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
-  // Variable to track the notification to post when the user's order is prepared.
-  private var didPostNotification = false
-  // Variable used to know if the oderpage is currently displayed or not.
-  var isDisplayingOrderPage = true
-  
-  init(orderObserver: OrderObservable){
-    self.orderObserver = orderObserver
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(appMovedToBackground),
-                                           name: UIApplication.willResignActiveNotification,
-                                           object: nil)
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(appMovedToForeground),
-                                           name: UIApplication.willEnterForegroundNotification,
-                                           object: nil)
-    
-  }
-  
-  deinit{
-    print("OrderManager is deInitialize.")
-    NotificationCenter.default.removeObserver(self)
-  }
-  // method used to notify the system that we need time to finish some processing while app in the background
-  @objc
-  func appMovedToBackground(){
-    isDisplayingOrderPage = false
-    let isTimerRunning = timer?.isValid == true
-    let isBackgroundTaskValid = backgroundTask != .invalid
-    if isTimerRunning && !isBackgroundTaskValid{
-      registerBackgroundTask()
+class OrderManager: OrderProvider {
+    // Used to communicate with viewControllers
+    weak var delegate: OrderProviderDelegate?
+    // Used for storing the user's selections
+    var orderObserver: OrderObservable
+    // Used for checking periodically the states of a food in preparation.
+    private weak var timer: Timer?
+    // BackgroundTask used when the app use to the background while there is food in preparation.
+    private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
+    // Variable to track the notification to post when the user's order is prepared.
+    private var didPostNotification = false
+    // Variable used to know if the oderpage is currently displayed or not.
+    var isDisplayingOrderPage = true
+
+    init(orderObserver: OrderObservable) {
+        self.orderObserver = orderObserver
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appMovedToBackground),
+                                               name: UIApplication.willResignActiveNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appMovedToForeground),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil)
     }
 
-  }
-
-  @objc
-  func appMovedToForeground(){
-    endBackgroundTask()
-  }
-  
-  func willShowOrderPage(){
-    self.isDisplayingOrderPage = true
-  }
-  
-  func orderPageWillDisappear(){
-    self.isDisplayingOrderPage = false
-  }
-  
-  func registerBackgroundTask(){
-    // notifies the system that we may need time to finish some processing
-    self.backgroundTask = UIApplication.shared.beginBackgroundTask(){ [weak self] in
-      print("BackgroundTask ending....")
-      self?.endBackgroundTask()
+    deinit {
+        print("OrderManager is deInitialize.")
+        NotificationCenter.default.removeObserver(self)
     }
 
-  }
-
-  func endBackgroundTask(){
-    self.backgroundTask = .invalid
-  }
-  
-  func didValidateOrder(){
-    // Notifies the observer.
-    self.orderObserver.didValidateOrder()
-    getTheListOfFood()
-    // Instantiates the timer and execute the getMadeOrder method every 2 secs.
-    self.timer = Timer.scheduledTimer(withTimeInterval: .init(2),
-                                      repeats: true,
-                                      block: { [weak self] _ in self?.getTheListOfFood() })
-    
-  }
-  
-  func getTheListOfFood() {
-    
-    let order = self.orderObserver.getMadeOrder()
-    
-    let toBeConfirmedList = order?.foodsList.filter({ $0.status == .toBeConfirmed }) ?? []
-    let pendingList = order?.foodsList.filter({ $0.status == .preparation }) ?? []
-    let finishedList = order?.foodsList.filter({ $0.status == .finished }) ?? []
-    
-    delegate?.didReceiveFood(toBeConfirmedList,
-                             withStatus: .toBeConfirmed)
-    delegate?.didReceiveFood(pendingList,
-                             withStatus: .preparation)
-    delegate?.didReceiveFood(finishedList,
-                             withStatus: .finished)
-    let restaurant = Restaurant(name: order?.restaurantName ?? "",
-                                adresse: order?.restaurantAdress ?? "")
-    delegate?.didReceiveRestaurant(restaurant)
-    
-    shouldInvalidateTimer(pendingList.isEmpty)
-    shouldEndBackgroundTask(pendingList.isEmpty)
-    shouldPostNotification(pendingList.isEmpty && !finishedList.isEmpty)
-  }
-  
-  private func shouldInvalidateTimer(_ state: Bool){
-    if state{
-      self.timer?.invalidate()
-    }
-  }
-  
-  private func shouldEndBackgroundTask(_ state: Bool){
-    if state{
-      self.endBackgroundTask()
-    }
-  }
-  
-  private func shouldPostNotification(_ state: Bool){
-    if state {
-      postNotification()
-      self.didPostNotification = state
-      return
-    }
-    self.didPostNotification = state
-  }
-  
-  private func postNotification() {
-    
-    guard didPostNotification == false && isDisplayingOrderPage == false else { return }
-    
-    UNUserNotificationCenter.current().getNotificationSettings{ settings in
-      if settings.authorizationStatus == .authorized {
-        let content = UNMutableNotificationContent()
-        content.title = "Finished"
-        content.body = "Your order is ready🍽"
-        
-
-        let request = UNNotificationRequest(identifier: UUID().uuidString,
-                                            content: content,
-                                            trigger: nil)
-        UNUserNotificationCenter.current().add(request){ error in
-          if let error = error{
-            print("Notification error: \(error.localizedDescription)")
-          }
+    // method used to notify the system that we need time to finish some processing while app in the background
+    @objc
+    func appMovedToBackground() {
+        isDisplayingOrderPage = false
+        let isTimerRunning = timer?.isValid == true
+        let isBackgroundTaskValid = backgroundTask != .invalid
+        if isTimerRunning, !isBackgroundTaskValid {
+            registerBackgroundTask()
         }
-      }
     }
-  }
-  
-  func delete(_ food: OrderedFood){
-    if food.status == .preparation{
-      delegate?.showAlertWith(message: "You cannot delete an item under preparation")
-      return
+
+    @objc
+    func appMovedToForeground() {
+        endBackgroundTask()
     }
-    self.orderObserver.delete(food)
-    self.getTheListOfFood()
-  }
-  
-  func deleteOrder(){
-    self.orderObserver.deleteOrder()
-  }
-  
+
+    func willShowOrderPage() {
+        isDisplayingOrderPage = true
+    }
+
+    func orderPageWillDisappear() {
+        isDisplayingOrderPage = false
+    }
+
+    func registerBackgroundTask() {
+        // notifies the system that we may need time to finish some processing
+        backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self] in
+            print("BackgroundTask ending....")
+            self?.endBackgroundTask()
+        }
+    }
+
+    func endBackgroundTask() {
+        backgroundTask = .invalid
+    }
+
+    func didValidateOrder() {
+        // Notifies the observer.
+        orderObserver.didValidateOrder()
+        getTheListOfFood()
+        // Instantiates the timer and execute the getMadeOrder method every 2 secs.
+        timer = Timer.scheduledTimer(withTimeInterval: .init(2),
+                                     repeats: true,
+                                     block: { [weak self] _ in self?.getTheListOfFood() })
+    }
+
+    func getTheListOfFood() {
+        let order = orderObserver.getMadeOrder()
+
+        let toBeConfirmedList = order?.foodsList.filter { $0.status == .toBeConfirmed } ?? []
+        let pendingList = order?.foodsList.filter { $0.status == .preparation } ?? []
+        let finishedList = order?.foodsList.filter { $0.status == .finished } ?? []
+
+        delegate?.didReceiveFood(toBeConfirmedList,
+                                 withStatus: .toBeConfirmed)
+        delegate?.didReceiveFood(pendingList,
+                                 withStatus: .preparation)
+        delegate?.didReceiveFood(finishedList,
+                                 withStatus: .finished)
+        let restaurant = Restaurant(name: order?.restaurantName ?? "",
+                                    adresse: order?.restaurantAdress ?? "")
+        delegate?.didReceiveRestaurant(restaurant)
+
+        shouldInvalidateTimer(pendingList.isEmpty)
+        shouldEndBackgroundTask(pendingList.isEmpty)
+        shouldPostNotification(pendingList.isEmpty && !finishedList.isEmpty)
+    }
+
+    private func shouldInvalidateTimer(_ state: Bool) {
+        if state {
+            timer?.invalidate()
+        }
+    }
+
+    private func shouldEndBackgroundTask(_ state: Bool) {
+        if state {
+            endBackgroundTask()
+        }
+    }
+
+    private func shouldPostNotification(_ state: Bool) {
+        if state {
+            postNotification()
+            didPostNotification = state
+            return
+        }
+        didPostNotification = state
+    }
+
+    private func postNotification() {
+        guard didPostNotification == false, isDisplayingOrderPage == false else { return }
+
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            if settings.authorizationStatus == .authorized {
+                let content = UNMutableNotificationContent()
+                content.title = "Finished"
+                content.body = "Your order is ready🍽"
+
+                let request = UNNotificationRequest(identifier: UUID().uuidString,
+                                                    content: content,
+                                                    trigger: nil)
+                UNUserNotificationCenter.current().add(request) { error in
+                    if let error = error {
+                        print("Notification error: \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
+    }
+
+    func delete(_ food: OrderedFood) {
+        if food.status == .preparation {
+            delegate?.showAlertWith(message: "You cannot delete an item under preparation")
+            return
+        }
+        orderObserver.delete(food)
+        getTheListOfFood()
+    }
+
+    func deleteOrder() {
+        orderObserver.deleteOrder()
+    }
 }

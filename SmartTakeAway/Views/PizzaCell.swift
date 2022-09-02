@@ -9,24 +9,21 @@
 import UIKit
 
 // Custom uitableViewCell for configuring the details for a pizza.
-class PizzaCell: UITableViewCell, FoodCell{
-    
+class PizzaCell: UITableViewCell, FoodCell {
+    @IBOutlet var pizzaView: UIImageView!
+    @IBOutlet var pizzaName: UILabel!
+    @IBOutlet var price: UILabel!
+    @IBOutlet var Ingredients: UILabel!
 
-    @IBOutlet weak var pizzaView: UIImageView!
-    @IBOutlet weak var pizzaName: UILabel!
-    @IBOutlet weak var price: UILabel!
-    @IBOutlet weak var Ingredients: UILabel!
-   
-    @IBOutlet weak var large: UILabel!
-    @IBOutlet weak var grande: UILabel!
-    @IBOutlet weak var medium: UILabel!
-  
+    @IBOutlet var large: UILabel!
+    @IBOutlet var grande: UILabel!
+    @IBOutlet var medium: UILabel!
+
 //    Identifier used by a tableview to dequeue a pizza cell.
     static var identifier = String(describing: PizzaCell.self)
-  
+
 //    Configuring the cell with a food item.
-    func populateLabelsWith(_ food: Food){
-        
+    func populateLabelsWith(_ food: Food) {
         switch food.price {
         case let .pizza(medium: mediumPrice, grande: grandePrice, large: largePrice):
             medium.text = "M:\(mediumPrice)"
@@ -35,7 +32,7 @@ class PizzaCell: UITableViewCell, FoodCell{
         default:
             break
         }
-        
+
         pizzaName.text = food.name
         Ingredients.text = food.description
         let pizzaImage = food.image!

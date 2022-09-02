@@ -7,22 +7,21 @@
 
 import Foundation
 
-
 class SelectedFoodManager: SelectedFoodProvider {
-  // Object wich holds the user's order.
-  var selectedFoodObserver: SelectedFoodObservable
-  weak var delegate: SelectedFoodDelegate?
-  
-  init(selectedFoodObserver: SelectedFoodObservable){
-    self.selectedFoodObserver = selectedFoodObserver
-  }
-  
-  func didCompletedSelecting(_ food: SelectedFood) {
-    self.selectedFoodObserver.didCompletedSelecting(food)
-    self.delegate?.didCompleteSelection()
-  }
-  
-  func isOrdersListEmpty() -> Bool {
-    self.selectedFoodObserver.isFoodListEmpty()
-  }
+    // Object wich holds the user's order.
+    var selectedFoodObserver: SelectedFoodObservable
+    weak var delegate: SelectedFoodDelegate?
+
+    init(selectedFoodObserver: SelectedFoodObservable) {
+        self.selectedFoodObserver = selectedFoodObserver
+    }
+
+    func didCompletedSelecting(_ food: SelectedFood) {
+        selectedFoodObserver.didCompletedSelecting(food)
+        delegate?.didCompleteSelection()
+    }
+
+    func isOrdersListEmpty() -> Bool {
+        selectedFoodObserver.isFoodListEmpty()
+    }
 }
