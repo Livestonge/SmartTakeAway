@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		090FB85428C250AA00BD95AE /* SmartTakeAway.gif in Resources */ = {isa = PBXBuildFile; fileRef = 090FB85328C250AA00BD95AE /* SmartTakeAway.gif */; };
 		091CDD7A28B3C3480092E5EC /* FirebaseInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091CDD7928B3C3480092E5EC /* FirebaseInterface.swift */; };
 		092892952890244300A7CCEA /* FoodAccessoryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092892942890244300A7CCEA /* FoodAccessoryProvider.swift */; };
 		0928929B28905B9400A7CCEA /* FoodAccessory protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0928929A28905B9400A7CCEA /* FoodAccessory protocols.swift */; };
@@ -89,6 +90,7 @@
 
 /* Begin PBXFileReference section */
 		0908A6937354196B3B127FE9 /* Pods-SmartTakeAway.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartTakeAway.debug.xcconfig"; path = "Target Support Files/Pods-SmartTakeAway/Pods-SmartTakeAway.debug.xcconfig"; sourceTree = "<group>"; };
+		090FB85328C250AA00BD95AE /* SmartTakeAway.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = SmartTakeAway.gif; sourceTree = "<group>"; };
 		091CDD7928B3C3480092E5EC /* FirebaseInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseInterface.swift; sourceTree = "<group>"; };
 		092892942890244300A7CCEA /* FoodAccessoryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAccessoryProvider.swift; sourceTree = "<group>"; };
 		0928929A28905B9400A7CCEA /* FoodAccessory protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodAccessory protocols.swift"; sourceTree = "<group>"; };
@@ -183,6 +185,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		090FB85228C24CC800BD95AE /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				090FB85328C250AA00BD95AE /* SmartTakeAway.gif */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		0928929928905B5600A7CCEA /* FoodAccessory Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,6 +243,7 @@
 			children = (
 				09948DCB288AA521005B6767 /* AppDelegate.swift */,
 				09948DCD288AA521005B6767 /* SceneDelegate.swift */,
+				090FB85228C24CC800BD95AE /* Images */,
 				09948E2A288AAB91005B6767 /* Views */,
 				09948E0A288AAABA005B6767 /* Controller */,
 				09948E19288AAB5E005B6767 /* Model */,
@@ -521,6 +532,7 @@
 				09948E3B288AABDE005B6767 /* DAndSData.plist in Resources */,
 				09948E58288AAEE9005B6767 /* Main.storyboard in Resources */,
 				09948E3D288AACE2005B6767 /* Meny.plist in Resources */,
+				090FB85428C250AA00BD95AE /* SmartTakeAway.gif in Resources */,
 				09948E45288AAD47005B6767 /* Assets.xcassets in Resources */,
 				09948E29288AAB7B005B6767 /* Restaurants.plist in Resources */,
 				09BF310728A7C38000815093 /* GoogleService-Info.plist in Resources */,
