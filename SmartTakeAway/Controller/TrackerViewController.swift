@@ -253,7 +253,7 @@ extension TrackerViewController: UITableViewDelegate, UITableViewDataSource {
         case 2:
             titleLabel.text = "\(count) under preparation"
         case 3:
-            titleLabel.text = "\(count) finished"
+            titleLabel.text = "\(count) finished, enjoy your meals"
         default:
             return nil
         }
