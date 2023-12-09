@@ -1,0 +1,8 @@
+app_identifier("com.awaleh.smartTakeAway") # The bundle identifier of your app
+apple_id("awaleh_h@yahoo.com") # Your Apple Developer Portal username
+
+itc_team_id("126093481") # App Store Connect Team ID
+team_id("7ZG4KANLDR") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
