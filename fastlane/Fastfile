@@ -22,3 +22,10 @@ platform :ios do
     upload_to_app_store(skip_binary_upload: true, skip_metadata: true)
   end
 end
+
+lane :buildSmartTakeAway do
+  # sync_code_signing(type: "appstore")
+  build_app(scheme: "SmartTakeAway")
+  # upload_to_testflight
+  # slack(message: "New beta build available.")
+end
