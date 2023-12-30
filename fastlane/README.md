@@ -13,26 +13,50 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
-### buildSmartTakeAway
+### get_api_key
 
 ```sh
-[bundle exec] fastlane buildSmartTakeAway
+[bundle exec] fastlane get_api_key
 ```
 
-
+responsible for loading API key usinh App Store Connect API
 
 ----
 
 
 ## iOS
 
-### ios screenshots
+### ios certificate_update
 
 ```sh
-[bundle exec] fastlane ios screenshots
+[bundle exec] fastlane ios certificate_update
 ```
 
-Generate new localized screenshots
+
+
+### ios buildSmartTakeAway
+
+```sh
+[bundle exec] fastlane ios buildSmartTakeAway
+```
+
+
+
+### ios sync_all_development
+
+```sh
+[bundle exec] fastlane ios sync_all_development
+```
+
+
+
+### ios beta
+
+```sh
+[bundle exec] fastlane ios beta
+```
+
+
 
 ----
 
