@@ -4,7 +4,7 @@ on:
  workflow_dispatch:
  
 jobs:
- deploy:
+ build:
    runs-on: macos-latest
    steps:
      - uses: actions/checkout@v2
@@ -16,9 +16,10 @@ jobs:
          bundler-cache: true
  
      - name: Build & upload iOS binary
-       run: bundle exec fastlane ios build_upload_testflight
+       run: bundle exec fastlane build
        env:
          APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
          APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
          APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}
-         SIGNING_KEY_FILE_PATH: Certificats.p12
+         MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+         MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD}}

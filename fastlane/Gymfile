@@ -6,9 +6,7 @@
 
 # Remove the # in front of the line to enable the option
 
-# scheme("SmartTakeAway")
-
-# sdk("iphoneos15.0")
+scheme("SmartTakeAway")
 
 export_options({
 method:"app-store",

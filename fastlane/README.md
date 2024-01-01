@@ -13,50 +13,21 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
-### get_api_key
+### sync_certificates
 
 ```sh
-[bundle exec] fastlane get_api_key
-```
-
-responsible for loading API key usinh App Store Connect API
-
-----
-
-
-## iOS
-
-### ios certificate_update
-
-```sh
-[bundle exec] fastlane ios certificate_update
+[bundle exec] fastlane sync_certificates
 ```
 
 
 
-### ios buildSmartTakeAway
+### build
 
 ```sh
-[bundle exec] fastlane ios buildSmartTakeAway
+[bundle exec] fastlane build
 ```
 
-
-
-### ios sync_all_development
-
-```sh
-[bundle exec] fastlane ios sync_all_development
-```
-
-
-
-### ios beta
-
-```sh
-[bundle exec] fastlane ios beta
-```
-
-
+Create ipa
 
 ----
 
