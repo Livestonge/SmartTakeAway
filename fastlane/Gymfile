@@ -1,0 +1,27 @@
+# For more information about this configuration visit
+# https://docs.fastlane.tools/actions/gym/#gymfile
+
+# In general, you can use the options available
+# fastlane gym --help
+
+# Remove the # in front of the line to enable the option
+
+scheme("SmartTakeAway")
+
+#provide provisioning profiles to use
+export_options({
+   method: "app-store",
+   provisioningProfiles: {
+     "com.awaleh.smartTakeAway" => "match AppStore com.awaleh.smartTakeAway",
+        }
+})
+
+sdk("iphoneos17.0")
+
+clean(true)
+
+output_directory("./fastlane/Builds")
+# Excludes bitcode from the build
+include_bitcode(false)
+# Excludes symbols from the build.
+include_symbols(false)
