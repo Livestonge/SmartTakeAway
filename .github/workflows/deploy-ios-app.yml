@@ -39,7 +39,7 @@ jobs:
           chmod 600 "$SSH_PATH/known_hosts"
           touch  "$SSH_PATH/id_ed25519"
           chmod 700 "$SSH_PATH/id_ed25519"
-          echo "$PRIVATE_KEY" > "$SSH_PATH/id_ed25519"
+          car "$PRIVATE_KEY" >> "$SSH_PATH/id_ed25519"
           ssh-keyscan github.com >> "$SSH_PATH/known_hosts"
           touch "$SSH_PATH/config"
           echo -e "Host github.com\n\tAddKeysToAgent yes\n\tUseKeychain yes\n\tIdentityFile $SSH_PATH/id_ed25519" >> "$SSH_PATH/config"
