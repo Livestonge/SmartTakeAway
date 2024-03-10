@@ -38,7 +38,7 @@ jobs:
           touch "$SSH_PATH/known_hosts"
           chmod 600 "$SSH_PATH/known_hosts"
           touch  "$SSH_PATH/id_ed25519"
-          chmod 600 "$SSH_PATH/id_ed25519"
+          chmod 700 "$SSH_PATH/id_ed25519"
           echo "$PRIVATE_KEY" > "$SSH_PATH/id_ed25519"
           ssh-keyscan github.com >> "$SSH_PATH/known_hosts"
           touch "$SSH_PATH/config"
