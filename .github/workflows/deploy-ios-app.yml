@@ -35,6 +35,7 @@ jobs:
           SSH_PATH="$HOME/.ssh"
           mkdir -p "$SSH_PATH"
           touch "$SSH_PATH/known_hosts"
+          touch  "$SSH_PATH/id_ed25519"
           echo "$PRIVATE_KEY" > "$SSH_PATH/id_ed25519"
           chmod 700 "$SSH_PATH"
           ssh-keyscan github.com >> "$SSH_PATH/known_hosts"
