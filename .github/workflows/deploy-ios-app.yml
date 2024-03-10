@@ -39,7 +39,7 @@ jobs:
           chmod 700 "$SSH_PATH"
           ssh-keyscan github.com >> "$SSH_PATH/known_hosts"
           chmod 600 "$SSH_PATH/known_hosts"
-          chmod 600 "$SSH_PATH/id_rsa"
+          chmod 700 "$SSH_PATH/id_rsa"
           touch "$SSH_PATH/config"
           echo -e "Host Livestonge@github.com\n\tAddKeysToAgent yes\n\tUseKeychain yes\n\tIdentityFile $SSH_PATH/id_rsa" >> "$SSH_PATH/config"
           eval $(ssh-agent -s)
