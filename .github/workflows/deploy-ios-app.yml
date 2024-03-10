@@ -42,7 +42,7 @@ jobs:
           echo "$PRIVATE_KEY" > "$SSH_PATH/id_ed25519"
           ssh-keyscan github.com >> "$SSH_PATH/known_hosts"
           touch "$SSH_PATH/config"
-          echo -e "Host github.com\n\tAddKeysToAgent yes\n\tUseKeychain yes\n\tIdentityFile "$SSH_PATH/id_ed25519"" >> "$SSH_PATH/config"
+          echo -e "Host github.com\n\tAddKeysToAgent yes\n\tUseKeychain yes\n\tIdentityFile $SSH_PATH/id_ed25519" >> "$SSH_PATH/config"
           eval $(ssh-agent -s)
           ssh-add --apple-use-keychain --apple-load-keychain "$SSH_PATH/id_ed25519"
           env:
