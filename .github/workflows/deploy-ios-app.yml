@@ -33,7 +33,6 @@ jobs:
       - name: Setup SSH Keys and known_hosts for fastlane match
         run: |
           SSH_PATH="$HOME/.ssh"
-          mkdir -p "$SSH_PATH"
           chmod 700 "$SSH_PATH"
           touch "$SSH_PATH/known_hosts"
           chmod 600 "$SSH_PATH/known_hosts"
