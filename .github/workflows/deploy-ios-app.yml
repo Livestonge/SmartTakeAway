@@ -39,6 +39,7 @@ jobs:
           chmod 600 "$SSH_PATH/known_hosts"
           touch  "$SSH_PATH/id_rsa"
           echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          echo $'' >> ~/.ssh/id_rsa
           chmod 600 "$SSH_PATH/id_rsa"
           ssh-keyscan github.com >> "$SSH_PATH/known_hosts"
           touch "$SSH_PATH/config"
