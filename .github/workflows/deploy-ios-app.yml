@@ -44,7 +44,7 @@ jobs:
           touch "$SSH_PATH/config"
           echo -e "Host github.com\n\tAddKeysToAgent yes\n\tUseKeychain yes\n\tIdentityFile $SSH_PATH/id_rsa" >> "$SSH_PATH/config"
           eval $(ssh-agent -s)
-          echo "$SSH_PRIVATE_KEY" | ssh-add --apple-use-keychain "$SSH_PATH/id_rsa"
+          cat "$SSH_PRIVATE_KEY" | ssh-add --apple-use-keychain "$SSH_PATH/id_rsa"
           env:
             PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
             SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
