@@ -28,34 +28,15 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      - name: Setup SSH Keys and known_hosts for fastlane match
-        run: |
-          SSH_PATH="$HOME/.ssh"
-          mkdir -p "$SSH_PATH"
-          touch "$SSH_PATH/known_hosts"
-          echo "$PRIVATE_KEY" > "$SSH_PATH/id_ed25519"
-          chmod 700 "$SSH_PATH"
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-          chmod 600 "$SSH_PATH/known_hosts"
-          chmod 600 "$SSH_PATH/id_ed25519"
-          touch "$SSH_PATH/config"
-          echo -e "Host github.com\n\tAddKeysToAgent yes\n\tUseKeychain yes\n\tIdentityFile $SSH_PATH/id_ed25519" >> "$SSH_PATH/config"
-          eval $(ssh-agent -s)
-          ssh-add --apple-use-keychain "$SSH_PATH/id_ed25519"
-          env:
-            PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-            SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
-            
-      - uses: maxim-lobanov/setup-xcode@v1
+      - uses: webfactory/ssh-agent@v0.9.0
         with:
-          xcode-version: "latest-stable"
+         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+         ssh-passphrase: ${{ secrets.SSH_PASSPHRASE }}
       - name: Deploy to TestFlight
-        working-directory: YOUR_APP_DIRECTORY/ios
-        run: |
-          bundle install
-          bundle exec fastlane ${{ github.event.inputs.lane || 'beta' }}
+        uses: maierj/fastlane-action@v1.4.0
+        # working-directory: YOUR_APP_DIRECTORY/ios
+        with:
+          lane: beta_from_ci
         env:
           FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
@@ -65,16 +46,8 @@ jobs:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
-
-      - name: Deploy to TestFlight
-        run: |
-          bundle install
-          bundle exec fastlane ${{ github.event.inputs.lane || 'beta' }}
-        env:
-          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
-          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}
-          MATCH_KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
-          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
-          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          DEVELOPER_APP_ID: ${{ secrets.DEVELOPER_APP_ID }}
+          DEVELOPER_APP_IDENTIFIER: ${{ secrets.DEVELOPER_APP_IDENTIFIER }}
+          FASTLANE_APPLE_ID: ${{ secrets.FASTLANE_APPLE_ID }}
+          PROVISIONING_PROFILE_SPECIFIER: ${{ secrets.PROVISIONING_PROFILE_SPECIFIER }}
+          GIT_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
