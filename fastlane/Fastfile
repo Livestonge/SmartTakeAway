@@ -55,7 +55,7 @@ lane :beta_from_ci do
        export_options: {
          method: "app-store",
         provisioningProfiles: {
-          ENV["DEVELOPER_APP_IDENTIFIER"] => ENV['PROVISIONING_PROFILE_SPECIFIER'],
+          ENV['DEVELOPER_APP_IDENTIFIER'] => ENV['PROVISIONING_PROFILE_SPECIFIER'],
         }
        },
        output_directory: "./fastlane/Builds"
