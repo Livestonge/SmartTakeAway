@@ -16,7 +16,7 @@ export_options({
         }
 })
 
-sdk("iphoneos17.0")
+#sdk("iphoneos17.0")
 
 clean(true)
 
