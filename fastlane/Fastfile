@@ -50,7 +50,7 @@ lane :beta_from_ci do
      )
      
      build_app(
-       workspace: "SmartTakeAway.xcworkspace",
+       workspace: "../SmartTakeAway.xcworkspace",
        scheme: "SmartTakeAway",
        export_options: {
          method: "app-store",
