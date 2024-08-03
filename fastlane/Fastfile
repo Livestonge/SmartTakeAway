@@ -64,8 +64,7 @@ lane :beta_from_ci do
           ENV['DEVELOPER_APP_IDENTIFIER'] => ENV['PROVISIONING_PROFILE_SPECIFIER'],
         }
        },
-       output_directory: "./fastlane/Builds",
-       export_xcargs: -allowProvisioningUpdates   
+       output_directory: "./fastlane/Builds"
      )
    else
     match(
