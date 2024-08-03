@@ -39,6 +39,7 @@ lane :beta_from_ci do
    end
    
    if is_ci
+     xcversion(version: "15.4")
      match(
        type: "appstore",
        app_identifier: ["#{ENV['DEVELOPER_APP_IDENTIFIER']}"],
