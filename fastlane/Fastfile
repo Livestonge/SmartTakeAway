@@ -41,7 +41,7 @@ lane :beta_from_ci do
    if is_ci
      xcversion(version: "15.4")
      xcode_select "/Applications/Xcode_15.4.app"
-     xcode-select -s /Applications/Xcode_15.4.app
+     xcode-select -s "/Applications/Xcode_15.4.app"
      match(
        type: "appstore",
        app_identifier: ["#{ENV['DEVELOPER_APP_IDENTIFIER']}"],
