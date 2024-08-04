@@ -51,10 +51,6 @@ lane :beta_from_ci do
        keychain_password: ENV['MATCH_KEYCHAIN_PASSWORD']
      )
 
-     gym(
-      xcargs: "ARCHIVE=NO"
-    )
-
      build_app(
        workspace: "SmartTakeAway.xcworkspace",
        scheme: "SmartTakeAway",
