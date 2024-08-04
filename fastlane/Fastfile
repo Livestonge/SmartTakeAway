@@ -15,15 +15,9 @@ def create_temp_keychain(name, password)
   create_keychain(
     name: name,
     password: password,
-    unlock: false,
+    default_keychain: true,
+    unlock: true,
     timeout: 0
-  )
-end
-
-def unlock_temp_keychain(password)
-  unlock_keychain(
-    path: "/Users/runner/Library/Keychains/login.keychain-db",
-    password: password
   )
 end
 
@@ -34,7 +28,7 @@ end
 
 lane :beta_from_ci do
    if is_ci
-     # ensure_temp_keychain(ENV['MATCH_KEYCHAIN_NAME'], ENV['MATCH_KEYCHAIN_PASSWORD'])
+     ensure_temp_keychain(ENV['MATCH_KEYCHAIN_NAME'], ENV['MATCH_KEYCHAIN_PASSWORD'])
      # create_keychain(
      #   name: ENV['MATCH_KEYCHAIN_NAME'],
      #   password: ENV["MATCH_KEYCHAIN_PASSWORD"],
@@ -48,7 +42,6 @@ lane :beta_from_ci do
    if is_ci
      xcversion(version: "15.4")
      xcode_select("/Applications/Xcode_15.4.app")
-     unlock_temp_keychain(ENV['MATCH_KEYCHAIN_PASSWORD'])
 
      match(
        type: "appstore",
