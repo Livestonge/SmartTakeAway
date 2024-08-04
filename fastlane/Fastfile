@@ -60,17 +60,13 @@ lane :beta_from_ci do
        keychain_password: ENV['MATCH_KEYCHAIN_PASSWORD']
      )
 
-     build_app(
-       workspace: "SmartTakeAway.xcworkspace",
-       scheme: "SmartTakeAway",
-       export_options: {
-         method: "app-store",
-        provisioningProfiles: {
-          ENV['DEVELOPER_APP_IDENTIFIER'] => ENV['PROVISIONING_PROFILE_SPECIFIER'],
-        }
-       },
-       output_directory: "./fastlane/Builds"
+    gym(
+      workspace: "../SmartTakeAway.xcworkspace",
+      output_directory: output_directory,
+      skip_profile_detection: true,
+      verbose: true
      )
+
    else
     match(
        type: "appstore",
