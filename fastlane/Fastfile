@@ -8,7 +8,7 @@ GIT_AUTHORIZATION = ENV['MATCH_GIT_BASIC_AUTHORIZATION']
 def delete_temp_keychain(name)
   delete_keychain(
     name: name
-  ) if File.exist? File.expand_path("/Users/runner/Library/Keychains/#{name}-db")
+  ) if File.exist? File.expand_path("/Users/runner/Library/Keychains/#{name}.keychain-db")
 end
   
 def create_temp_keychain(name, password)
@@ -22,7 +22,7 @@ end
 
 def unlock_temp_keychain(name, password)
   unlock_keychain(
-    path: "/Users/runner/Library/Keychains/#{name}-db",
+    path: "/Users/runner/Library/Keychains/#{name}.keychain-db",
     password: password
   )
 end
