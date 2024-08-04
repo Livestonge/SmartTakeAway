@@ -62,7 +62,6 @@ lane :beta_from_ci do
 
     gym(
       workspace: "../SmartTakeAway.xcworkspace",
-      output_directory: output_directory,
       skip_profile_detection: true,
       verbose: true
      )
