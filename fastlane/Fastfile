@@ -61,7 +61,7 @@ lane :beta_from_ci do
      )
 
     gym(
-      workspace: "../SmartTakeAway.xcworkspace",
+      workspace: "SmartTakeAway.xcworkspace",
       skip_profile_detection: true,
       verbose: true
      )
