@@ -48,6 +48,8 @@ lane :beta_from_ci do
    if is_ci
      xcversion(version: "15.4")
      xcode_select("/Applications/Xcode_15.4.app")
+     unlock_temp_keychain(ENV['MATCH_KEYCHAIN_NAME'], ENV['MATCH_KEYCHAIN_PASSWORD'])
+
      match(
        type: "appstore",
        app_identifier: ["#{ENV['DEVELOPER_APP_IDENTIFIER']}"],
@@ -57,8 +59,6 @@ lane :beta_from_ci do
        keychain_name: ENV['MATCH_KEYCHAIN_NAME'],
        keychain_password: ENV['MATCH_KEYCHAIN_PASSWORD']
      )
-
-     unlock_temp_keychain(ENV['MATCH_KEYCHAIN_NAME'], ENV['MATCH_KEYCHAIN_PASSWORD'])
 
      build_app(
        workspace: "SmartTakeAway.xcworkspace",
