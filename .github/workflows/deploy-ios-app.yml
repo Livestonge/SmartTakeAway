@@ -31,7 +31,6 @@ jobs:
       - name: clean pod cache
         run: |
           pod cache clean --all
-          npm init
           cd SmartTakeAway && arch -x86_64 pod install
       - name: Build & upload iOS binary
         run: |
