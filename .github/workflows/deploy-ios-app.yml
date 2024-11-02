@@ -22,20 +22,20 @@ jobs:
           bundler-cache: true
       - name: Create .env file
         run: |
-          cd ios
+          cd SmartTakeAway
           echo "${{ secrets.APP_ENV_FILE }}" > .env.default
       - name: Install bundler
         run: gem install bundler
       - name: Install fastlane dependencies
-        run: cd ios && bundle install
+        run: cd SmartTakeAway && bundle install
       - name: clean pod cache
         run: |
           pod cache clean --all
           npm i
-          cd ios && arch -x86_64 pod install
+          cd SmartTakeAway && arch -x86_64 pod install
       - name: Build & upload iOS binary
         run: |
-          cd ios && pod install --repo-update 
+          cd SmartTakeAway && pod install --repo-update 
           bundle exec fastlane ios build_upload_testflight
         env:
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
