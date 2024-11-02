@@ -22,7 +22,6 @@ jobs:
           bundler-cache: true
       - name: Create .env file
         run: |
-#          cd SmartTakeAway
           echo "${{ secrets.APP_ENV_FILE }}" > .env.default
       - name: Install bundler
         run: gem install bundler
