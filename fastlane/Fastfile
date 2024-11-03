@@ -4,7 +4,7 @@ platform :ios do
   desc "Get certificates"
   lane :certificates do
     sync_code_signing(
-      type: "appStore",
+      type: "appstore",
       app_identifier: ['com.awaleh.smartTakeAway'],
       force_for_new_devices: true,
       readonly: true
