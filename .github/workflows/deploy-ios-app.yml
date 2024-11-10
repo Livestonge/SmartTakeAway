@@ -20,6 +20,20 @@ jobs:
         with:
           ruby-version: 3.2.0
           bundler-cache: true
+      - name: Setup SSH Keys and known_hosts for fasstlane match
+        run: |
+         SSH_PATH="$HOME/.ssh"
+         mkdir -p "$SSH_PATH"
+         touch "$SSH_PATH/known_hosts"
+         echo "$PRIVATE_KEY" >> "$SSH_PATH/id_ed25519"
+         echo "$SSH_PATH/id_ed25519"
+         chmod 700 "$SSH_PATH"
+         ssh-keyscan github.com >> ~/.ssh/known_hosts
+         chmod 600 "$SSH_PATH/known_hosts"
+         chmod 600 "$SSH_PATH/id_ed25519"
+         touch "$SSH_PATH/config"
+         echo -e "Host github.com\n\tAddKeysToAgent yes\n\tUseKeychain yes\n\tIdentityFile $SSH_PATH/id_ed25519" >> "$SSH_PATH/config"
+         eval "$(ssh-agent -s)" ssh-add "$SSH_PATH/id_ed25519"
       - name: Create .env file
         run: |
           echo "${{ secrets.APP_ENV_FILE }}" > .env.default
@@ -37,6 +51,7 @@ jobs:
           bundle update fastlane
           bundle exec fastlane build_upload_testflight
         env:
+          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
           APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
           APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}
